@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><plugin>
+  <extension point="org.eclipse.emf.ecore.generated_package">
+    <!-- @generated traceability -->
+    <package class="traceability.TraceabilityPackage" genModel="platform:/traceability_meta/model/traceability.genmodel" uri="http://blackbelt.hu/judo/meta/psm/ui/traceability"/>
+  </extension>
+  <extension point="org.eclipse.emf.ecore.generated_package">
+    <!-- @generated traceability -->
+    <package class="psm.PsmPackage" genModel="platform:/resource/traceability_meta/model/traceability.genmodel" uri="http://blackbelt.hu/judo/meta/psm"/>
+  </extension>
+  <extension point="org.eclipse.emf.ecore.generated_package">
+    <!-- @generated traceability -->
+    <package class="ui.UiPackage" genModel="platform:/resource/traceability_meta/model/traceability.genmodel" uri="http://blackbelt.hu/judo/meta/psm/ui"/>
+  </extension>
+  <extension id="queries.PatternProvider" point="org.eclipse.viatra.query.runtime.queryspecification">
+    <group group="org.eclipse.viatra.query.runtime.extensibility.SingletonExtensionFactory:queries.PatternProvider" id="queries.PatternProvider">
+      <query-specification fqn="queries.JModelQuery"/>
+      <query-specification fqn="queries.JUIFilterQuery"/>
+      <query-specification fqn="queries.JPackageToUIModuleQuery"/>
+      <query-specification fqn="queries.findDescendantsForClass"/>
+      <query-specification fqn="queries.JClassQuery"/>
+      <query-specification fqn="queries.JClassWithGuardConditionQuery"/>
+      <query-specification fqn="queries.findMenuItemForFilter"/>
+      <query-specification fqn="queries.findMenuItemWithParent"/>
+      <query-specification fqn="queries.JRoleQuery"/>
+      <query-specification fqn="queries.JAttributeQuery"/>
+      <query-specification fqn="queries.findCorrespondingType"/>
+    </group>
+  </extension>
+</plugin>

@@ -1,0 +1,13 @@
+rule UIFilter
+	transform jUIFilter: PSM!JUIFilter
+	to uiFilter : UI!UIFilter {
+		if (jUIFilter.name.isDefined()) {
+			uiFilter.name = jUIFilter.name;
+		} else {
+			uiFilter.name = "filter";
+		}
+		
+		uiFilter.uuid = generateUuid(jUIFilter.uuid, "UIFilter", "_");
+		uiFilter.operator = jUIFilter.operator.toString();
+		uiFilter.value = jUIFilter.value;
+	}

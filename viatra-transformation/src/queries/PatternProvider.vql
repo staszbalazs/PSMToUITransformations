@@ -1,0 +1,113 @@
+package queries
+
+import "http://blackbelt.hu/judo/meta/psm"
+import "http://blackbelt.hu/judo/meta/psm/ui"
+import "http://blackbelt.hu/judo/meta/psm/ui/traceability"
+import "http://blackbelt.hu/judo/meta/psm/ui/mapping"
+
+
+//JModel Queries
+pattern JModelQuery(jModel : JModel) {
+	JModel(jModel);
+}
+
+//JUIFilter Queries
+pattern JUIFilterQuery(jFilter : JUIFilter) {
+	JUIFilter(jFilter);
+}
+
+//JPackage Queries
+pattern JPackageToUIModuleQuery(jPackage : JPackage) {
+	find notOnlyContainerPackage(jPackage);
+	find findUIRelevantPackages(jPackage);	
+}
+
+private pattern findUIRelevantPackages(jPackage : JPackage) {
+	find findPackagesInLayer(jPackage, JLayer::SCREEN);
+} or {
+	find findPackagesInLayer(jPackage, JLayer::OPERATION);
+} or {
+	find findPackagesInLayer(jPackage, JLayer::ALL);
+}
+
+private pattern findPackagesInLayer(jPackage : JPackage, layer : JLayer) {
+	JPackage.participates(jPackage, layer);
+}
+
+private pattern notOnlyContainerPackage(jPackage : JPackage) {
+	JPackage(jPackage);
+	primitives == count find primitivesInPackage(jPackage, _);
+	enumerations == count find enumerationsInPackage(jPackage, _);
+	relationships == count find relationshipsInPackage(jPackage, _);
+	classes == count find classesInPackage(jPackage, _);
+	check (
+		enumerations + primitives + relationships + classes > 0
+	);
+}
+
+private pattern primitivesInPackage(jPackage : JPackage, jPrimitive : JPrimitive) {
+	JPackage.primitives(jPackage, jPrimitive);
+}
+
+private pattern enumerationsInPackage(jPackage : JPackage, jEnumeration : JEnumeration) {
+	JPackage.enumerations(jPackage, jEnumeration);
+}
+
+private pattern relationshipsInPackage(jPackage : JPackage, jRelationship : JRelationship) {
+	JPackage.relationships(jPackage, jRelationship);
+}
+
+private pattern classesInPackage(jPackage : JPackage, jClass : JClass) {
+	JPackage.classes(jPackage, jClass);
+}
+
+
+//UIClass Queries
+pattern findDescendantsForClass(uiClass : UIClass, descendant : UIClass) {
+	UIClass.^super+(descendant, uiClass);
+}
+
+
+//JClass Queries
+pattern JClassQuery(jClass : JClass) {
+	JClass(jClass);
+}
+
+pattern JClassWithGuardConditionQuery(jClass : JClass) {
+	JClass.^package(jClass, jPackage);
+	find findUIRelevantPackages(jPackage);
+}
+
+//JUIMenuItem Queries
+pattern findMenuItemForFilter(jFilter : JUIFilter, jMenuItem : JUIMenuItem) {
+	JUIMenuItem.uifilters(jMenuItem, jFilter);
+}
+
+pattern findMenuItemWithParent(jMenuItem : JUIMenuItem) {
+	JUIMenuItem.parent(jMenuItem, _);
+}
+
+//JRole Queries
+pattern JRoleQuery(jRole : JRole) {
+	JRole(jRole);
+}
+
+//JAttribute Queries
+pattern JAttributeQuery(jAttribute : JAttribute) {
+	JAttribute(jAttribute);
+}
+/*
+//Trace Queries
+pattern psmToUiTrace(jElement : JElement, identifiable : Identifiable) {
+	PSMToUITrace.psmElements(trace, jElement);
+	PSMToUITrace.uiElements(trace, identifiable);
+}*/
+
+//PSMToUIMapping Queries
+pattern findCorrespondingType(jPrimitive : JPrimitive, componentType : UIComponentType) {
+	Mapping.componentType(mapping, componentType);
+	Mapping.psmType(mapping, jPrimitive);
+}
+
+
+

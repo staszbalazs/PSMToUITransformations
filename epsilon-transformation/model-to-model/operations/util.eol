@@ -1,0 +1,29 @@
+operation generateUuid(namespace : String, name : String, separator : String) : String {
+	return namespace + separator + name;
+}
+
+
+@cached
+operation PSM!JPackage onlyContainerPackage() : Boolean {
+	return self.primitives.isEmpty() 
+	   and self.enumerations.isEmpty() 
+	   and self.relationships.isEmpty() 
+	   and self.classes.isEmpty(); 
+}
+
+operation checkAllUuidsForDuplicateOrMissing() {
+	var all = UI!Identifiable.all.collect(e | e.uuid);
+	var set = all.asSet();
+
+	set.size.println("SET: ");
+	all.size.println("ALL: ");
+
+	for (uuid in set) {
+		if (all.count(uuid) > 1) {
+			uuid.println();
+		}
+	}
+	
+	
+	UI!Identifiable.all.select(e | e.uuid.isUndefined()).println("UNDEFINED: ");
+}

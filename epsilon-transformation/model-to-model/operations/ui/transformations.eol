@@ -1,0 +1,44 @@
+operation transformJAttribute(uiClass : UI!UIClass, jAttribute : PSM!JAttribute, inherited : Boolean, emfTool) {
+	var attribute : UI!UIBaseComponentType;
+	if (inherited) {
+		attribute = emfTool.getECoreUtil().copy(jAttribute.equivalent("UIBaseComponentType"));
+	} else {
+		attribute = jAttribute.equivalent("UIBaseComponentType");
+	}
+	
+	uiClass.attributes.add(attribute);
+	attribute.inherited = inherited;
+	attribute.uuid = generateUuid(uiClass.uuid, jAttribute.name, ".");
+	if (not inherited) {
+		attribute.createIntervals(jAttribute.interval, uiClass.uuid);
+	}  else if (attribute.intervals.size() > 0) {
+		for (interval in attribute.intervals) {
+			interval.uuid = generateUuid(generateUuid(uiClass.uuid, attribute.name, "."), attribute.intervals.indexOf(interval).asString(), "_");
+		}	
+	}		
+}
+
+operation transformJRole(uiClass : UI!UIClass, jRole : PSM!JRole, inherited : Boolean, emfTool) {
+	var reference : UI!UIReferenceComponentType;
+	if (inherited) {
+		reference = emfTool.getECoreUtil().copy(jRole.equivalent("UIReferenceComponentType"));
+	} else {
+		reference = jRole.equivalent("UIReferenceComponentType");
+	}
+	
+	uiClass.attributes.add(reference);
+	reference.inherited = inherited;
+	reference.uuid = generateUuid(uiClass.uuid, jRole.name, ".");
+			
+	reference.opposite = jRole.opposite().equivalent("UIReferenceComponentType");
+	reference.referenced = jRole.opposite().ownerClass.equivalent("UIClass");
+	reference.type = reference.referenced.name;
+	
+	if (not inherited) {
+		reference.createIntervals(jRole.interval, uiClass.uuid);
+	}  else if (reference.intervals.size() > 0) {
+		for (interval in reference.intervals) {
+			interval.uuid = generateUuid(generateUuid(uiClass.uuid, reference.name, "."), reference.intervals.indexOf(interval).asString(), "_");
+		}	
+	}
+}

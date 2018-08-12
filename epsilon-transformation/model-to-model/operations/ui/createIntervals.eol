@@ -1,0 +1,30 @@
+operation UI!UIComponentType createIntervals(intervalString : String, classUuid : String) {
+	
+	if (intervalString.isDefined()) {
+		var intervalList = intervalString.replace(" ", "").replace("\\],\\[", " ").replace("\\]", "").replace("\\[", "").split(" ");
+		
+		var n = 1;
+		if (intervalList.first() <> "") {
+			for (interval in intervalList) {
+				var splitInterval = interval.split(",");
+				var uiInterval = new UI!UIInterval();
+							
+				if (splitInterval.first() <> "") {
+					uiInterval.min = splitInterval.first().asInteger();
+				}
+				if (splitInterval.size() >= 2 and splitInterval.second() <> "") {
+					uiInterval.max = splitInterval.second().asInteger();
+				}
+				if (splitInterval.size() = 3 and splitInterval.third() <> "") {
+					uiInterval.step = splitInterval.third().asInteger();
+				}
+				
+				uiInterval.name = "UIInterval";
+				uiInterval.uuid = generateUuid(generateUuid(classUuid, self.name, "."), n.asString, "_");
+				n++;
+				
+				self.intervals.add(uiInterval);
+			}
+		}
+	}	
+}
