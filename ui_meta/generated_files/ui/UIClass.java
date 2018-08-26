@@ -25,6 +25,8 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link ui.UIClass#getSuper <em>Super</em>}</li>
  *   <li>{@link ui.UIClass#getRepresentation <em>Representation</em>}</li>
  *   <li>{@link ui.UIClass#getAttributes <em>Attributes</em>}</li>
+ *   <li>{@link ui.UIClass#getInheritedAttributes <em>Inherited Attributes</em>}</li>
+ *   <li>{@link ui.UIClass#getInheritedActions <em>Inherited Actions</em>}</li>
  * </ul>
  *
  * @see ui.UiPackage#getUIClass()
@@ -297,5 +299,37 @@ public interface UIClass extends Identifiable {
 	 * @generated
 	 */
 	EList<UIAttributeComponentType> getAttributes();
+
+	/**
+	 * Returns the value of the '<em><b>Inherited Attributes</b></em>' reference list.
+	 * The list contents are of type {@link ui.UIAttributeComponentType}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Inherited Attributes</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Inherited Attributes</em>' reference list.
+	 * @see ui.UiPackage#getUIClass_InheritedAttributes()
+	 * @model
+	 * @generated
+	 */
+	EList<UIAttributeComponentType> getInheritedAttributes();
+
+	/**
+	 * Returns the value of the '<em><b>Inherited Actions</b></em>' reference list.
+	 * The list contents are of type {@link ui.UIAction}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Inherited Actions</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Inherited Actions</em>' reference list.
+	 * @see ui.UiPackage#getUIClass_InheritedActions()
+	 * @model
+	 * @generated
+	 */
+	EList<UIAction> getInheritedActions();
 
 } // UIClass

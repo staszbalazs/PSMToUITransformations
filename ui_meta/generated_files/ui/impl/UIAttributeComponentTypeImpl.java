@@ -24,7 +24,6 @@ import ui.UiPackage;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link ui.impl.UIAttributeComponentTypeImpl#isInherited <em>Inherited</em>}</li>
  *   <li>{@link ui.impl.UIAttributeComponentTypeImpl#isDerived <em>Derived</em>}</li>
  *   <li>{@link ui.impl.UIAttributeComponentTypeImpl#isPrivate <em>Private</em>}</li>
  *   <li>{@link ui.impl.UIAttributeComponentTypeImpl#isReadonly <em>Readonly</em>}</li>
@@ -35,26 +34,6 @@ import ui.UiPackage;
  * @generated
  */
 public abstract class UIAttributeComponentTypeImpl extends UIComponentTypeImpl implements UIAttributeComponentType {
-	/**
-	 * The default value of the '{@link #isInherited() <em>Inherited</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isInherited()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean INHERITED_EDEFAULT = false;
-
-	/**
-	 * The cached value of the '{@link #isInherited() <em>Inherited</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isInherited()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean inherited = INHERITED_EDEFAULT;
-
 	/**
 	 * The default value of the '{@link #isDerived() <em>Derived</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -152,27 +131,6 @@ public abstract class UIAttributeComponentTypeImpl extends UIComponentTypeImpl i
 	@Override
 	protected EClass eStaticClass() {
 		return UiPackage.Literals.UI_ATTRIBUTE_COMPONENT_TYPE;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isInherited() {
-		return inherited;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setInherited(boolean newInherited) {
-		boolean oldInherited = inherited;
-		inherited = newInherited;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, UiPackage.UI_ATTRIBUTE_COMPONENT_TYPE__INHERITED, oldInherited, inherited));
 	}
 
 	/**
@@ -352,8 +310,6 @@ public abstract class UIAttributeComponentTypeImpl extends UIComponentTypeImpl i
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case UiPackage.UI_ATTRIBUTE_COMPONENT_TYPE__INHERITED:
-				return isInherited();
 			case UiPackage.UI_ATTRIBUTE_COMPONENT_TYPE__DERIVED:
 				return isDerived();
 			case UiPackage.UI_ATTRIBUTE_COMPONENT_TYPE__PRIVATE:
@@ -376,9 +332,6 @@ public abstract class UIAttributeComponentTypeImpl extends UIComponentTypeImpl i
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case UiPackage.UI_ATTRIBUTE_COMPONENT_TYPE__INHERITED:
-				setInherited((Boolean)newValue);
-				return;
 			case UiPackage.UI_ATTRIBUTE_COMPONENT_TYPE__DERIVED:
 				setDerived((Boolean)newValue);
 				return;
@@ -406,9 +359,6 @@ public abstract class UIAttributeComponentTypeImpl extends UIComponentTypeImpl i
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case UiPackage.UI_ATTRIBUTE_COMPONENT_TYPE__INHERITED:
-				setInherited(INHERITED_EDEFAULT);
-				return;
 			case UiPackage.UI_ATTRIBUTE_COMPONENT_TYPE__DERIVED:
 				setDerived(DERIVED_EDEFAULT);
 				return;
@@ -436,8 +386,6 @@ public abstract class UIAttributeComponentTypeImpl extends UIComponentTypeImpl i
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case UiPackage.UI_ATTRIBUTE_COMPONENT_TYPE__INHERITED:
-				return inherited != INHERITED_EDEFAULT;
 			case UiPackage.UI_ATTRIBUTE_COMPONENT_TYPE__DERIVED:
 				return derived != DERIVED_EDEFAULT;
 			case UiPackage.UI_ATTRIBUTE_COMPONENT_TYPE__PRIVATE:
@@ -462,9 +410,7 @@ public abstract class UIAttributeComponentTypeImpl extends UIComponentTypeImpl i
 		if (eIsProxy()) return super.toString();
 
 		StringBuilder result = new StringBuilder(super.toString());
-		result.append(" (inherited: ");
-		result.append(inherited);
-		result.append(", derived: ");
+		result.append(" (derived: ");
 		result.append(derived);
 		result.append(", private: ");
 		result.append(private_);

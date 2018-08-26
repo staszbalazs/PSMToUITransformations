@@ -312,13 +312,31 @@ public interface UiPackage extends EPackage {
 	int UI_CLASS__ATTRIBUTES = IDENTIFIABLE_FEATURE_COUNT + 11;
 
 	/**
+	 * The feature id for the '<em><b>Inherited Attributes</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UI_CLASS__INHERITED_ATTRIBUTES = IDENTIFIABLE_FEATURE_COUNT + 12;
+
+	/**
+	 * The feature id for the '<em><b>Inherited Actions</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UI_CLASS__INHERITED_ACTIONS = IDENTIFIABLE_FEATURE_COUNT + 13;
+
+	/**
 	 * The number of structural features of the '<em>UI Class</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int UI_CLASS_FEATURE_COUNT = IDENTIFIABLE_FEATURE_COUNT + 12;
+	int UI_CLASS_FEATURE_COUNT = IDENTIFIABLE_FEATURE_COUNT + 14;
 
 	/**
 	 * The number of operations of the '<em>UI Class</em>' class.
@@ -1605,22 +1623,13 @@ public interface UiPackage extends EPackage {
 	int UI_ATTRIBUTE_COMPONENT_TYPE__INTERVALS = UI_COMPONENT_TYPE__INTERVALS;
 
 	/**
-	 * The feature id for the '<em><b>Inherited</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UI_ATTRIBUTE_COMPONENT_TYPE__INHERITED = UI_COMPONENT_TYPE_FEATURE_COUNT + 0;
-
-	/**
 	 * The feature id for the '<em><b>Derived</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int UI_ATTRIBUTE_COMPONENT_TYPE__DERIVED = UI_COMPONENT_TYPE_FEATURE_COUNT + 1;
+	int UI_ATTRIBUTE_COMPONENT_TYPE__DERIVED = UI_COMPONENT_TYPE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Private</b></em>' attribute.
@@ -1629,7 +1638,7 @@ public interface UiPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UI_ATTRIBUTE_COMPONENT_TYPE__PRIVATE = UI_COMPONENT_TYPE_FEATURE_COUNT + 2;
+	int UI_ATTRIBUTE_COMPONENT_TYPE__PRIVATE = UI_COMPONENT_TYPE_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
@@ -1638,7 +1647,7 @@ public interface UiPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UI_ATTRIBUTE_COMPONENT_TYPE__READONLY = UI_COMPONENT_TYPE_FEATURE_COUNT + 3;
+	int UI_ATTRIBUTE_COMPONENT_TYPE__READONLY = UI_COMPONENT_TYPE_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Disable On Create</b></em>' attribute.
@@ -1647,7 +1656,7 @@ public interface UiPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UI_ATTRIBUTE_COMPONENT_TYPE__DISABLE_ON_CREATE = UI_COMPONENT_TYPE_FEATURE_COUNT + 4;
+	int UI_ATTRIBUTE_COMPONENT_TYPE__DISABLE_ON_CREATE = UI_COMPONENT_TYPE_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Owner Class</b></em>' container reference.
@@ -1656,7 +1665,7 @@ public interface UiPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UI_ATTRIBUTE_COMPONENT_TYPE__OWNER_CLASS = UI_COMPONENT_TYPE_FEATURE_COUNT + 5;
+	int UI_ATTRIBUTE_COMPONENT_TYPE__OWNER_CLASS = UI_COMPONENT_TYPE_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of structural features of the '<em>UI Attribute Component Type</em>' class.
@@ -1665,7 +1674,7 @@ public interface UiPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UI_ATTRIBUTE_COMPONENT_TYPE_FEATURE_COUNT = UI_COMPONENT_TYPE_FEATURE_COUNT + 6;
+	int UI_ATTRIBUTE_COMPONENT_TYPE_FEATURE_COUNT = UI_COMPONENT_TYPE_FEATURE_COUNT + 5;
 
 	/**
 	 * The number of operations of the '<em>UI Attribute Component Type</em>' class.
@@ -1757,15 +1766,6 @@ public interface UiPackage extends EPackage {
 	 * @ordered
 	 */
 	int UI_BASE_COMPONENT_TYPE__INTERVALS = UI_ATTRIBUTE_COMPONENT_TYPE__INTERVALS;
-
-	/**
-	 * The feature id for the '<em><b>Inherited</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UI_BASE_COMPONENT_TYPE__INHERITED = UI_ATTRIBUTE_COMPONENT_TYPE__INHERITED;
 
 	/**
 	 * The feature id for the '<em><b>Derived</b></em>' attribute.
@@ -1947,15 +1947,6 @@ public interface UiPackage extends EPackage {
 	 * @ordered
 	 */
 	int UI_REFERENCE_COMPONENT_TYPE__INTERVALS = UI_ATTRIBUTE_COMPONENT_TYPE__INTERVALS;
-
-	/**
-	 * The feature id for the '<em><b>Inherited</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UI_REFERENCE_COMPONENT_TYPE__INHERITED = UI_ATTRIBUTE_COMPONENT_TYPE__INHERITED;
 
 	/**
 	 * The feature id for the '<em><b>Derived</b></em>' attribute.
@@ -2350,6 +2341,28 @@ public interface UiPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getUIClass_Attributes();
+
+	/**
+	 * Returns the meta object for the reference list '{@link ui.UIClass#getInheritedAttributes <em>Inherited Attributes</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Inherited Attributes</em>'.
+	 * @see ui.UIClass#getInheritedAttributes()
+	 * @see #getUIClass()
+	 * @generated
+	 */
+	EReference getUIClass_InheritedAttributes();
+
+	/**
+	 * Returns the meta object for the reference list '{@link ui.UIClass#getInheritedActions <em>Inherited Actions</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Inherited Actions</em>'.
+	 * @see ui.UIClass#getInheritedActions()
+	 * @see #getUIClass()
+	 * @generated
+	 */
+	EReference getUIClass_InheritedActions();
 
 	/**
 	 * Returns the meta object for class '{@link ui.UIAction <em>UI Action</em>}'.
@@ -3158,17 +3171,6 @@ public interface UiPackage extends EPackage {
 	EClass getUIAttributeComponentType();
 
 	/**
-	 * Returns the meta object for the attribute '{@link ui.UIAttributeComponentType#isInherited <em>Inherited</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Inherited</em>'.
-	 * @see ui.UIAttributeComponentType#isInherited()
-	 * @see #getUIAttributeComponentType()
-	 * @generated
-	 */
-	EAttribute getUIAttributeComponentType_Inherited();
-
-	/**
 	 * Returns the meta object for the attribute '{@link ui.UIAttributeComponentType#isDerived <em>Derived</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3385,6 +3387,22 @@ public interface UiPackage extends EPackage {
 		 * @generated
 		 */
 		EReference UI_CLASS__ATTRIBUTES = eINSTANCE.getUIClass_Attributes();
+
+		/**
+		 * The meta object literal for the '<em><b>Inherited Attributes</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference UI_CLASS__INHERITED_ATTRIBUTES = eINSTANCE.getUIClass_InheritedAttributes();
+
+		/**
+		 * The meta object literal for the '<em><b>Inherited Actions</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference UI_CLASS__INHERITED_ACTIONS = eINSTANCE.getUIClass_InheritedActions();
 
 		/**
 		 * The meta object literal for the '{@link ui.impl.UIActionImpl <em>UI Action</em>}' class.
@@ -4023,14 +4041,6 @@ public interface UiPackage extends EPackage {
 		 * @generated
 		 */
 		EClass UI_ATTRIBUTE_COMPONENT_TYPE = eINSTANCE.getUIAttributeComponentType();
-
-		/**
-		 * The meta object literal for the '<em><b>Inherited</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute UI_ATTRIBUTE_COMPONENT_TYPE__INHERITED = eINSTANCE.getUIAttributeComponentType_Inherited();
 
 		/**
 		 * The meta object literal for the '<em><b>Derived</b></em>' attribute feature.

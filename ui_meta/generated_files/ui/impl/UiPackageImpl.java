@@ -406,6 +406,24 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getUIClass_InheritedAttributes() {
+		return (EReference)uiClassEClass.getEStructuralFeatures().get(12);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getUIClass_InheritedActions() {
+		return (EReference)uiClassEClass.getEStructuralFeatures().get(13);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getUIAction() {
 		return uiActionEClass;
 	}
@@ -1081,7 +1099,7 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getUIAttributeComponentType_Inherited() {
+	public EAttribute getUIAttributeComponentType_Derived() {
 		return (EAttribute)uiAttributeComponentTypeEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -1090,7 +1108,7 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getUIAttributeComponentType_Derived() {
+	public EAttribute getUIAttributeComponentType_Private() {
 		return (EAttribute)uiAttributeComponentTypeEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -1099,7 +1117,7 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getUIAttributeComponentType_Private() {
+	public EAttribute getUIAttributeComponentType_Readonly() {
 		return (EAttribute)uiAttributeComponentTypeEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -1108,7 +1126,7 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getUIAttributeComponentType_Readonly() {
+	public EAttribute getUIAttributeComponentType_DisableOnCreate() {
 		return (EAttribute)uiAttributeComponentTypeEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -1117,17 +1135,8 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getUIAttributeComponentType_DisableOnCreate() {
-		return (EAttribute)uiAttributeComponentTypeEClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EReference getUIAttributeComponentType_OwnerClass() {
-		return (EReference)uiAttributeComponentTypeEClass.getEStructuralFeatures().get(5);
+		return (EReference)uiAttributeComponentTypeEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -1176,6 +1185,8 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		createEReference(uiClassEClass, UI_CLASS__SUPER);
 		createEReference(uiClassEClass, UI_CLASS__REPRESENTATION);
 		createEReference(uiClassEClass, UI_CLASS__ATTRIBUTES);
+		createEReference(uiClassEClass, UI_CLASS__INHERITED_ATTRIBUTES);
+		createEReference(uiClassEClass, UI_CLASS__INHERITED_ACTIONS);
 
 		uiActionEClass = createEClass(UI_ACTION);
 		createEReference(uiActionEClass, UI_ACTION__PARAM_VIEW);
@@ -1270,7 +1281,6 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		createEReference(uiParameterComponentTypeEClass, UI_PARAMETER_COMPONENT_TYPE__REFERENCED);
 
 		uiAttributeComponentTypeEClass = createEClass(UI_ATTRIBUTE_COMPONENT_TYPE);
-		createEAttribute(uiAttributeComponentTypeEClass, UI_ATTRIBUTE_COMPONENT_TYPE__INHERITED);
 		createEAttribute(uiAttributeComponentTypeEClass, UI_ATTRIBUTE_COMPONENT_TYPE__DERIVED);
 		createEAttribute(uiAttributeComponentTypeEClass, UI_ATTRIBUTE_COMPONENT_TYPE__PRIVATE);
 		createEAttribute(uiAttributeComponentTypeEClass, UI_ATTRIBUTE_COMPONENT_TYPE__READONLY);
@@ -1346,6 +1356,8 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		initEReference(getUIClass_Super(), this.getUIClass(), null, "super", null, 0, 1, UIClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getUIClass_Representation(), this.getUIBaseComponentType(), null, "representation", null, 0, 1, UIClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getUIClass_Attributes(), this.getUIAttributeComponentType(), this.getUIAttributeComponentType_OwnerClass(), "attributes", null, 0, -1, UIClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getUIClass_InheritedAttributes(), this.getUIAttributeComponentType(), null, "inheritedAttributes", null, 0, -1, UIClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getUIClass_InheritedActions(), this.getUIAction(), null, "inheritedActions", null, 0, -1, UIClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(uiActionEClass, UIAction.class, "UIAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getUIAction_ParamView(), this.getUIParamView(), null, "paramView", null, 1, 1, UIAction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1440,7 +1452,6 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		initEReference(getUIParameterComponentType_Referenced(), this.getUIClass(), null, "referenced", null, 0, 1, UIParameterComponentType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(uiAttributeComponentTypeEClass, UIAttributeComponentType.class, "UIAttributeComponentType", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getUIAttributeComponentType_Inherited(), ecorePackage.getEBoolean(), "inherited", null, 0, 1, UIAttributeComponentType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUIAttributeComponentType_Derived(), ecorePackage.getEBoolean(), "derived", null, 0, 1, UIAttributeComponentType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUIAttributeComponentType_Private(), ecorePackage.getEBoolean(), "private", "false", 0, 1, UIAttributeComponentType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUIAttributeComponentType_Readonly(), ecorePackage.getEBoolean(), "readonly", null, 0, 1, UIAttributeComponentType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

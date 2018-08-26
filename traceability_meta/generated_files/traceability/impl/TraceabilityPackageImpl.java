@@ -117,7 +117,7 @@ public class TraceabilityPackageImpl extends EPackageImpl implements Traceabilit
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getPSMToUI_JModel() {
+	public EReference getPSMToUI_Traces() {
 		return (EReference)psmToUIEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -126,7 +126,7 @@ public class TraceabilityPackageImpl extends EPackageImpl implements Traceabilit
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getPSMToUI_UiBase() {
+	public EReference getPSMToUI_JModel() {
 		return (EReference)psmToUIEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -135,7 +135,7 @@ public class TraceabilityPackageImpl extends EPackageImpl implements Traceabilit
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getPSMToUI_Traces() {
+	public EReference getPSMToUI_UiBase() {
 		return (EReference)psmToUIEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -195,9 +195,9 @@ public class TraceabilityPackageImpl extends EPackageImpl implements Traceabilit
 
 		// Create classes and their features
 		psmToUIEClass = createEClass(PSM_TO_UI);
+		createEReference(psmToUIEClass, PSM_TO_UI__TRACES);
 		createEReference(psmToUIEClass, PSM_TO_UI__JMODEL);
 		createEReference(psmToUIEClass, PSM_TO_UI__UI_BASE);
-		createEReference(psmToUIEClass, PSM_TO_UI__TRACES);
 
 		psmToUITraceEClass = createEClass(PSM_TO_UI_TRACE);
 		createEReference(psmToUITraceEClass, PSM_TO_UI_TRACE__UI_ELEMENTS);
@@ -239,9 +239,9 @@ public class TraceabilityPackageImpl extends EPackageImpl implements Traceabilit
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(psmToUIEClass, PSMToUI.class, "PSMToUI", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getPSMToUI_Traces(), this.getPSMToUITrace(), null, "traces", null, 0, -1, PSMToUI.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getPSMToUI_JModel(), thePsmPackage.getJModel(), null, "jModel", null, 0, 1, PSMToUI.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getPSMToUI_UiBase(), theUiPackage.getUIBase(), null, "uiBase", null, 0, 1, PSMToUI.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getPSMToUI_Traces(), this.getPSMToUITrace(), null, "traces", null, 0, -1, PSMToUI.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(psmToUITraceEClass, PSMToUITrace.class, "PSMToUITrace", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getPSMToUITrace_UiElements(), theUiPackage.getIdentifiable(), null, "uiElements", null, 0, -1, PSMToUITrace.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

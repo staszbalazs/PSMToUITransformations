@@ -43,7 +43,7 @@ class RoleRuleFactory {
 					val UIClass owner = potentialOwner.get.get(0) as UIClass
 					
 					//Create role for owner
-					var uiReferenceType = createUIReferenceComponentType(owner, jRole, false)
+					var uiReferenceType = createUIReferenceComponentType(owner, jRole, false, engine, psm2ui)
 					val trace = psm2ui.createChild(PSMToUI_Traces, PSMToUITrace)
 					trace.addTo(PSMToUITrace_PsmElements, jRole)
 					trace.addTo(PSMToUITrace_UiElements, uiReferenceType)
@@ -55,10 +55,9 @@ class RoleRuleFactory {
 											  .map[getDescendant as UIClass]
 											  .collect(Collectors.toList)
 					
-					//Create role for each of them
+					//Add attribute to each of them
 					for (UIClass class : ownersByInheritance) {
-						uiReferenceType = createUIReferenceComponentType(class, jRole, true)
-						trace.addTo(PSMToUITrace_UiElements, uiReferenceType)
+						class.inheritedAttributes.add(uiReferenceType)
 					}
 				].action(CRUDActivationStateEnum.UPDATED) [
 				].action(CRUDActivationStateEnum.DELETED) [

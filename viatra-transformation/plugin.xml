@@ -23,6 +23,7 @@
       <query-specification fqn="queries.findMenuItemWithParent"/>
       <query-specification fqn="queries.JRoleQuery"/>
       <query-specification fqn="queries.JAttributeQuery"/>
+      <query-specification fqn="queries.psmToUiTrace"/>
       <query-specification fqn="queries.findCorrespondingType"/>
     </group>
   </extension>

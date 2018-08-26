@@ -12,16 +12,5 @@ rule UIModule
 			uimodule.classes.add(jclass.equivalent("UIClass"));
 		}
 		
-		var fqName : String = jpackage.name;
-		var currentPackage = jpackage;
-		while (true) {
-			if (currentPackage.parent.isDefined()) {
-				fqName = currentPackage.parent.name + "." + fqName;
-				currentPackage = currentPackage.parent;
-			} else {
-				uimodule.fullyQualifiedName = fqName;
-				break;
-			}	
-		}
-		
+		uimodule.fullyQualifiedName = jpackage.fqName();
 	}

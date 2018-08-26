@@ -41,7 +41,7 @@ class AttributeRuleFactory {
 										.map[getUiElements()]
 										.findFirst()
 										
-					val UIClass owner = potentialOwner.get.get(0) as UIClass
+					val UIClass owner = potentialOwner.get().get(0) as UIClass
 					
 					//Create role for owner
 					var uiBaseType = createUIBaseType(owner, jAttr, false, engine)
@@ -56,10 +56,9 @@ class AttributeRuleFactory {
 											  .map[getDescendant as UIClass]
 											  .collect(Collectors.toList)
 					
-					//Create role for each of them
+					//Add attribute to each of them
 					for (UIClass class : ownersByInheritance) {
-						uiBaseType = createUIBaseType(class, jAttr, true, engine)
-						trace.addTo(PSMToUITrace_UiElements, uiBaseType)
+						class.inheritedAttributes.add(uiBaseType)
 					}
 							
 				].action(CRUDActivationStateEnum.UPDATED) [

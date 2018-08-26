@@ -2,15 +2,6 @@ operation generateUuid(namespace : String, name : String, separator : String) : 
 	return namespace + separator + name;
 }
 
-
-@cached
-operation PSM!JPackage onlyContainerPackage() : Boolean {
-	return self.primitives.isEmpty() 
-	   and self.enumerations.isEmpty() 
-	   and self.relationships.isEmpty() 
-	   and self.classes.isEmpty(); 
-}
-
 operation checkAllUuidsForDuplicateOrMissing() {
 	var all = UI!Identifiable.all.collect(e | e.uuid);
 	var set = all.asSet();

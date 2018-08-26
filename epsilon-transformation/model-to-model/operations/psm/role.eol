@@ -8,8 +8,3 @@ operation PSM!JRole opposite () : PSM!JRole {
 		return role1;
 	}
 }
-
-@cached
-operation PSM!JRole isMandatory() : Boolean {
-	return self.lower = 1;
-}

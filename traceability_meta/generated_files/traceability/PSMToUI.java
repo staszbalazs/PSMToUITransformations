@@ -19,9 +19,9 @@ import ui.UIBase;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link traceability.PSMToUI#getTraces <em>Traces</em>}</li>
  *   <li>{@link traceability.PSMToUI#getJModel <em>JModel</em>}</li>
  *   <li>{@link traceability.PSMToUI#getUiBase <em>Ui Base</em>}</li>
- *   <li>{@link traceability.PSMToUI#getTraces <em>Traces</em>}</li>
  * </ul>
  *
  * @see traceability.TraceabilityPackage#getPSMToUI()
@@ -29,6 +29,22 @@ import ui.UIBase;
  * @generated
  */
 public interface PSMToUI extends EObject {
+	/**
+	 * Returns the value of the '<em><b>Traces</b></em>' reference list.
+	 * The list contents are of type {@link traceability.PSMToUITrace}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Traces</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Traces</em>' reference list.
+	 * @see traceability.TraceabilityPackage#getPSMToUI_Traces()
+	 * @model
+	 * @generated
+	 */
+	EList<PSMToUITrace> getTraces();
+
 	/**
 	 * Returns the value of the '<em><b>JModel</b></em>' reference.
 	 * <!-- begin-user-doc -->
@@ -80,21 +96,5 @@ public interface PSMToUI extends EObject {
 	 * @generated
 	 */
 	void setUiBase(UIBase value);
-
-	/**
-	 * Returns the value of the '<em><b>Traces</b></em>' reference list.
-	 * The list contents are of type {@link traceability.PSMToUITrace}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Traces</em>' reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Traces</em>' reference list.
-	 * @see traceability.TraceabilityPackage#getPSMToUI_Traces()
-	 * @model
-	 * @generated
-	 */
-	EList<PSMToUITrace> getTraces();
 
 } // PSMToUI

@@ -1,16 +1,8 @@
 [%import "../operations/_importAll.eol";%]
 
 [% 		
-	if (UI!UIBase.all.size() > 1) {
-		out.println("[");
-		for (ui in UI!UIBase.all) {
-			ui.generateJson();  if (hasMore) { out.println(","); }
-		}
-		out.print("]");
-	} else {
-		for (ui in UI!UIBase.all) {
-			ui.generateJson();
-		}
+	for (ui in UI!UIBase.all) {
+		ui.generateJson();
 	}
 %]
 
@@ -29,7 +21,13 @@
 	"fields" : [
 	[% if(not self.attributes.isEmpty())  { %]
 		[%for (attribute in self.attributes) { %]
-			[%attribute.generateJson();%] [% if (hasMore) { out.println(","); } %]
+			[%attribute.generateJson(false);%] [% if (hasMore) { out.println(","); } %]
+		[%}%]	
+	[% } %]
+	[% if(not self.inhretedAttributes.isEmpty())  { %]
+		,
+		[%for (attribute in self.inhretedAttributes) { %]
+			[%attribute.generateJson(true);%] [% if (hasMore) { out.println(","); } %]
 		[%}%]	
 	[% } %]
 	],
@@ -37,7 +35,13 @@
 	"actions" : [
 	[% if(not self.actions.isEmpty())  { %]		
 		[%for (action in self.actions) { %]
-			[%action.generateJson();%] [% if (hasMore) { out.println(","); } %]
+			[%action.generateJson(false);%] [% if (hasMore) { out.println(","); } %]
+		[%}%]		
+	[% } %]
+	[% if(not self.inheretedActions.isEmpty())  { %]
+		,		
+		[%for (action in self.inheretedActions) { %]
+			[%action.generateJson(true);%] [% if (hasMore) { out.println(","); } %]
 		[%}%]		
 	[% } %]
 	],
@@ -71,7 +75,7 @@
 }
 [% } %]
 
-[% operation UI!UIAction generateJson() { %]
+[% operation UI!UIAction generateJson(isInherited : Boolean) { %]
 {
 	"confirmed" : [%=self.toBeConfirmed%],
 	"classbased" : [%=self.classBased%],
@@ -95,7 +99,7 @@
 	[% } else {%]
 	"result" : null,
 	[% } %]
-	"inherited" : [%=self.inherited%],
+	"inherited" : [%=isInherited%],
 	"query" : [%=self.isQuery%],
 	"paramView" : [%self.paramView.generateJson();%]
 }
@@ -199,7 +203,7 @@
 }
 [% } %]
 
-[% operation UI!UIBaseComponentType generateJson() { %]
+[% operation UI!UIBaseComponentType generateJson(isInherited : Boolean) { %]
 {
 	[% if (self.upper = -1) { %]
 	"upper" : "*",
@@ -226,7 +230,7 @@
 	
 	"id" : "[%=self.id%]",
 	"readonly" : [%=self.readonly%],
-	"inherited" : [%=self.inherited%],
+	"inherited" : [%=isInherited%],
 	"type" : "[%=self.type%]",
 	"derived" : [%=self.derived%],
 	"navigable" : false,
@@ -265,7 +269,7 @@
 }
 [% } %]
 
-[% operation UI!UIReferenceComponentType generateJson() { %]
+[% operation UI!UIReferenceComponentType generateJson(isInherited : Boolean) { %]
 {
 	[% if (self.upper = -1) { %]
 	"upper" : "*",
@@ -300,7 +304,7 @@
 	[% } else { %]
 	"other" : null,
 	[% } %]
-	"inherited" : [%=self.inherited%],
+	"inherited" : [%=isInherited%],
 	"type" : "[%=self.type%]",
 	"derived" : [%=self.derived%],
 	"navigable" : [%=self.navigable%],

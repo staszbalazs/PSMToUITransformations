@@ -12,7 +12,6 @@ package ui;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link ui.UIAttributeComponentType#isInherited <em>Inherited</em>}</li>
  *   <li>{@link ui.UIAttributeComponentType#isDerived <em>Derived</em>}</li>
  *   <li>{@link ui.UIAttributeComponentType#isPrivate <em>Private</em>}</li>
  *   <li>{@link ui.UIAttributeComponentType#isReadonly <em>Readonly</em>}</li>
@@ -25,32 +24,6 @@ package ui;
  * @generated
  */
 public interface UIAttributeComponentType extends UIComponentType {
-	/**
-	 * Returns the value of the '<em><b>Inherited</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Inherited</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Inherited</em>' attribute.
-	 * @see #setInherited(boolean)
-	 * @see ui.UiPackage#getUIAttributeComponentType_Inherited()
-	 * @model
-	 * @generated
-	 */
-	boolean isInherited();
-
-	/**
-	 * Sets the value of the '{@link ui.UIAttributeComponentType#isInherited <em>Inherited</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Inherited</em>' attribute.
-	 * @see #isInherited()
-	 * @generated
-	 */
-	void setInherited(boolean value);
-
 	/**
 	 * Returns the value of the '<em><b>Derived</b></em>' attribute.
 	 * <!-- begin-user-doc -->

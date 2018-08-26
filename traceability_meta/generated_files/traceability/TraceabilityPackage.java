@@ -66,13 +66,22 @@ public interface TraceabilityPackage extends EPackage {
 	int PSM_TO_UI = 0;
 
 	/**
+	 * The feature id for the '<em><b>Traces</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PSM_TO_UI__TRACES = 0;
+
+	/**
 	 * The feature id for the '<em><b>JModel</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PSM_TO_UI__JMODEL = 0;
+	int PSM_TO_UI__JMODEL = 1;
 
 	/**
 	 * The feature id for the '<em><b>Ui Base</b></em>' reference.
@@ -81,16 +90,7 @@ public interface TraceabilityPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PSM_TO_UI__UI_BASE = 1;
-
-	/**
-	 * The feature id for the '<em><b>Traces</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PSM_TO_UI__TRACES = 2;
+	int PSM_TO_UI__UI_BASE = 2;
 
 	/**
 	 * The number of structural features of the '<em>PSM To UI</em>' class.
@@ -168,6 +168,17 @@ public interface TraceabilityPackage extends EPackage {
 	EClass getPSMToUI();
 
 	/**
+	 * Returns the meta object for the reference list '{@link traceability.PSMToUI#getTraces <em>Traces</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Traces</em>'.
+	 * @see traceability.PSMToUI#getTraces()
+	 * @see #getPSMToUI()
+	 * @generated
+	 */
+	EReference getPSMToUI_Traces();
+
+	/**
 	 * Returns the meta object for the reference '{@link traceability.PSMToUI#getJModel <em>JModel</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -188,17 +199,6 @@ public interface TraceabilityPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getPSMToUI_UiBase();
-
-	/**
-	 * Returns the meta object for the reference list '{@link traceability.PSMToUI#getTraces <em>Traces</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Traces</em>'.
-	 * @see traceability.PSMToUI#getTraces()
-	 * @see #getPSMToUI()
-	 * @generated
-	 */
-	EReference getPSMToUI_Traces();
 
 	/**
 	 * Returns the meta object for class '{@link traceability.PSMToUITrace <em>PSM To UI Trace</em>}'.
@@ -266,6 +266,14 @@ public interface TraceabilityPackage extends EPackage {
 		EClass PSM_TO_UI = eINSTANCE.getPSMToUI();
 
 		/**
+		 * The meta object literal for the '<em><b>Traces</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PSM_TO_UI__TRACES = eINSTANCE.getPSMToUI_Traces();
+
+		/**
 		 * The meta object literal for the '<em><b>JModel</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -280,14 +288,6 @@ public interface TraceabilityPackage extends EPackage {
 		 * @generated
 		 */
 		EReference PSM_TO_UI__UI_BASE = eINSTANCE.getPSMToUI_UiBase();
-
-		/**
-		 * The meta object literal for the '<em><b>Traces</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference PSM_TO_UI__TRACES = eINSTANCE.getPSMToUI_Traces();
 
 		/**
 		 * The meta object literal for the '{@link traceability.impl.PSMToUITraceImpl <em>PSM To UI Trace</em>}' class.

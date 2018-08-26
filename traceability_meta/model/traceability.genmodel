@@ -8,9 +8,9 @@
   <foreignModel>traceability.ecore</foreignModel>
   <genPackages prefix="Traceability" disposableProviderFactory="true" ecorePackage="traceability.ecore#/">
     <genClasses ecoreClass="traceability.ecore#//PSMToUI">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference traceability.ecore#//PSMToUI/traces"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference traceability.ecore#//PSMToUI/jModel"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference traceability.ecore#//PSMToUI/uiBase"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference traceability.ecore#//PSMToUI/traces"/>
     </genClasses>
     <genClasses ecoreClass="traceability.ecore#//PSMToUITrace">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference traceability.ecore#//PSMToUITrace/uiElements"/>

@@ -28,7 +28,7 @@ class EventDrivenPsmToUi {
     extension PatternProvider patternProvider = PatternProvider.instance
     
     /*VIATRA Rules */
-    extension RuleProvider ruleProviderx
+    extension RuleProvider ruleProvider
     
     /* EMF metamodels */
     extension PsmPackage psmPackage = PsmPackage.eINSTANCE

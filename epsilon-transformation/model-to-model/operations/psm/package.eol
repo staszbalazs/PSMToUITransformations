@@ -10,3 +10,11 @@ operation fqNameInternal (pe : PSM!JPackage) : String {
 		return pe.name;
 	}
 }
+
+@cached
+operation PSM!JPackage onlyContainerPackage() : Boolean {
+	return self.primitives.isEmpty() 
+	   and self.enumerations.isEmpty() 
+	   and self.relationships.isEmpty() 
+	   and self.classes.isEmpty(); 
+}

@@ -47,6 +47,8 @@ import ui.UiPackage;
  *   <li>{@link ui.impl.UIClassImpl#getSuper <em>Super</em>}</li>
  *   <li>{@link ui.impl.UIClassImpl#getRepresentation <em>Representation</em>}</li>
  *   <li>{@link ui.impl.UIClassImpl#getAttributes <em>Attributes</em>}</li>
+ *   <li>{@link ui.impl.UIClassImpl#getInheritedAttributes <em>Inherited Attributes</em>}</li>
+ *   <li>{@link ui.impl.UIClassImpl#getInheritedActions <em>Inherited Actions</em>}</li>
  * </ul>
  *
  * @generated
@@ -211,6 +213,26 @@ public class UIClassImpl extends IdentifiableImpl implements UIClass {
 	 * @ordered
 	 */
 	protected EList<UIAttributeComponentType> attributes;
+
+	/**
+	 * The cached value of the '{@link #getInheritedAttributes() <em>Inherited Attributes</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getInheritedAttributes()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<UIAttributeComponentType> inheritedAttributes;
+
+	/**
+	 * The cached value of the '{@link #getInheritedActions() <em>Inherited Actions</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getInheritedActions()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<UIAction> inheritedActions;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -516,6 +538,30 @@ public class UIClassImpl extends IdentifiableImpl implements UIClass {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<UIAttributeComponentType> getInheritedAttributes() {
+		if (inheritedAttributes == null) {
+			inheritedAttributes = new EObjectResolvingEList<UIAttributeComponentType>(UIAttributeComponentType.class, this, UiPackage.UI_CLASS__INHERITED_ATTRIBUTES);
+		}
+		return inheritedAttributes;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<UIAction> getInheritedActions() {
+		if (inheritedActions == null) {
+			inheritedActions = new EObjectResolvingEList<UIAction>(UIAction.class, this, UiPackage.UI_CLASS__INHERITED_ACTIONS);
+		}
+		return inheritedActions;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -587,6 +633,10 @@ public class UIClassImpl extends IdentifiableImpl implements UIClass {
 				return basicGetRepresentation();
 			case UiPackage.UI_CLASS__ATTRIBUTES:
 				return getAttributes();
+			case UiPackage.UI_CLASS__INHERITED_ATTRIBUTES:
+				return getInheritedAttributes();
+			case UiPackage.UI_CLASS__INHERITED_ACTIONS:
+				return getInheritedActions();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -641,6 +691,14 @@ public class UIClassImpl extends IdentifiableImpl implements UIClass {
 				getAttributes().clear();
 				getAttributes().addAll((Collection<? extends UIAttributeComponentType>)newValue);
 				return;
+			case UiPackage.UI_CLASS__INHERITED_ATTRIBUTES:
+				getInheritedAttributes().clear();
+				getInheritedAttributes().addAll((Collection<? extends UIAttributeComponentType>)newValue);
+				return;
+			case UiPackage.UI_CLASS__INHERITED_ACTIONS:
+				getInheritedActions().clear();
+				getInheritedActions().addAll((Collection<? extends UIAction>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -689,6 +747,12 @@ public class UIClassImpl extends IdentifiableImpl implements UIClass {
 			case UiPackage.UI_CLASS__ATTRIBUTES:
 				getAttributes().clear();
 				return;
+			case UiPackage.UI_CLASS__INHERITED_ATTRIBUTES:
+				getInheritedAttributes().clear();
+				return;
+			case UiPackage.UI_CLASS__INHERITED_ACTIONS:
+				getInheritedActions().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -725,6 +789,10 @@ public class UIClassImpl extends IdentifiableImpl implements UIClass {
 				return representation != null;
 			case UiPackage.UI_CLASS__ATTRIBUTES:
 				return attributes != null && !attributes.isEmpty();
+			case UiPackage.UI_CLASS__INHERITED_ATTRIBUTES:
+				return inheritedAttributes != null && !inheritedAttributes.isEmpty();
+			case UiPackage.UI_CLASS__INHERITED_ACTIONS:
+				return inheritedActions != null && !inheritedActions.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

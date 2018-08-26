@@ -13,6 +13,8 @@ Export-Package: traceability,
  traceability.util
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
+ psm_meta;visibility:=reexport,
+ viatra-model-transformation;visibility:=reexport,
  org.eclipse.emf.ecore.xmi;visibility:=reexport
 Bundle-ActivationPolicy: lazy
 Import-Package: psm,

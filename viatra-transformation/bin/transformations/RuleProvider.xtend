@@ -14,9 +14,10 @@ class RuleProvider {
 	extension FilterRuleFactory filterRuleFactory
 	extension MenuRuleFactory menuRuleFactory
 	extension RoleRuleFactory roleRuleFactory
+	extension AttributeRuleFactory attrRuleFactory
 	
-	PSMToUI psm2ui
-	ViatraQueryEngine engine
+	private PSMToUI psm2ui
+	private ViatraQueryEngine engine
 	
 	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> modelRule = getModelRule()
 	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> classRule = getClassRule(psm2ui)
@@ -24,6 +25,8 @@ class RuleProvider {
 	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> filterRule = getFilterRule(psm2ui, engine)
 	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> menuRule = getMenuRule(psm2ui)
 	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> roleRule = getRoleRule(psm2ui, engine)
+	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> attrRule = getAttributeRule(psm2ui, engine)
+	
 
 	new(ViatraQueryEngine engine, PSMToUI psm2ui) {
 		this.engine = engine
@@ -52,6 +55,10 @@ class RuleProvider {
 	
 	public def getRoleRul() {
 		return roleRule
+	}
+	
+	public def getAttrRul() {
+		return attrRule
 	}
 	
 }

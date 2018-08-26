@@ -32,14 +32,24 @@ import ui.UIBase;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link traceability.impl.PSMToUIImpl#getTraces <em>Traces</em>}</li>
  *   <li>{@link traceability.impl.PSMToUIImpl#getJModel <em>JModel</em>}</li>
  *   <li>{@link traceability.impl.PSMToUIImpl#getUiBase <em>Ui Base</em>}</li>
- *   <li>{@link traceability.impl.PSMToUIImpl#getTraces <em>Traces</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class PSMToUIImpl extends MinimalEObjectImpl.Container implements PSMToUI {
+	/**
+	 * The cached value of the '{@link #getTraces() <em>Traces</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTraces()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<PSMToUITrace> traces;
+
 	/**
 	 * The cached value of the '{@link #getJModel() <em>JModel</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -61,16 +71,6 @@ public class PSMToUIImpl extends MinimalEObjectImpl.Container implements PSMToUI
 	protected UIBase uiBase;
 
 	/**
-	 * The cached value of the '{@link #getTraces() <em>Traces</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getTraces()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<PSMToUITrace> traces;
-
-	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -87,6 +87,18 @@ public class PSMToUIImpl extends MinimalEObjectImpl.Container implements PSMToUI
 	@Override
 	protected EClass eStaticClass() {
 		return TraceabilityPackage.Literals.PSM_TO_UI;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<PSMToUITrace> getTraces() {
+		if (traces == null) {
+			traces = new EObjectResolvingEList<PSMToUITrace>(PSMToUITrace.class, this, TraceabilityPackage.PSM_TO_UI__TRACES);
+		}
+		return traces;
 	}
 
 	/**
@@ -170,29 +182,17 @@ public class PSMToUIImpl extends MinimalEObjectImpl.Container implements PSMToUI
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<PSMToUITrace> getTraces() {
-		if (traces == null) {
-			traces = new EObjectResolvingEList<PSMToUITrace>(PSMToUITrace.class, this, TraceabilityPackage.PSM_TO_UI__TRACES);
-		}
-		return traces;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case TraceabilityPackage.PSM_TO_UI__TRACES:
+				return getTraces();
 			case TraceabilityPackage.PSM_TO_UI__JMODEL:
 				if (resolve) return getJModel();
 				return basicGetJModel();
 			case TraceabilityPackage.PSM_TO_UI__UI_BASE:
 				if (resolve) return getUiBase();
 				return basicGetUiBase();
-			case TraceabilityPackage.PSM_TO_UI__TRACES:
-				return getTraces();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -206,15 +206,15 @@ public class PSMToUIImpl extends MinimalEObjectImpl.Container implements PSMToUI
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case TraceabilityPackage.PSM_TO_UI__TRACES:
+				getTraces().clear();
+				getTraces().addAll((Collection<? extends PSMToUITrace>)newValue);
+				return;
 			case TraceabilityPackage.PSM_TO_UI__JMODEL:
 				setJModel((JModel)newValue);
 				return;
 			case TraceabilityPackage.PSM_TO_UI__UI_BASE:
 				setUiBase((UIBase)newValue);
-				return;
-			case TraceabilityPackage.PSM_TO_UI__TRACES:
-				getTraces().clear();
-				getTraces().addAll((Collection<? extends PSMToUITrace>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -228,14 +228,14 @@ public class PSMToUIImpl extends MinimalEObjectImpl.Container implements PSMToUI
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case TraceabilityPackage.PSM_TO_UI__TRACES:
+				getTraces().clear();
+				return;
 			case TraceabilityPackage.PSM_TO_UI__JMODEL:
 				setJModel((JModel)null);
 				return;
 			case TraceabilityPackage.PSM_TO_UI__UI_BASE:
 				setUiBase((UIBase)null);
-				return;
-			case TraceabilityPackage.PSM_TO_UI__TRACES:
-				getTraces().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -249,12 +249,12 @@ public class PSMToUIImpl extends MinimalEObjectImpl.Container implements PSMToUI
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case TraceabilityPackage.PSM_TO_UI__TRACES:
+				return traces != null && !traces.isEmpty();
 			case TraceabilityPackage.PSM_TO_UI__JMODEL:
 				return jModel != null;
 			case TraceabilityPackage.PSM_TO_UI__UI_BASE:
 				return uiBase != null;
-			case TraceabilityPackage.PSM_TO_UI__TRACES:
-				return traces != null && !traces.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

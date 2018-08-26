@@ -96,12 +96,12 @@ pattern JRoleQuery(jRole : JRole) {
 pattern JAttributeQuery(jAttribute : JAttribute) {
 	JAttribute(jAttribute);
 }
-/*
+
 //Trace Queries
-pattern psmToUiTrace(jElement : JElement, identifiable : Identifiable) {
+pattern psmToUiTrace(jElement, identifiable) {
 	PSMToUITrace.psmElements(trace, jElement);
 	PSMToUITrace.uiElements(trace, identifiable);
-}*/
+}
 
 //PSMToUIMapping Queries
 pattern findCorrespondingType(jPrimitive : JPrimitive, componentType : UIComponentType) {

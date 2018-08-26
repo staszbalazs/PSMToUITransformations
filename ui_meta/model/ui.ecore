@@ -27,6 +27,10 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="representation" eType="#//UIBaseComponentType"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="attributes" upperBound="-1"
         eType="#//UIAttributeComponentType" containment="true" eOpposite="#//UIAttributeComponentType/ownerClass"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inheritedAttributes" upperBound="-1"
+        eType="#//UIAttributeComponentType"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inheritedActions" upperBound="-1"
+        eType="#//UIAction"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="UIAction" eSuperTypes="#//Identifiable">
     <eStructuralFeatures xsi:type="ecore:EReference" name="paramView" lowerBound="1"
@@ -155,7 +159,6 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="UIAttributeComponentType" abstract="true"
       eSuperTypes="#//UIComponentType">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="inherited" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="derived" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="private" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
         defaultValueLiteral="false"/>

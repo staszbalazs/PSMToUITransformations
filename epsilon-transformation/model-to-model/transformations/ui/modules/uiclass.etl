@@ -1,6 +1,5 @@
 import "../../../operations/_importAll.eol";
 
-
 rule UIClass
 	transform jclass : PSM!JClass
 	to uiclass : UI!UIClass {
@@ -28,36 +27,27 @@ rule UIClass
 	
 	uiclass.super = jclass.supertype.equivalent("UIClass");
 
-	var emfTool : new Native("org.eclipse.epsilon.emc.emf.tools.EmfTool");
 	//create ComponentTypes/Actions
-	var inherited = false;
-	var currentClass = jclass;
-	while (true) {
 	
-		for (attr : PSM!JAttribute in currentClass.attributes) {
-			transformJAttribute(uiclass, attr, inherited, emfTool);
-		}
-			
-		for (role : PSM!JRole in currentClass.roles) {
-			transformJRole(uiclass, role, inherited, emfTool);
-		}
+	for (attr : PSM!JAttribute in jclass.attributes) {
+		uiClass.attributes.add(attr.equivalent("UIBaseComponentType"));
+	}
+	for (role : PSM!JRole in jclass.roles) {
+		uiClass.attributes.add(role.equivalent("UIReferenceComponentType"));
+	}
+	for (op : PSM!JOperation in jclass.operations) {
+		if (op.visibility = PSM!JVisibility#PUBLIC) {
+			uiClass.actions.add(op.equivalent("UIAction"));
+		}	
+	}
+	
+	for (class : PSM!JClass in jclass.getSuperTypes()) {
+		var superType = class.equivalent("UIClass");
+		var inheretedAttributes = superType.attributes;
+		var inheretedActions = superType.actions;
 		
-		for (op : PSM!JOperation in currentClass.operations) {
-			if (op.visibility = PSM!JVisibility#PUBLIC) {
-				var action : UI!UIAction = createActions(op, inherited, uiclass.uuid);
-				action.inherited = inherited;
-				action.uuid = generateUuid(uiclass.uuid, op.name, ".");
-				uiclass.actions.add(action);
-			}	
-		}
-		
-		if (currentClass.supertype.isDefined()) {
-			currentClass = currentClass.supertype;
-			inherited = true;
-		}	else {
-			break;
-		}
-		
+		uiClass.inheritedAttributes.addAll(inheretedAttributes);
+		uiClass.inheritedActions.addAll(inheretedActions);
 	}
 
 	uiclass.~attributesForListing = new Sequence(UI!UIComponentType);
