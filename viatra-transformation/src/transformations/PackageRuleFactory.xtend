@@ -11,12 +11,16 @@ import org.eclipse.viatra.query.runtime.api.ViatraQueryMatcher
 import org.eclipse.viatra.query.runtime.api.IPatternMatch
 import org.eclipse.viatra.transformation.runtime.emf.rules.eventdriven.EventDrivenTransformationRule
 import psm.JPackage
+import traceability.TraceabilityPackage
+import ui.UIModule
 
 class PackageRuleFactory {
 	
 	extension IModelManipulations manipulation	
-	extension UiPackage uiPackage = UiPackage::eINSTANCE
 	extension EventDrivenTransformationRuleFactory factory = new EventDrivenTransformationRuleFactory
+	
+	extension UiPackage uiPackage = UiPackage::eINSTANCE
+	extension TraceabilityPackage trPackage = TraceabilityPackage::eINSTANCE
 	
 	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> packageRule
 	
@@ -28,24 +32,30 @@ class PackageRuleFactory {
 					
 					val JPackage jPackage = it.getJPackage() as JPackage
 					
-					val uiModule = psm2ui.uiBase.createChild(getUIBase_Modules(), UIModule) => [
-						set(getIdentifiable_Uuid(), jPackage.getUuid())
-						set(getIdentifiable_Name(), jPackage.getName())
-					]
+					val UIModule uiModule = psm2ui.uiBase.createChild(getUIBase_Modules(), UIModule) as UIModule
 					
-					var fqName = jPackage.getName()
-					var currentPackage = jPackage 
-					while (currentPackage.getParent() !== null) {
-							fqName = currentPackage.parent.name + "." + fqName;
-							currentPackage = currentPackage.getParent;
-					}
-					uiModule.set(getUIModule_FullyQualifiedName(), fqName)
+					uiModule.uuid = jPackage.uuid
+					uiModule.name = jPackage.name
+					uiModule.fullyQualifiedName = jPackage.fqName()
+					
+					val trace = psm2ui.createChild(PSMToUI_Traces, PSMToUITrace)
+					trace.addTo(PSMToUITrace_PsmElements, jPackage)
+					trace.addTo(PSMToUITrace_UiElements, uiModule)
 					
 				].action(CRUDActivationStateEnum.UPDATED) [
 				].action(CRUDActivationStateEnum.DELETED) [
 				].addLifeCycle(Lifecycles.getDefault(true, true)).build
 		}
 		return packageRule
+	}
+	
+	
+	private def fqName(JPackage pe) {
+		if (pe.parent !== null) {
+			return pe.parent.fqName() + "." + pe.name;
+		} else {
+			return pe.name;
+		}
 	}
 	
 }

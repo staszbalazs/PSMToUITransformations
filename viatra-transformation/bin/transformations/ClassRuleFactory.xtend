@@ -15,6 +15,7 @@ import org.eclipse.viatra.query.runtime.api.ViatraQueryMatcher
 import org.eclipse.viatra.query.runtime.api.IPatternMatch
 import org.eclipse.viatra.transformation.runtime.emf.rules.eventdriven.EventDrivenTransformationRule
 import psm.JClass
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
 
 class ClassRuleFactory {
 	
@@ -25,7 +26,7 @@ class ClassRuleFactory {
 	
 	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> classRule
 	
-	public def getClassRule(PSMToUI psm2ui) {
+	public def getClassRule(PSMToUI psm2ui, ViatraQueryEngine engine) {
 		if (classRule === null) {
 			classRule = createRule.name("ClassRule").precondition(PatternProvider.instance().getJClassWithGuardConditionQuery())
 				.action(CRUDActivationStateEnum.CREATED) [	
@@ -33,22 +34,20 @@ class ClassRuleFactory {
 					val JClass jClass = it.getJClass() as JClass
 					
 					//Get the UIModule for the class
-					val potentialModule = psm2ui.traces.stream()
-										.filter[getPsmElements.contains(jClass.getPackage)]
-										.map[getUiElements()]
-										.findFirst()
+					val match = PatternProvider.instance().getPsmToUiTrace(engine)
+												.getOneArbitraryMatch(jClass.package, null)
+												.get()
 					
-					var UIModule module = potentialModule.get().get(0) as UIModule
+					var UIModule module = match.getIdentifiable as UIModule
 					
 					//Get or create the UIClass
-					val potentialUIClass = psm2ui.traces.stream()
-										.filter[getPsmElements.contains(jClass)]
-										.map[getUiElements()]
-										.findFirst()
+					val possibleMatch =  PatternProvider.instance().getPsmToUiTrace(engine)
+												.getOneArbitraryMatch(jClass, null)
+												
 					
 					var UIClass uiClass
-					if (potentialUIClass.isPresent) {
-						uiClass = potentialUIClass.get().get(0) as UIClass
+					if (possibleMatch.isPresent) {
+						uiClass = possibleMatch.get().getIdentifiable as UIClass
 						module.addTo(getUIModule_Classes, uiClass)
 					} else {
 						uiClass = module.createChild(getUIModule_Classes, UIClass) as UIClass
@@ -59,28 +58,25 @@ class ClassRuleFactory {
 					}
 					
 					//Set attributes
-					uiClass.set(getIdentifiable_Name, jClass.getName)
-					uiClass.set(getIdentifiable_Uuid, jClass.getUuid)
-					uiClass.set(getUIClass_Abstract, jClass.isAbstract)
-					uiClass.set(getUIClass_EnumClass, jClass.isRepresentsEnum)
-					uiClass.set(getUIClass_Singleton, jClass.isBusinessSingleton)
+					uiClass.name = jClass.name
+					uiClass.uuid = jClass.uuid
+					uiClass.abstract = jClass.isAbstract
+					uiClass.enumClass = jClass.isRepresentsEnum
+					uiClass.singleton = jClass.isBusinessSingleton
 					
-					if (jClass.getVisibility == JVisibility::PUBLIC) {
-						uiClass.set(UIClass_Readonly, false)	
+					if (jClass.visibility == JVisibility::PUBLIC) {
+						uiClass.readonly = false	
 					} else {
-						uiClass.set(UIClass_Readonly, true)
+						uiClass.readonly = true
 					}
 					
 					//Set supertype
 					if (jClass.getSupertype !== null) {
-						val potentialSuper = psm2ui.traces.stream()
-										.filter[getPsmElements.contains(jClass.getSupertype)]
-										.map[getUiElements()]
-										.findFirst()
-						
-						
+						val potentialSuper = PatternProvider.instance().getPsmToUiTrace(engine)
+												.getOneArbitraryMatch(jClass.supertype, null)
+									
 						if (potentialSuper.isPresent) {
-							uiClass.addTo(getUIClass_Super, potentialSuper.get().get(0))
+							uiClass.addTo(getUIClass_Super, potentialSuper.get().getIdentifiable as UIClass)
 						} else {
 							val superType = psm2ui.uiBase.eResource.create(UIClass)
 							uiClass.addTo(getUIClass_Super, superType)
@@ -91,9 +87,6 @@ class ClassRuleFactory {
 						}
 					}
 					
-					//Create views
-					
-				
 				].action(CRUDActivationStateEnum.UPDATED) [
 				].action(CRUDActivationStateEnum.DELETED) [
 				].addLifeCycle(Lifecycles.getDefault(true, true)).build

@@ -43,7 +43,7 @@ class RoleRuleFactory {
 					val UIClass owner = potentialOwner.get.get(0) as UIClass
 					
 					//Create role for owner
-					var uiReferenceType = createUIReferenceComponentType(owner, jRole, false, engine, psm2ui)
+					var uiReferenceType = createUIReferenceComponentType(owner, jRole, engine, psm2ui)
 					val trace = psm2ui.createChild(PSMToUI_Traces, PSMToUITrace)
 					trace.addTo(PSMToUITrace_PsmElements, jRole)
 					trace.addTo(PSMToUITrace_UiElements, uiReferenceType)

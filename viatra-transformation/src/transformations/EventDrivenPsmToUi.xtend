@@ -7,12 +7,8 @@ import org.eclipse.viatra.query.runtime.emf.EMFScope
 import org.eclipse.viatra.transformation.debug.configuration.TransformationDebuggerConfiguration
 import org.eclipse.viatra.transformation.runtime.emf.modelmanipulation.IModelManipulations
 import org.eclipse.viatra.transformation.runtime.emf.modelmanipulation.SimpleModelManipulations
-import org.eclipse.viatra.transformation.runtime.emf.rules.eventdriven.EventDrivenTransformationRuleFactory
 import org.eclipse.viatra.transformation.runtime.emf.transformation.eventdriven.EventDrivenTransformation
-import psm.PsmPackage
-import queries.PatternProvider
-import traceability.TraceabilityPackage
-import ui.UiPackage
+import traceability.PSMToUI
 
 class EventDrivenPsmToUi {
     extension Logger logger = Logger.getLogger(EventDrivenPsmToUi)
@@ -21,23 +17,12 @@ class EventDrivenPsmToUi {
     extension EventDrivenTransformation transformation
     
     /* Transformation rule-related extensions */
-    extension EventDrivenTransformationRuleFactory = new EventDrivenTransformationRuleFactory
     extension IModelManipulations manipulation
-    
-    /* VIATRA Query Pattern group */
-    extension PatternProvider patternProvider = PatternProvider.instance
-    
-    /*VIATRA Rules */
-    extension RuleProvider ruleProvider
-    
-    /* EMF metamodels */
-    extension PsmPackage psmPackage = PsmPackage.eINSTANCE
-    extension UiPackage uiPackage = UiPackage.eINSTANCE
-    extension TraceabilityPackage trPackage = TraceabilityPackage::eINSTANCE 
 
     protected ViatraQueryEngine engine
     protected Resource resource
-    //protected EventDrivenTransformationRule<?,?> exampleRule
+    
+    //private RuleProvider ruleProvider = new RuleProvider(engine, psm2ui)
 
     new(Resource resource) {
         this.resource = resource
@@ -46,9 +31,13 @@ class EventDrivenPsmToUi {
         engine = ViatraQueryEngine.on(scope);
         
         info("Preparing transformation rules.")
-        createTransformation
+        createTransformation()
         info('''Prepared transformation rules''')
 
+    }
+    
+    new(PSMToUI psm2ui, ViatraQueryEngine engine) {
+    	
     }
 
     public def execute() {
@@ -61,7 +50,7 @@ class EventDrivenPsmToUi {
         this.manipulation = new SimpleModelManipulations(engine)
         //Initialize event-driven transformation
         transformation = EventDrivenTransformation.forEngine(engine)
-            //.addRule(classRule)
+            //.addRule(ruleProvider.getClassRule())
             .addAdapterConfiguration(
                 //Create a debug adapter
                 //The debugger implements a classic breakpoint based functionality mapped to the field of model transformations.

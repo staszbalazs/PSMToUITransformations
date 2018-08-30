@@ -33,3 +33,5 @@
 /FindDescendantsForClass.java
 /JAttributeQuery.java
 /JRoleQuery.java
+/.JOperationWithGuardQuery.java._trace
+/.JParameterWithGuardQuery.java._trace

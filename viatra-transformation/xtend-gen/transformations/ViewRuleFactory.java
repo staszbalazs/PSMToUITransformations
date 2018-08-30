@@ -37,7 +37,7 @@ public class ViewRuleFactory {
         EObject _jClass = it.getJClass();
         final JClass jClass = ((JClass) _jClass);
         final PsmToUiTrace.Match match = PatternProvider.instance().getPsmToUiTrace(engine).getOneArbitraryMatch(jClass, null).get();
-        EObject _identifiable = match.getIdentifiable();
+        Object _identifiable = match.getIdentifiable();
         final UIClass uiClass = ((UIClass) _identifiable);
         UIClassView classView = this.view.createClassView(uiClass, jClass, null, Boolean.valueOf(true), engine);
         final UIListView listView = this.view.createListView(uiClass, jClass, null, classView, Boolean.valueOf(true), engine);

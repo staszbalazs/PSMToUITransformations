@@ -14,6 +14,7 @@ import ui.UIMenuItem
 import ui.UiPackage
 import traceability.TraceabilityPackage
 import psm.JUIFilter
+import ui.UIFilter
 
 class FilterRuleFactory {
 	
@@ -39,29 +40,28 @@ class FilterRuleFactory {
 											  .getJMenuItem();
 											  
 					//Get the JUIMenuItem UIMenuItem equivalent
-					val potentialMenuItem = psm2ui.traces.stream()
-										.filter[getPsmElements.contains(jMenuItem)]
-										.map[getUiElements()]
-										.findFirst()
-					var UIMenuItem uiMenuItem = potentialMenuItem.get().get(0) as UIMenuItem
+					val potentialMenuItem = PatternProvider.instance().getPsmToUiTrace(engine)
+												.getOneArbitraryMatch(jMenuItem, null)
+												.get()
+					var UIMenuItem uiMenuItem = potentialMenuItem.getIdentifiable as UIMenuItem
 					
 					//Create UIFilter
-					val uiFilter = uiMenuItem.createChild(getUIMenuItem_Filters(), UIFilter) => [
-						set(getIdentifiable_Uuid(), jFilter.getUuid() + "_UIFilter")
-						set(getUIFilter_Operator(), jFilter.getOperator().toString())
-						set(getUIFilter_Value(), jFilter.getValue())
+					val UIFilter uiFilter = uiMenuItem.createChild(getUIMenuItem_Filters(), UIFilter) as UIFilter
+					psm2ui.createChild(PSMToUI_Traces, PSMToUITrace) => [
+						addTo(PSMToUITrace_PsmElements, jFilter)
+						addTo(PSMToUITrace_UiElements, uiFilter)
 					]
 					
+					uiFilter.uuid = jFilter.uuid + "_UIFilter"
+					uiFilter.operator = jFilter.getOperator().toString()
+					uiFilter.value = jFilter.value
+					
 					if (jFilter.name !== null) {
-						uiFilter.set(getIdentifiable_Name(), jFilter.getName())
+						uiFilter.name = jFilter.name
 					} else {
-						uiFilter.set(getIdentifiable_Name(), "filter")
+						uiFilter.name = "filter"
 					}
 						
-					val trace = psm2ui.createChild(PSMToUI_Traces, PSMToUITrace)
-					trace.addTo(PSMToUITrace_PsmElements, jFilter)
-					trace.addTo(PSMToUITrace_UiElements, uiFilter)
-					
 				].action(CRUDActivationStateEnum.UPDATED) [
 				].action(CRUDActivationStateEnum.DELETED) [
 				].addLifeCycle(Lifecycles.getDefault(true, true)).build

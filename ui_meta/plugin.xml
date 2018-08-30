@@ -11,7 +11,7 @@
       <package
             uri="http://blackbelt.hu/judo/meta/psm/ui"
             class="ui.UiPackage"
-            genModel="model/ui.genmodel"/>
+            genModel="src/model/ui.genmodel"/>
    </extension>
 
 </plugin>

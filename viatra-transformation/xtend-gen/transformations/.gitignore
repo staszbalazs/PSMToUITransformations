@@ -26,3 +26,5 @@
 /PackageRuleFactory.java
 /RoleRuleFactory.java
 /.ViewRuleFactory.java._trace
+/.OperationRuleFactory.java._trace
+/.ParameterRuleFactory.java._trace

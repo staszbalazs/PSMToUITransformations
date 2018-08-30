@@ -78,6 +78,19 @@ pattern JClassWithGuardConditionQuery(jClass : JClass) {
 	find findUIRelevantPackages(jPackage);
 }
 
+//JOperation Queries
+pattern JOperationWithGuardQuery(jOperation : JOperation) {
+	JOperation(jOperation);
+	JOperation.visibility(jOperation, JVisibility::PUBLIC);
+}
+
+//JParameter Queries
+pattern JParameterWithGuardQuery(jParameter : JParameter) {
+	JParameter(jParameter);
+	JOperation.parameters(jOperation, jParameter);
+	JOperation.visibility(jOperation, JVisibility::PUBLIC);
+}
+
 //JUIMenuItem Queries
 pattern findMenuItemForFilter(jFilter : JUIFilter, jMenuItem : JUIMenuItem) {
 	JUIMenuItem.uifilters(jMenuItem, jFilter);

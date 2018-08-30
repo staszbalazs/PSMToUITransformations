@@ -36,18 +36,18 @@ class AttributeRuleFactory {
 					
 					val JAttribute jAttr = it.JAttribute as JAttribute
 					//Get owner UIClass
-					val potentialOwner = psm2ui.traces.stream()
-										.filter[getPsmElements.contains(jAttr.getOwnerClass)]
-										.map[getUiElements()]
-										.findFirst()
+					val match = PatternProvider.instance().getPsmToUiTrace(engine)
+												.getOneArbitraryMatch(jAttr.ownerClass, null)
+												.get()
 										
-					val UIClass owner = potentialOwner.get().get(0) as UIClass
+					val UIClass owner = match.getIdentifiable as UIClass
 					
 					//Create role for owner
-					var uiBaseType = createUIBaseType(owner, jAttr, false, engine)
-					val trace = psm2ui.createChild(PSMToUI_Traces, PSMToUITrace)
-					trace.addTo(PSMToUITrace_PsmElements, jAttr)
-					trace.addTo(PSMToUITrace_UiElements, uiBaseType)
+					val uiBaseType = createUIBaseType(owner, jAttr, engine)
+					psm2ui.createChild(PSMToUI_Traces, PSMToUITrace) => [
+						addTo(PSMToUITrace_PsmElements, jAttr)
+						addTo(PSMToUITrace_UiElements, uiBaseType)
+					]
 					
 					//Get descendant UIClasses
 					val List<UIClass> ownersByInheritance = PatternProvider.instance().getFindDescendantsForClass(engine)

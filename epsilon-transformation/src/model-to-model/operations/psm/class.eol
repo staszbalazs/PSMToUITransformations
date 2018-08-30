@@ -1,0 +1,4 @@
+@cached
+operation PSM!JClass getSuperTypes() : Collection {
+	return self.closure(class | class.supertype);
+}

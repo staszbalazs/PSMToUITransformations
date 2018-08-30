@@ -8,29 +8,39 @@ import traceability.PSMToUI
 
 class RuleProvider {
 	
-	extension ClassRuleFactory classRuleFactory
-	extension ModelRuleFactory modelRuleFactory
-	extension PackageRuleFactory packageRuleFactory
-	extension FilterRuleFactory filterRuleFactory
-	extension MenuRuleFactory menuRuleFactory
-	extension RoleRuleFactory roleRuleFactory
-	extension AttributeRuleFactory attrRuleFactory
+	private ClassRuleFactory classRuleFactory
+	private ModelRuleFactory modelRuleFactory
+	private PackageRuleFactory packageRuleFactory
+	private FilterRuleFactory filterRuleFactory
+	private MenuRuleFactory menuRuleFactory
+	private RoleRuleFactory roleRuleFactory
+	private AttributeRuleFactory attributeRuleFactory
+	private OperationRuleFactory operationRuleFactory
 	
 	private PSMToUI psm2ui
 	private ViatraQueryEngine engine
 	
-	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> modelRule = getModelRule()
-	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> classRule = getClassRule(psm2ui)
-	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> packageRule = getPackageRule(psm2ui)
-	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> filterRule = getFilterRule(psm2ui, engine)
-	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> menuRule = getMenuRule(psm2ui)
-	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> roleRule = getRoleRule(psm2ui, engine)
-	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> attrRule = getAttributeRule(psm2ui, engine)
-	
+	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> modelRule = modelRuleFactory.getModelRule()
+	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> classRule = classRuleFactory.getClassRule(psm2ui, engine)
+	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> packageRule = packageRuleFactory.getPackageRule(psm2ui)
+	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> filterRule = filterRuleFactory.getFilterRule(psm2ui, engine)
+	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> menuRule = menuRuleFactory.getMenuRule(psm2ui, engine)
+	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> roleRule = roleRuleFactory.getRoleRule(psm2ui, engine)
+	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> attrRule = attributeRuleFactory.getAttributeRule(psm2ui, engine)
+	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> operationRule = operationRuleFactory.getOperationRule(psm2ui, engine)
 
 	new(ViatraQueryEngine engine, PSMToUI psm2ui) {
 		this.engine = engine
 		this.psm2ui = psm2ui
+		
+		this.classRuleFactory = new ClassRuleFactory
+		this.modelRuleFactory = new ModelRuleFactory
+		this.packageRuleFactory = new PackageRuleFactory
+		this.filterRuleFactory = new FilterRuleFactory
+		this.menuRuleFactory = new MenuRuleFactory
+		this.roleRuleFactory = new RoleRuleFactory
+		this.attributeRuleFactory = new AttributeRuleFactory
+		this.operationRuleFactory = new OperationRuleFactory
 	}
 	
 	public def getModuleRule() {
@@ -53,12 +63,16 @@ class RuleProvider {
 		return menuRule
 	}
 	
-	public def getRoleRul() {
+	public def getRoleRule() {
 		return roleRule
 	}
 	
-	public def getAttrRul() {
+	public def getAttrRule() {
 		return attrRule
+	}
+	
+	public def getOperationRule() {
+		return operationRule
 	}
 	
 }

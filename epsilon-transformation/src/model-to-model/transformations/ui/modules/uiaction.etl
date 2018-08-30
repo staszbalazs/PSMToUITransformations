@@ -1,0 +1,44 @@
+rule UIAction
+	transform joperation: PSM!JOperation
+	to uiaction : UI!UIAction {
+	guard : joperation.visibility = PSM!JVisibility#PUBLIC 
+	
+	//inherited from Identifiable
+	uiaction.uuid = generateUuid(joperation.ownerClass.uuid, joperation.name, ".");
+	uiaction.name = joperation.name;
+	//Attributes
+	uiaction.classBased = joperation.classBased;
+	uiaction.toBeConfirmed = joperation.uiMustConfirm;
+	uiaction.notBulk = not joperation.bulk;
+	uiaction.isQuery = (joperation.kind = PSM!JOperationKind#QUERY);
+	//Parameters		
+	for (param : PSM!JParameter in joperation.parameters) {
+		if (not param.input) {
+			uiaction.result = param.equivalent("UIParameterComponentType");
+					
+			if (param.type.isTypeOf(PSM!JClass)) {
+				uiaction.result.referenced = param.type.equivalent("UIClass");
+				uiaction.result.type = param.type.equivalent("UIClass").name;
+			} else {
+				uiaction.result.type = param.type.componentType().name;
+			}
+				
+			uiaction.result.createIntervals(param.interval, joperation.ownerClass.uuid);
+			uiaction.resultView = createResultView(uiaction);
+		} else {
+			var uiparam = param.equivalent("UIParameterComponentType");
+			uiaction.parameters.add(uiparam);
+				
+			if (param.type.isTypeOf(PSM!JClass)) {
+				uiparam.referenced = param.type.equivalent("UIClass");
+				uiparam.type = param.type.equivalent("UIClass").name;
+			} else {
+				uiparam.type = param.type.componentType().name;
+			}
+
+			uiparam.createIntervals(param.interval, joperation.ownerClass.uuid);
+		}
+	}
+		
+	uiaction.paramView = createParamView(uiaction);
+}

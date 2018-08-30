@@ -19,6 +19,8 @@
       <query-specification fqn="queries.findDescendantsForClass"/>
       <query-specification fqn="queries.JClassQuery"/>
       <query-specification fqn="queries.JClassWithGuardConditionQuery"/>
+      <query-specification fqn="queries.JOperationWithGuardQuery"/>
+      <query-specification fqn="queries.JParameterWithGuardQuery"/>
       <query-specification fqn="queries.findMenuItemForFilter"/>
       <query-specification fqn="queries.findMenuItemWithParent"/>
       <query-specification fqn="queries.JRoleQuery"/>

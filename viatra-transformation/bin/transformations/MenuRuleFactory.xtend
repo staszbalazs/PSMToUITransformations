@@ -15,6 +15,7 @@ import org.eclipse.viatra.query.runtime.api.ViatraQueryMatcher
 import org.eclipse.viatra.query.runtime.api.IPatternMatch
 import org.eclipse.viatra.transformation.runtime.emf.rules.eventdriven.EventDrivenTransformationRule
 import psm.JUIMenuItem
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
 
 class MenuRuleFactory {
 	
@@ -25,38 +26,36 @@ class MenuRuleFactory {
 	
 	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> menuRule
 	
+	//TODO REFACTOR
 	//After Class, before Filter
-	public def getMenuRule(PSMToUI psm2ui) {
+	public def getMenuRule(PSMToUI psm2ui, ViatraQueryEngine engine) {
 		if (menuRule === null) {
 			menuRule = createRule.name("MenuRule").precondition(PatternProvider.instance().getFindMenuItemWithParent())
 				.action(CRUDActivationStateEnum.CREATED) [
 					
 					val JUIMenuItem jMenuItem = it.JMenuItem as JUIMenuItem;
 					//Get or create parent MenuItem
-					val potentialParent = psm2ui.traces.stream()
-										.filter[getPsmElements.contains(jMenuItem.getParent)]
-										.map[getUiElements()]
-										.findFirst()
+					val potentialParent = PatternProvider.instance().getPsmToUiTrace(engine)
+												.getOneArbitraryMatch(jMenuItem.parent, null)
 										
 					var UIMenuItem parent
 					if (potentialParent.isPresent()) {
-						parent = potentialParent.get().get(0) as UIMenuItem
+						parent = potentialParent.get().getIdentifiable as UIMenuItem
 					} else {
 						parent = psm2ui.uiBase.eResource.create(UIMenuItem) as UIMenuItem
+						
 						val trace = psm2ui.createChild(getPSMToUI_Traces(), PSMToUITrace)
 						trace.addTo(getPSMToUITrace_PsmElements, jMenuItem.getParent)
 						trace.addTo(getPSMToUITrace_UiElements, parent)
 					}
 					
 					//Get or create current MenuItem
-					val potentialUiElements = psm2ui.traces.stream()
-										.filter[getPsmElements.contains(jMenuItem)]
-										.map[getUiElements()]
-										.findFirst()
+					val potentialUiElements = PatternProvider.instance().getPsmToUiTrace(engine)
+												.getOneArbitraryMatch(jMenuItem, null)
 					
 					var UIMenuItem uiMenuItem
 					if (potentialUiElements.isPresent()) {
-						uiMenuItem = potentialUiElements.get().get(0) as UIMenuItem
+						uiMenuItem = potentialUiElements.get().getIdentifiable as UIMenuItem
 						parent.addTo(getUIMenuItem_MenuItems, uiMenuItem)
 					} else {
 						uiMenuItem = parent.createChild(getUIMenuItem_MenuItems, UIMenuItem) as UIMenuItem

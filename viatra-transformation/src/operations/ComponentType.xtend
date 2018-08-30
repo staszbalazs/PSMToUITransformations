@@ -23,7 +23,7 @@ class ComponentType {
 	
 	extension Interval interval
 
-	public def createUIBaseType(UIClass owner, JAttribute jAttr, Boolean inherited, ViatraQueryEngine engine) {
+	public def createUIBaseType(UIClass owner, JAttribute jAttr, ViatraQueryEngine engine) {
 		//create UIBaseComponentType
 		val UIBaseComponentType uiBaseType = owner.createChild(getUIClass_Attributes, UIBaseComponentType) as UIBaseComponentType
 		
@@ -64,25 +64,22 @@ class ComponentType {
 		return uiBaseType
 	}
 	
-	public def createUIReferenceComponentType(UIClass owner, JRole jRole, Boolean inherited, ViatraQueryEngine engine, PSMToUI psm2ui) {
+	public def createUIReferenceComponentType(UIClass owner, JRole jRole, ViatraQueryEngine engine, PSMToUI psm2ui) {
 		//create UIReferenceType
 		var UIReferenceComponentType uiReferenceType = null
-		if (!inherited) {
-			val match = PatternProvider.instance().getPsmToUiTrace(engine)
-												.getOneArbitraryMatch(jRole, null)
-												.get()
+		val match = PatternProvider.instance().getPsmToUiTrace(engine)
+											.getOneArbitraryMatch(jRole, null)
+											.get()
 			
-			if (match !== null) {
-				uiReferenceType = match.getIdentifiable as UIReferenceComponentType
-				owner.addTo(getUIClass_Attributes, uiReferenceType)
-			}
+		if (match !== null) {
+			uiReferenceType = match.getIdentifiable as UIReferenceComponentType
+			owner.addTo(getUIClass_Attributes, uiReferenceType)
 		}
 		
 		if (uiReferenceType === null) {
 			uiReferenceType = owner.createChild(getUIClass_Attributes, UIReferenceComponentType) as UIReferenceComponentType	
 		}
-		
-		
+			
 		//set attributes
 		uiReferenceType.name = jRole.name
 		uiReferenceType.uuid = owner.uuid + "." + jRole.uuid

@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>hu.blackbelt.judo.generator</groupId>
+    <artifactId>epsilon-transformation</artifactId>
+    <version>2.0.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+	<properties>
+        <src.dir>src</src.dir>
+    </properties>
+    
+    <dependencies>
+    	<!-- https://mvnrepository.com/artifact/hu.blackbelt.epsilon/epsilon-maven-plugin -->
+		<dependency>
+		    <groupId>hu.blackbelt.epsilon</groupId>
+		    <artifactId>epsilon-maven-plugin</artifactId>
+		    <version>1.1.1</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.codehaus.mojo/build-helper-maven-plugin -->
+		<dependency>
+		    <groupId>org.codehaus.mojo</groupId>
+		    <artifactId>build-helper-maven-plugin</artifactId>
+		    <version>3.0.0</version>
+		</dependency>
+		
+    </dependencies>
+
+    <build>
+        <sourceDirectory>${src.dir}</sourceDirectory>
+        <resources>
+            <resource>
+                <directory>${src.dir}</directory>
+            </resource>
+        </resources>
+    </build>
+    
+    <profiles>
+    	<profile>
+    		<id>ui-transformer-development</id>
+			  <build>
+			    <plugins>
+			      <plugin>
+					<groupId>hu.blackbelt.epsilon</groupId>
+					<artifactId>epsilon-maven-plugin</artifactId>
+			        <executions>
+			          <execution>
+			            <phase>generate-resources</phase>
+			            <goals>
+			              <goal>execute</goal>
+			            </goals>
+			            <configuration>
+			              <metaModels>
+			                <metaModel>mvn:${project.groupId}:psm_meta:ecore:psm:${project.version}</metaModel>
+			                <metaModel>mvn:${project.groupId}:ui_meta:ecore:ui:${project.version}</metaModel>
+			                <metaModel>mvn:${project.groupId}:ui_meta:ecore:psmToUiTypeMapping:${project.version}</metaModel>
+			              </metaModels>
+			
+			                <models>
+			                
+			                	<model>
+			                        <artifact>mvn:${project.groupId}:psm_meta:model:psmTypes:${project.version}</artifact>
+			                        <name>PSMTYPES</name>
+			                        <metaModelUris>
+			                            <param>http://blackbelt.hu/judo/meta/psm</param>
+			                        </metaModelUris>
+			                        <expand>true</expand>
+			                        <platformAlias>platform:/resource/psm_meta/src/library/psmTypes.model</platformAlias>
+			                    </model>
+			                		                  			                    
+			                   <model>
+									<artifact>mvn:${project.groupId}:psm_meta:model:psm:${project.version}</artifact>
+									<name>PSM</name>
+									<metaModelUris>
+										<param>http://blackbelt.hu/judo/meta/psm</param>
+									</metaModelUris>
+									<expand>true</expand>
+								</model> 
+			
+			                    <model>
+			                        <artifact>mvn:${project.groupId}:ui_meta:model:uiTypes:${project.version}</artifact>
+			                        <name>UITYPES</name>
+			                        <metaModelUris>
+			                            <param>http://blackbelt.hu/judo/meta/psm/ui</param>
+			                        </metaModelUris>
+			                        <platformAlias>platform:/resource/ui_meta/src/library/uiTypes.model</platformAlias>
+			                    </model>
+			
+			                    <model>
+			                        <artifact>mvn:${project.groupId}:ui_meta:model:psmToUiTypeMapping:${project.version}</artifact>
+			                        <name>UTM</name>
+			                        <metaModelUris>
+			                            <param>http://blackbelt.hu/judo/meta/psm/ui/mapping</param>
+			                        </metaModelUris>
+			                        <expand>true</expand>
+			                    </model>
+			                    
+			
+			                    <!--  Target -->
+			                    <model>
+			                       <artifact>${project.build.directory}/ui.model</artifact>
+			                       <name>UI</name>
+			                       <readOnLoad>false</readOnLoad>
+			                       <storeOnDisposal>true</storeOnDisposal>
+			                       <metaModelUris>
+			                           <param>http://blackbelt.hu/judo/meta/psm/ui</param>
+			                       </metaModelUris>
+			                    </model>
+			                </models>
+			                <eolPrograms>
+			                    <Etl>
+			                        <source>src/model-to-model/transformations/ui/psmToUi.etl</source>
+			                    </Etl>
+			                </eolPrograms>
+			            </configuration>
+			          </execution>
+			        </executions>
+			      </plugin>
+			      <plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>build-helper-maven-plugin</artifactId>
+						<version>3.0.0</version>
+						<executions>
+							<execution>
+								<id>add-resource</id>
+								<goals>
+									<goal>add-resource</goal>
+								</goals>
+								
+								<configuration>
+									<resources>
+										<resource>
+											<directory>src</directory>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+							
+							<execution>
+								<id>attach-artifacts</id>
+								<phase>package</phase>
+								<goals>
+									<goal>attach-artifact</goal>
+								</goals>
+								<configuration>
+									<artifacts>
+										<artifact>
+											<file>${project.build.directory}/ui.model</file>
+											<type>model</type>
+											<classifier>ui</classifier>
+										</artifact>
+									</artifacts>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+			    </plugins>
+			  </build>
+   		</profile>
+   		
+   		<profile>
+    		<id>ui-templates-development</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>hu.blackbelt.epsilon</groupId>
+						<artifactId>epsilon-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>templateModel</id>
+								<phase>generate-resources</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<metaModels>
+										<metaModel>mvn:${project.groupId}:ui_meta:ecore:ui:${project.version}</metaModel>
+									</metaModels>
+		
+									<models>
+										<model>
+											<artifact>mvn:${project.groupId}:ui_meta:model:uiTypes:${project.version}</artifact>
+											<name>UITYPES</name>
+											<metaModelUris>
+												<param>http://blackbelt.hu/judo/meta/psm/ui</param>
+											</metaModelUris>
+											<platformAlias>platform:/resource/ui_meta/src/library/uiTypes.model</platformAlias>
+										</model>
+										<model>
+											<artifact>mvn:${project.groupId}:epsilon-transformation:model:ui:${project.version}</artifact>
+											<name>UI</name>
+											<metaModelUris>
+												<param>http://blackbelt.hu/judo/meta/psm/ui</param>
+											</metaModelUris>
+											<expand>true</expand>
+										</model>
+									</models>
+									<eolPrograms>
+										<Egl>
+											<source>src/model-to-text/main.egl</source>
+											<outputRoot>${project.basedir}/target/generated-sources</outputRoot>
+										</Egl>
+									</eolPrograms>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>build-helper-maven-plugin</artifactId>
+						<version>3.0.0</version>
+						<executions>
+							<execution>
+								<id>add-resource</id>
+								<goals>
+									<goal>add-resource</goal>
+								</goals>
+								
+								<configuration>
+									<resources>
+										<resource>
+											<directory>src</directory>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>   	
+   		</profile>
+   		
+    </profiles>
+</project>

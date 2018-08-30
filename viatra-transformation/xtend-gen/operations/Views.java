@@ -83,7 +83,7 @@ public class Views {
               EObject _createChild_2 = this.manipulation.createChild(viewFieldSet, this.uiPackage.getUIViewFieldSet_ViewFields(), this.uiPackage.getUIViewField());
               final UIViewField viewField = ((UIViewField) _createChild_2);
               final PsmToUiTrace.Match match = PatternProvider.instance().getPsmToUiTrace(engine).getOneArbitraryMatch(attribute, null).get();
-              EObject _identifiable = match.getIdentifiable();
+              Object _identifiable = match.getIdentifiable();
               final UIBaseComponentType uiBaseType = ((UIBaseComponentType) _identifiable);
               viewField.setComponentType(uiBaseType);
               viewField.setName(attribute.getName());
