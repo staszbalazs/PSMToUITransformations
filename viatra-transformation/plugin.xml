@@ -11,7 +11,24 @@
     <!-- @generated traceability -->
     <package class="ui.UiPackage" genModel="platform:/resource/traceability_meta/model/traceability.genmodel" uri="http://blackbelt.hu/judo/meta/psm/ui"/>
   </extension>
-  <extension id="queries.PatternProvider" point="org.eclipse.viatra.query.runtime.queryspecification">
+  <extension point="org.eclipse.ui.commands">
+    <command defaultHandler="viatra_transformation.src.handlers.ToggleTransformationHandler" id="viatra_transformation.command" name="Toggle Transformation"/>
+  </extension>
+  <extension point="org.eclipse.ui.menus">
+    <menuContribution allPopups="false" locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+      <command commandId="viatra_transformation.command" label="Toggle Incremental Transformation" style="push">
+        <visibleWhen checkEnabled="false">
+          <with variable="selection">
+            <count value="1"/>
+            <iterate>
+              <adapt type="traceability_meta.generated_files.traceability.PSMToUI"/>
+            </iterate>
+          </with>
+        </visibleWhen>
+      </command>
+    </menuContribution>
+  </extension>
+    <extension id="queries.PatternProvider" point="org.eclipse.viatra.query.runtime.queryspecification">
     <group group="org.eclipse.viatra.query.runtime.extensibility.SingletonExtensionFactory:queries.PatternProvider" id="queries.PatternProvider">
       <query-specification fqn="queries.JModelQuery"/>
       <query-specification fqn="queries.JUIFilterQuery"/>

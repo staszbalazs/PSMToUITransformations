@@ -8,6 +8,10 @@
   <semanticResources>platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore</semanticResources>
   <semanticResources>platform:/resource/ui_meta/model/ui.ecore</semanticResources>
   <semanticResources>platform:/resource/psm_meta/model/psm.genmodel</semanticResources>
+  <semanticResources>platform:/resource/psm_meta/src/model/psm.ecore</semanticResources>
+  <semanticResources>platform:/resource/ui_meta/src/model/ui.ecore</semanticResources>
+  <semanticResources>platform:/resource/psm_meta/src/model/psm.genmodel</semanticResources>
+  <semanticResources>platform:/resource/ui_meta/src/model/ui.genmodel</semanticResources>
   <ownedViews xmi:type="viewpoint:DView" xmi:id="_Q1sagJ1iEeijQc-iU-grLw">
     <viewpoint xmi:type="description:Viewpoint" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Review']"/>
   </ownedViews>

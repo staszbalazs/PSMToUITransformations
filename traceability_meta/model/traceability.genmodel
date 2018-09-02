@@ -3,12 +3,12 @@
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/traceability_meta/generated_files" modelPluginID="traceability_meta"
     modelName="Traceability" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
-    usedGenPackages="../../psm_meta/model/psm.genmodel#//psm ../../ui_meta/model/ui.genmodel#//ui"
+    usedGenPackages="../../psm_meta/src/model/psm.genmodel#//psm ../../ui_meta/src/model/ui.genmodel#//ui"
     operationReflection="true" importOrganizing="true">
   <foreignModel>traceability.ecore</foreignModel>
   <genPackages prefix="Traceability" disposableProviderFactory="true" ecorePackage="traceability.ecore#/">
     <genClasses ecoreClass="traceability.ecore#//PSMToUI">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference traceability.ecore#//PSMToUI/traces"/>
+      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference traceability.ecore#//PSMToUI/traces"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference traceability.ecore#//PSMToUI/jModel"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference traceability.ecore#//PSMToUI/uiBase"/>
     </genClasses>
