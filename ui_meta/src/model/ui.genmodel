@@ -13,11 +13,10 @@
     </genClasses>
     <genClasses ecoreClass="ui.ecore#//UIClass">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ui.ecore#//UIClass/actions"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ui.ecore#//UIClass/classViews"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ui.ecore#//UIClass/listViews"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ui.ecore#//UIClass/classView"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ui.ecore#//UIClass/listView"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ui.ecore#//UIClass/childClassViews"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ui.ecore#//UIClass/abstract"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ui.ecore#//UIClass/selector"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ui.ecore#//UIClass/readonly"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ui.ecore#//UIClass/enumClass"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ui.ecore#//UIClass/singleton"/>
@@ -52,7 +51,6 @@
     <genClasses image="false" ecoreClass="ui.ecore#//UIView">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ui.ecore#//UIView/viewFieldSets"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ui.ecore#//UIView/pageSize"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ui.ecore#//UIView/isDefault"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ui.ecore#//UIView/columns"/>
     </genClasses>
     <genClasses ecoreClass="ui.ecore#//UIBase">
@@ -96,7 +94,6 @@
     </genClasses>
     <genClasses ecoreClass="ui.ecore#//UIListView">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ui.ecore#//UIListView/detailView"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ui.ecore#//UIListView/ownerClass"/>
     </genClasses>
     <genClasses ecoreClass="ui.ecore#//UIClassView"/>
     <genClasses ecoreClass="ui.ecore#//UIResultView"/>

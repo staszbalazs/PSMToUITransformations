@@ -15,6 +15,7 @@ import ui.UiPackage
 import traceability.TraceabilityPackage
 import psm.JUIFilter
 import ui.UIFilter
+import ui.UIBaseComponentType
 
 class FilterRuleFactory {
 	
@@ -25,7 +26,6 @@ class FilterRuleFactory {
 	
 	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> filterRule
 	
-	//After MenuItem
 	public def getFilterRule(PSMToUI psm2ui, ViatraQueryEngine engine) {
 		if (filterRule === null) {
 			filterRule = createRule.name("FilterRule").precondition(PatternProvider.instance().getJUIFilterQuery())
@@ -61,6 +61,13 @@ class FilterRuleFactory {
 					} else {
 						uiFilter.name = "filter"
 					}
+					
+					//Get attribute uuid for filter
+					val filterAttribute = PatternProvider.instance().getPsmToUiTrace(engine)
+												.getOneArbitraryMatch(jFilter.attribute, null)
+												.get()
+												.getIdentifiable as UIBaseComponentType
+					uiFilter.attribute = filterAttribute.uuid
 						
 				].action(CRUDActivationStateEnum.UPDATED) [
 				].action(CRUDActivationStateEnum.DELETED) [

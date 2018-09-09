@@ -1,11 +1,10 @@
-operation createClassView(ownerClass: UI!UIClass, originClass: PSM!JClass, name: String, uuid: String, isDefault: Boolean) : UI!UIClassView {
+operation createClassView(ownerClass: UI!UIClass, originClass: PSM!JClass, name: String, uuid: String) : UI!UIClassView {
 	var classView : UI!UIClassView = new UI!UIClassView();
 	classView.uuid = uuid.replace("\\.", "_");
 	classView.name = name;
-	classView.isDefault = isDefault;
 	
 	var position = 1;
-	var remaining : OrderedSet(UI!UIAttributeComponentType) = ownerClass.attributes;
+	var remaining : OrderedSet(UI!UIAttributeComponentType) = ownerClass.attributes + ownerClass.inheritedAttributes;
 	var vfsName : String;
 	
 	for (attrGroup in originClass.attributeOrder) {
@@ -65,11 +64,10 @@ operation createClassView(ownerClass: UI!UIClass, originClass: PSM!JClass, name:
 	return classView;
 }
 
-operation createListView(ownerClass: UI!UIClass, name: String, uuid: String, classView: UI!UIClassView, isDefault: Boolean) : UI!UIListView {
+operation createListView(ownerClass: UI!UIClass, name: String, uuid: String, classView: UI!UIClassView) : UI!UIListView {
 	var listView = new UI!UIListView();
 	listView.uuid = uuid.replace("\\.", "_");
 	listView.name = name;
-	listView.isDefault = isDefault;
 	listView.pageSize = 20;
 	listView.detailView = classView;
 	
@@ -79,7 +77,8 @@ operation createListView(ownerClass: UI!UIClass, name: String, uuid: String, cla
 	
 	var position = ownerClass.~attributesForListing.size();
 	
-	for (attribute in ownerClass.attributes) {
+	var allAttributes = ownerClass.attributes + ownerClass.inheritedAttributes;
+	for (attribute in allAttributes) {
 		if ((attribute.isTypeOf(UI!UIReferenceComponentType) and attribute.upper = 1 and attribute.navigable and not attribute.private) or 
 				(attribute.isTypeOf(UI!UIBaseComponentType) and not attribute.private)) {
 				

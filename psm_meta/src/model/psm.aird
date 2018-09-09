@@ -20,6 +20,7 @@
     <semanticResources>platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore</semanticResources>
     <semanticResources>../pim_meta/UML2_5_0_0.ecore_diagram</semanticResources>
     <semanticResources>psm.genmodel</semanticResources>
+    <semanticResources>../../generated_files/asd.xtend</semanticResources>
     <ownedViews xmi:type="viewpoint:DView" xmi:id="_x5nowPNzEeaNDJApFon-cQ">
       <viewpoint xmi:type="description:Viewpoint" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Review']"/>
     </ownedViews>

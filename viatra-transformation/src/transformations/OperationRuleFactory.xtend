@@ -16,6 +16,8 @@ import ui.UIAction
 import psm.JOperationKind
 import traceability.PSMToUI
 import traceability.TraceabilityPackage
+import ui.UIParamView
+import ui.UIResultView
 
 class OperationRuleFactory {
 	
@@ -54,6 +56,19 @@ class OperationRuleFactory {
 					uiAction.toBeConfirmed = jOperation.uiMustConfirm;
 					uiAction.notBulk = !jOperation.bulk;
 					uiAction.isQuery = (jOperation.kind == JOperationKind::QUERY);
+					
+					//create paramView
+					val UIParamView paramView = uiAction.createChild(getUIAction_ParamView, UIParamView) as UIParamView
+					paramView.name = uiAction.name
+					paramView.uuid = uiAction.uuid.replace("\\.", "_") + "_paramView"
+					
+					//create resultView if necessary
+					if (PatternProvider.instance().getResultJParameter(engine).hasMatch(jOperation, null)) {
+						val UIResultView resultView = uiAction.createChild(getUIAction_ResultView, UIResultView) as UIResultView
+						resultView.name = uiAction.name;
+						resultView.uuid = uiAction.uuid.replace("\\.", "_") + "_resultView"
+						resultView.pageSize = 1000
+					}
 								
 				].action(CRUDActivationStateEnum.UPDATED) [
 				].action(CRUDActivationStateEnum.DELETED) [

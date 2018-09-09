@@ -9,13 +9,9 @@
 [% operation UI!UIClass generateJson() { %]
 {
 	"singleton" : [%=self.singleton%],
-	"listViews" : [
-	[% if(not self.listViews.isEmpty())  { %]	
-		[%for (listView in self.listViews) { %]
-			[%listView.generateJson();%] [% if (hasMore) { out.println(","); } %]
-		[%}%]
-	[% } %]
-	],
+	"listView" : 
+		[%self.listView.generateJson();%]
+	,
 	"enumclass" : [%=self.enumClass%],
 	"name" : "[%=self.name%]",
 	"fields" : [
@@ -49,20 +45,15 @@
 		[%}%]		
 	[% } %]
 	],
-	"selector" : "[%=self.selector.uuid%]",
 	"readonly" : [%=self.readonly%],
 	[% if (self.representation.isDefined()) { %]
 	"representation" : "<%= [%=self.representation.name%] %>",
 	[% } else {%]
 	"representation" : "",
 	[% } %]
-	"objectViews" : [
-	[% if(not self.classViews.isEmpty())  { %]
-		[%for (classView in self.classViews) { %]
-			[%classView.generateJson();%] [% if (hasMore) { out.println(","); } %]
-		[%}%]
-	[% } %]
-	],
+	"objectView" : 
+			[%self.classView.generateJson();%]
+	,
 	"childObjectViews" : [
 	[% if(not self.childClassViews.isEmpty())  { %]
 		[%for (classView in self.childClassViews) { %]
@@ -113,7 +104,6 @@
 {
 	"name" : "[%=self.name%]",
 	"pageSize" : [%=self.pageSize%],
-	"default" : [%=self.isDefault%],
 	[% if(self.isTypeOf(UI!UIListView)) {%]
 	"detail" : "[%=self.detailView.uuid%]",
 	[%}%]

@@ -10,4 +10,5 @@ rule UIFilter
 		uiFilter.uuid = generateUuid(jUIFilter.uuid, "UIFilter", "_");
 		uiFilter.operator = jUIFilter.operator.toString();
 		uiFilter.value = jUIFilter.value;
+		uiFilter.attribute = jUIFilter.attribute.equivalent("UIBaseComponentType").uuid;
 	}

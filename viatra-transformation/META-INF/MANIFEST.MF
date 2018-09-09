@@ -6,6 +6,7 @@ Bundle-Version: 0.0.1.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
+Export-Package: queries
 Require-Bundle: org.eclipse.viatra.transformation.runtime.emf,
   org.eclipse.viatra.transformation.evm,
   org.eclipse.viatra.transformation.runtime.debug,

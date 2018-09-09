@@ -55,7 +55,7 @@ rule UIBaseComponentType
 		uibasetype.upper = jattribute.upper;
 		uibasetype.regexp = jattribute.regexp;
 		uibasetype.decimals = jattribute.decimals;
-		uibasetype.placeholder = jattribute.placeholder;
+		uibasetype.placeholder = jattribute.placeholder;		
 		uibasetype.type = jattribute.type.componentType().name;
 		uibasetype.interval = jattribute.interval;
 		

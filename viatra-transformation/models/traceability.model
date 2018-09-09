@@ -1,2 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<traceability:PSMToUI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:traceability="http://blackbelt.hu/judo/meta/psm/ui/traceability" xmi:id="_FWdGsK7fEei6TNRUv-4xJg"/>
+<traceability:PSMToUI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:traceability="http://blackbelt.hu/judo/meta/psm/ui/traceability" xmi:id="_FWdGsK7fEei6TNRUv-4xJg">
+  <jModel href="platform:/resource/psm_meta/src/library/car-psm.model#/"/>
+  <uiBase href="ui.model#/"/>
+</traceability:PSMToUI>

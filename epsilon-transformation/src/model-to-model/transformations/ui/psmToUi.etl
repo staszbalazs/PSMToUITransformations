@@ -7,8 +7,6 @@ import "modules/uifilter.etl";
 import "modules/uimenuitem.etl";
 import "modules/uiaction.etl";
 
-
-
 post {
 
 	if (UI!UIMenuItem.all.size = 0) {
@@ -23,7 +21,7 @@ post {
 					var classMenuItem = new UI!UIMenuItem();
 					classMenuItem.uuid = class.uuid + "_menuitem";
 					classMenuItem.name = class.name;
-					classMenuItem.menuView = class.equivalent("UIClass").selector;
+					classMenuItem.menuView = class.equivalent("UIClass").listView;
 					
 					menuItem.menuItems.add(classMenuItem); 
 				}
@@ -45,13 +43,8 @@ post {
 		while (true) {
 			if (class.super.isDefined()) {
 				if (not class.`abstract`) {
-					for (classView in class.classViews) {
-						if (classView.uuid.endsWith("_oview_default")) {
-							childClassViews.add(classView);
-						}
-					}
+					childClassViews.add(class.classView);
 				}
-				
 				
 				class.super.childClassViews.addAll(childClassViews);
 				class = class.super;
@@ -59,12 +52,7 @@ post {
 				break;
 			}
 		}
-	}
-	
-	for (filter in PSM!JUIFilter) {
-		filter.equivalent("UIFilter").attribute = filter.attribute.equivalent("UIBaseComponentType").uuid;
-	}
-	
+	}	
 	
 	//Use it to check if all Uuids are unique
 	//Impacts performance

@@ -307,7 +307,7 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getUIClass_ClassViews() {
+	public EReference getUIClass_ClassView() {
 		return (EReference)uiClassEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -316,7 +316,7 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getUIClass_ListViews() {
+	public EReference getUIClass_ListView() {
 		return (EReference)uiClassEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -343,17 +343,8 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getUIClass_Selector() {
-		return (EReference)uiClassEClass.getEStructuralFeatures().get(5);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EAttribute getUIClass_Readonly() {
-		return (EAttribute)uiClassEClass.getEStructuralFeatures().get(6);
+		return (EAttribute)uiClassEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -362,7 +353,7 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 	 * @generated
 	 */
 	public EAttribute getUIClass_EnumClass() {
-		return (EAttribute)uiClassEClass.getEStructuralFeatures().get(7);
+		return (EAttribute)uiClassEClass.getEStructuralFeatures().get(6);
 	}
 
 	/**
@@ -371,7 +362,7 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 	 * @generated
 	 */
 	public EAttribute getUIClass_Singleton() {
-		return (EAttribute)uiClassEClass.getEStructuralFeatures().get(8);
+		return (EAttribute)uiClassEClass.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -380,7 +371,7 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 	 * @generated
 	 */
 	public EReference getUIClass_Super() {
-		return (EReference)uiClassEClass.getEStructuralFeatures().get(9);
+		return (EReference)uiClassEClass.getEStructuralFeatures().get(8);
 	}
 
 	/**
@@ -389,7 +380,7 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 	 * @generated
 	 */
 	public EReference getUIClass_Representation() {
-		return (EReference)uiClassEClass.getEStructuralFeatures().get(10);
+		return (EReference)uiClassEClass.getEStructuralFeatures().get(9);
 	}
 
 	/**
@@ -398,7 +389,7 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 	 * @generated
 	 */
 	public EReference getUIClass_Attributes() {
-		return (EReference)uiClassEClass.getEStructuralFeatures().get(11);
+		return (EReference)uiClassEClass.getEStructuralFeatures().get(10);
 	}
 
 	/**
@@ -407,7 +398,7 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 	 * @generated
 	 */
 	public EReference getUIClass_InheritedAttributes() {
-		return (EReference)uiClassEClass.getEStructuralFeatures().get(12);
+		return (EReference)uiClassEClass.getEStructuralFeatures().get(11);
 	}
 
 	/**
@@ -416,7 +407,7 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 	 * @generated
 	 */
 	public EReference getUIClass_InheritedActions() {
-		return (EReference)uiClassEClass.getEStructuralFeatures().get(13);
+		return (EReference)uiClassEClass.getEStructuralFeatures().get(12);
 	}
 
 	/**
@@ -946,15 +937,6 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getUIListView_OwnerClass() {
-		return (EReference)uiListViewEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getUIClassView() {
 		return uiClassViewEClass;
 	}
@@ -1174,11 +1156,10 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 
 		uiClassEClass = createEClass(UI_CLASS);
 		createEReference(uiClassEClass, UI_CLASS__ACTIONS);
-		createEReference(uiClassEClass, UI_CLASS__CLASS_VIEWS);
-		createEReference(uiClassEClass, UI_CLASS__LIST_VIEWS);
+		createEReference(uiClassEClass, UI_CLASS__CLASS_VIEW);
+		createEReference(uiClassEClass, UI_CLASS__LIST_VIEW);
 		createEReference(uiClassEClass, UI_CLASS__CHILD_CLASS_VIEWS);
 		createEAttribute(uiClassEClass, UI_CLASS__ABSTRACT);
-		createEReference(uiClassEClass, UI_CLASS__SELECTOR);
 		createEAttribute(uiClassEClass, UI_CLASS__READONLY);
 		createEAttribute(uiClassEClass, UI_CLASS__ENUM_CLASS);
 		createEAttribute(uiClassEClass, UI_CLASS__SINGLETON);
@@ -1257,7 +1238,6 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 
 		uiListViewEClass = createEClass(UI_LIST_VIEW);
 		createEReference(uiListViewEClass, UI_LIST_VIEW__DETAIL_VIEW);
-		createEReference(uiListViewEClass, UI_LIST_VIEW__OWNER_CLASS);
 
 		uiClassViewEClass = createEClass(UI_CLASS_VIEW);
 
@@ -1345,11 +1325,10 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 
 		initEClass(uiClassEClass, UIClass.class, "UIClass", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getUIClass_Actions(), this.getUIAction(), null, "actions", null, 0, -1, UIClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getUIClass_ClassViews(), this.getUIClassView(), null, "classViews", null, 0, -1, UIClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getUIClass_ListViews(), this.getUIListView(), null, "listViews", null, 0, -1, UIClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getUIClass_ClassView(), this.getUIClassView(), null, "classView", null, 1, 1, UIClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getUIClass_ListView(), this.getUIListView(), null, "listView", null, 1, 1, UIClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getUIClass_ChildClassViews(), this.getUIClassView(), null, "childClassViews", null, 0, -1, UIClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUIClass_Abstract(), ecorePackage.getEBoolean(), "abstract", null, 0, 1, UIClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getUIClass_Selector(), this.getUIListView(), this.getUIListView_OwnerClass(), "selector", null, 1, 1, UIClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUIClass_Readonly(), ecorePackage.getEBoolean(), "readonly", null, 0, 1, UIClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUIClass_EnumClass(), ecorePackage.getEBoolean(), "enumClass", null, 0, 1, UIClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUIClass_Singleton(), ecorePackage.getEBoolean(), "singleton", null, 0, 1, UIClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1428,7 +1407,6 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 
 		initEClass(uiListViewEClass, UIListView.class, "UIListView", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getUIListView_DetailView(), this.getUIClassView(), null, "detailView", null, 0, 1, UIListView.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getUIListView_OwnerClass(), this.getUIClass(), this.getUIClass_Selector(), "ownerClass", null, 0, 1, UIListView.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(uiClassViewEClass, UIClassView.class, "UIClassView", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

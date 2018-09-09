@@ -17,12 +17,17 @@ import traceability.TraceabilityPackage
 import ui.UIClass
 import java.util.List
 import java.util.ArrayList
+import psm.JUIAttributeGroup
+import ui.UIViewFieldSet
+import ui.UIClassView
+import ui.UiPackage
 
 class AttributeRuleFactory {
 	
 	extension IModelManipulations manipulation
 	extension EventDrivenTransformationRuleFactory factory = new EventDrivenTransformationRuleFactory
 	
+	extension UiPackage uiPackage = UiPackage::eINSTANCE
 	extension TraceabilityPackage trPackage = TraceabilityPackage::eINSTANCE
 	
 	extension ComponentType componentType
@@ -36,14 +41,13 @@ class AttributeRuleFactory {
 					
 					val JAttribute jAttr = it.JAttribute as JAttribute
 					//Get owner UIClass
-					val match = PatternProvider.instance().getPsmToUiTrace(engine)
+					val uiClass = PatternProvider.instance().getPsmToUiTrace(engine)
 												.getOneArbitraryMatch(jAttr.ownerClass, null)
 												.get()
-										
-					val UIClass owner = match.getIdentifiable as UIClass
-					
+												.getIdentifiable as UIClass
+															
 					//Create role for owner
-					val uiBaseType = createUIBaseType(owner, jAttr, engine)
+					val uiBaseType = createUIBaseType(uiClass, jAttr, engine)
 					psm2ui.createChild(PSMToUI_Traces, PSMToUITrace) => [
 						addTo(PSMToUITrace_PsmElements, jAttr)
 						addTo(PSMToUITrace_UiElements, uiBaseType)
@@ -51,15 +55,41 @@ class AttributeRuleFactory {
 					
 					//Get descendant UIClasses
 					val List<UIClass> ownersByInheritance = PatternProvider.instance().getFindDescendantsForClass(engine)
-											  .getAllMatches(null, owner)
+											  .getAllMatches(null, uiClass)
 											  .stream()
 											  .map[getDescendant as UIClass]
 											  .collect(Collectors.toList)
 					
-					//Add attribute to each of them
 					for (UIClass class : ownersByInheritance) {
 						class.inheritedAttributes.add(uiBaseType)
 					}
+					
+					//create viewFields for attribute			
+					val groups = PatternProvider.instance().getAttributeGroupQuery(engine)
+												.getAllMatches(null, null, jAttr)
+					
+					for (group : groups) {
+						val attrGroup = group.getGroup() as JUIAttributeGroup
+						
+						val potentialViewFieldSet = PatternProvider.instance().getPsmToUiTrace(engine)
+															.getOneArbitraryMatch(attrGroup, null)
+						
+						if (potentialViewFieldSet.isPresent()) {
+							val viewFieldSet = potentialViewFieldSet.get().getIdentifiable() as UIViewFieldSet
+							
+						} else {
+							val UIClassView classView = PatternProvider.instance().getClassViewForUIClass(engine)
+												.getOneArbitraryMatch(uiClass, null)
+												.get()
+												.getView() as UIClassView
+							
+							classView.createChild(getUIView_ViewFieldSets, UIViewFieldSet) as UIViewFieldSet
+						}
+											
+					}
+					
+					
+					
 							
 				].action(CRUDActivationStateEnum.UPDATED) [
 				].action(CRUDActivationStateEnum.DELETED) [

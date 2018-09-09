@@ -4,6 +4,8 @@ import org.eclipse.viatra.transformation.runtime.emf.modelmanipulation.IModelMan
 import ui.UIAttributeComponentType
 import ui.UIInterval
 import ui.UiPackage
+import ui.UIComponentType
+import ui.UIParameterComponentType
 
 class Interval {
 	
@@ -11,7 +13,7 @@ class Interval {
 	
 	extension UiPackage uiPackage = UiPackage::eINSTANCE
 	
-	public def createIntervals(UIAttributeComponentType componentType) {
+	public def createIntervals(UIComponentType componentType, String classUuid) {
 		
 		if (componentType.interval !== null) {
 			val intervalList = componentType.interval.replace(" ", "").replace("\\],\\[", " ").replace("\\]", "").replace("\\[", "").split(" ");
@@ -33,11 +35,11 @@ class Interval {
 					}
 					
 					uiInterval.name = "UIInterval";
-					uiInterval.uuid = componentType.ownerClass.uuid + "." + componentType.name + "_" + n
+					uiInterval.uuid = classUuid + "." + componentType.name + "_" + n
 					n++;
 				}
 			}
 		}	
-	}
+	} 
 	
 }

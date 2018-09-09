@@ -14,11 +14,10 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  * <ul>
  *   <li>{@link ui.UIClass#getActions <em>Actions</em>}</li>
- *   <li>{@link ui.UIClass#getClassViews <em>Class Views</em>}</li>
- *   <li>{@link ui.UIClass#getListViews <em>List Views</em>}</li>
+ *   <li>{@link ui.UIClass#getClassView <em>Class View</em>}</li>
+ *   <li>{@link ui.UIClass#getListView <em>List View</em>}</li>
  *   <li>{@link ui.UIClass#getChildClassViews <em>Child Class Views</em>}</li>
  *   <li>{@link ui.UIClass#isAbstract <em>Abstract</em>}</li>
- *   <li>{@link ui.UIClass#getSelector <em>Selector</em>}</li>
  *   <li>{@link ui.UIClass#isReadonly <em>Readonly</em>}</li>
  *   <li>{@link ui.UIClass#isEnumClass <em>Enum Class</em>}</li>
  *   <li>{@link ui.UIClass#isSingleton <em>Singleton</em>}</li>
@@ -51,36 +50,56 @@ public interface UIClass extends Identifiable {
 	EList<UIAction> getActions();
 
 	/**
-	 * Returns the value of the '<em><b>Class Views</b></em>' containment reference list.
-	 * The list contents are of type {@link ui.UIClassView}.
+	 * Returns the value of the '<em><b>Class View</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Class Views</em>' containment reference list isn't clear,
+	 * If the meaning of the '<em>Class View</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Class Views</em>' containment reference list.
-	 * @see ui.UiPackage#getUIClass_ClassViews()
-	 * @model containment="true"
+	 * @return the value of the '<em>Class View</em>' containment reference.
+	 * @see #setClassView(UIClassView)
+	 * @see ui.UiPackage#getUIClass_ClassView()
+	 * @model containment="true" required="true"
 	 * @generated
 	 */
-	EList<UIClassView> getClassViews();
+	UIClassView getClassView();
 
 	/**
-	 * Returns the value of the '<em><b>List Views</b></em>' containment reference list.
-	 * The list contents are of type {@link ui.UIListView}.
+	 * Sets the value of the '{@link ui.UIClass#getClassView <em>Class View</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Class View</em>' containment reference.
+	 * @see #getClassView()
+	 * @generated
+	 */
+	void setClassView(UIClassView value);
+
+	/**
+	 * Returns the value of the '<em><b>List View</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>List Views</em>' containment reference list isn't clear,
+	 * If the meaning of the '<em>List View</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>List Views</em>' containment reference list.
-	 * @see ui.UiPackage#getUIClass_ListViews()
-	 * @model containment="true"
+	 * @return the value of the '<em>List View</em>' containment reference.
+	 * @see #setListView(UIListView)
+	 * @see ui.UiPackage#getUIClass_ListView()
+	 * @model containment="true" required="true"
 	 * @generated
 	 */
-	EList<UIListView> getListViews();
+	UIListView getListView();
+
+	/**
+	 * Sets the value of the '{@link ui.UIClass#getListView <em>List View</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>List View</em>' containment reference.
+	 * @see #getListView()
+	 * @generated
+	 */
+	void setListView(UIListView value);
 
 	/**
 	 * Returns the value of the '<em><b>Child Class Views</b></em>' reference list.
@@ -123,34 +142,6 @@ public interface UIClass extends Identifiable {
 	 * @generated
 	 */
 	void setAbstract(boolean value);
-
-	/**
-	 * Returns the value of the '<em><b>Selector</b></em>' reference.
-	 * It is bidirectional and its opposite is '{@link ui.UIListView#getOwnerClass <em>Owner Class</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Selector</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Selector</em>' reference.
-	 * @see #setSelector(UIListView)
-	 * @see ui.UiPackage#getUIClass_Selector()
-	 * @see ui.UIListView#getOwnerClass
-	 * @model opposite="ownerClass" required="true"
-	 * @generated
-	 */
-	UIListView getSelector();
-
-	/**
-	 * Sets the value of the '{@link ui.UIClass#getSelector <em>Selector</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Selector</em>' reference.
-	 * @see #getSelector()
-	 * @generated
-	 */
-	void setSelector(UIListView value);
 
 	/**
 	 * Returns the value of the '<em><b>Readonly</b></em>' attribute.

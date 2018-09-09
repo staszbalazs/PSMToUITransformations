@@ -8,19 +8,118 @@ import org.eclipse.viatra.query.runtime.api.ViatraQueryMatcher
 import org.eclipse.viatra.query.runtime.api.IPatternMatch
 import org.eclipse.viatra.transformation.runtime.emf.rules.eventdriven.EventDrivenTransformationRule
 import psm.JParameter
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
+import ui.UIAction
+import ui.UiPackage
+import traceability.TraceabilityPackage
+import org.eclipse.viatra.transformation.runtime.emf.modelmanipulation.IModelManipulations
+import ui.UIParameterComponentType
+import psm.JClass
+import ui.UIClass
+import operations.ComponentType
+import ui.UIBaseComponentType
+import ui.UIResultView
+import ui.UIViewFieldSet
+import ui.UIViewField
+import operations.Interval
+import ui.UIParamView
+import traceability.PSMToUI
 
 class ParameterRuleFactory {
 	
+	extension IModelManipulations manipulation	
 	extension EventDrivenTransformationRuleFactory factory = new EventDrivenTransformationRuleFactory
 	
+	extension UiPackage uiPackage = UiPackage::eINSTANCE
+	extension TraceabilityPackage trPackage = TraceabilityPackage::eINSTANCE
+	
+	extension Interval interval
+		
 	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> parameterRule
 	
-	public def getParameterRule() {
+	public def getParameterRule(PSMToUI psm2ui, ViatraQueryEngine engine) {
 		if (parameterRule === null) {
 			parameterRule = createRule.name("ParameterRule").precondition(PatternProvider.instance().getJParameterWithGuardQuery())
 				.action(CRUDActivationStateEnum.CREATED) [
 					
-					it.JParameter as JParameter
+					val JParameter jParameter = it.JParameter as JParameter
+					val UIAction uiAction = PatternProvider.instance().getPsmToUiTrace(engine)
+												.getOneArbitraryMatch(jParameter.ownerOperation, null)
+												.get()
+												.getIdentifiable() as UIAction
+					
+					var UIParameterComponentType param
+					if (jParameter.input) {
+						param = uiAction.createChild(getUIAction_Parameters, UIParameterComponentType) as UIParameterComponentType
+						
+						val paramView = PatternProvider.instance().getParamViewForUIAction(engine)
+												.getOneArbitraryMatch(uiAction, null)
+												.get()
+												.getView() as UIParamView
+						
+						var UIViewFieldSet viewFieldSet			
+						if (paramView.viewFieldSets.isEmpty()) {
+							viewFieldSet = paramView.createChild(getUIView_ViewFieldSets, UIViewFieldSet) as UIViewFieldSet
+							viewFieldSet.name = uiAction.name
+							viewFieldSet.uuid = paramView.uuid +  "_viewFieldSet_" + uiAction.name
+						} else {
+							viewFieldSet = paramView.viewFieldSets.get(0)
+						}												
+												
+						val viewField = viewFieldSet.createChild(getUIViewFieldSet_ViewFields, UIViewField) as UIViewField
+						viewField.name = jParameter.name;
+						viewField.uuid = uiAction.uuid + "." + jParameter.name + "_viewField"
+						viewField.componentType = param;
+						viewField.position = viewFieldSet.viewFields.size() + 1;
+						
+					} else {
+						param = uiAction.createChild(getUIAction_Result, UIParameterComponentType) as UIParameterComponentType
+					
+						//create viewField for resultView
+						val resultView = PatternProvider.instance().getResultViewForUIAction(engine)
+												.getOneArbitraryMatch(uiAction, null)
+												.get()
+												.getView() as UIResultView
+						
+						val viewFieldSet = resultView.createChild(getUIView_ViewFieldSets, UIViewFieldSet) as UIViewFieldSet
+						viewFieldSet.name = uiAction.name
+						viewFieldSet.uuid = resultView.uuid +  "_viewFieldSet_" + uiAction.name
+						
+						val viewField = viewFieldSet.createChild(getUIViewFieldSet_ViewFields, UIViewField) as UIViewField
+						viewField.name = jParameter.name;
+						viewField.uuid = resultView.uuid + "." + jParameter.name + "_viewField"
+						viewField.componentType = param;
+						viewField.position = 1;
+					}
+					
+					if (jParameter.type instanceof JClass) {
+						val UIClass uiClass = PatternProvider.instance().getPsmToUiTrace(engine)
+												.getOneArbitraryMatch(jParameter.type, null)
+												.get()
+												.getIdentifiable() as UIClass
+						
+						param.referenced = uiClass
+						param.type = uiClass.name;
+					} else {
+						val UIBaseComponentType componentType = PatternProvider.instance().getFindCorrespondingType(engine)
+													.getOneArbitraryMatch(jParameter.type, null)
+													.get()
+													.getComponentType() as UIBaseComponentType
+						param.type = componentType.name
+					}
+					
+					param.uuid = jParameter.uuid;
+					param.name = jParameter.name;
+					param.value = "";
+					param.lower = jParameter.lower;
+					param.upper = jParameter.upper;
+					param.interval = jParameter.interval;
+					
+					createIntervals(param, jParameter.ownerOperation.ownerClass.uuid)
+					
+					val trace = psm2ui.createChild(PSMToUI_Traces, PSMToUITrace)
+					trace.addTo(PSMToUITrace_PsmElements, jParameter)
+					trace.addTo(PSMToUITrace_UiElements, param)
 					
 				].action(CRUDActivationStateEnum.UPDATED) [
 				].action(CRUDActivationStateEnum.DELETED) [

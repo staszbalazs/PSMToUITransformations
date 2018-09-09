@@ -213,22 +213,22 @@ public interface UiPackage extends EPackage {
 	int UI_CLASS__ACTIONS = IDENTIFIABLE_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Class Views</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Class View</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int UI_CLASS__CLASS_VIEWS = IDENTIFIABLE_FEATURE_COUNT + 1;
+	int UI_CLASS__CLASS_VIEW = IDENTIFIABLE_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>List Views</b></em>' containment reference list.
+	 * The feature id for the '<em><b>List View</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int UI_CLASS__LIST_VIEWS = IDENTIFIABLE_FEATURE_COUNT + 2;
+	int UI_CLASS__LIST_VIEW = IDENTIFIABLE_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Child Class Views</b></em>' reference list.
@@ -249,22 +249,13 @@ public interface UiPackage extends EPackage {
 	int UI_CLASS__ABSTRACT = IDENTIFIABLE_FEATURE_COUNT + 4;
 
 	/**
-	 * The feature id for the '<em><b>Selector</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UI_CLASS__SELECTOR = IDENTIFIABLE_FEATURE_COUNT + 5;
-
-	/**
 	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int UI_CLASS__READONLY = IDENTIFIABLE_FEATURE_COUNT + 6;
+	int UI_CLASS__READONLY = IDENTIFIABLE_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Enum Class</b></em>' attribute.
@@ -273,7 +264,7 @@ public interface UiPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UI_CLASS__ENUM_CLASS = IDENTIFIABLE_FEATURE_COUNT + 7;
+	int UI_CLASS__ENUM_CLASS = IDENTIFIABLE_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Singleton</b></em>' attribute.
@@ -282,7 +273,7 @@ public interface UiPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UI_CLASS__SINGLETON = IDENTIFIABLE_FEATURE_COUNT + 8;
+	int UI_CLASS__SINGLETON = IDENTIFIABLE_FEATURE_COUNT + 7;
 
 	/**
 	 * The feature id for the '<em><b>Super</b></em>' reference.
@@ -291,7 +282,7 @@ public interface UiPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UI_CLASS__SUPER = IDENTIFIABLE_FEATURE_COUNT + 9;
+	int UI_CLASS__SUPER = IDENTIFIABLE_FEATURE_COUNT + 8;
 
 	/**
 	 * The feature id for the '<em><b>Representation</b></em>' reference.
@@ -300,7 +291,7 @@ public interface UiPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UI_CLASS__REPRESENTATION = IDENTIFIABLE_FEATURE_COUNT + 10;
+	int UI_CLASS__REPRESENTATION = IDENTIFIABLE_FEATURE_COUNT + 9;
 
 	/**
 	 * The feature id for the '<em><b>Attributes</b></em>' containment reference list.
@@ -309,7 +300,7 @@ public interface UiPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UI_CLASS__ATTRIBUTES = IDENTIFIABLE_FEATURE_COUNT + 11;
+	int UI_CLASS__ATTRIBUTES = IDENTIFIABLE_FEATURE_COUNT + 10;
 
 	/**
 	 * The feature id for the '<em><b>Inherited Attributes</b></em>' reference list.
@@ -318,7 +309,7 @@ public interface UiPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UI_CLASS__INHERITED_ATTRIBUTES = IDENTIFIABLE_FEATURE_COUNT + 12;
+	int UI_CLASS__INHERITED_ATTRIBUTES = IDENTIFIABLE_FEATURE_COUNT + 11;
 
 	/**
 	 * The feature id for the '<em><b>Inherited Actions</b></em>' reference list.
@@ -327,7 +318,7 @@ public interface UiPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UI_CLASS__INHERITED_ACTIONS = IDENTIFIABLE_FEATURE_COUNT + 13;
+	int UI_CLASS__INHERITED_ACTIONS = IDENTIFIABLE_FEATURE_COUNT + 12;
 
 	/**
 	 * The number of structural features of the '<em>UI Class</em>' class.
@@ -336,7 +327,7 @@ public interface UiPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UI_CLASS_FEATURE_COUNT = IDENTIFIABLE_FEATURE_COUNT + 14;
+	int UI_CLASS_FEATURE_COUNT = IDENTIFIABLE_FEATURE_COUNT + 13;
 
 	/**
 	 * The number of operations of the '<em>UI Class</em>' class.
@@ -1268,22 +1259,13 @@ public interface UiPackage extends EPackage {
 	int UI_LIST_VIEW__DETAIL_VIEW = UI_VIEW_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Owner Class</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UI_LIST_VIEW__OWNER_CLASS = UI_VIEW_FEATURE_COUNT + 1;
-
-	/**
 	 * The number of structural features of the '<em>UI List View</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int UI_LIST_VIEW_FEATURE_COUNT = UI_VIEW_FEATURE_COUNT + 2;
+	int UI_LIST_VIEW_FEATURE_COUNT = UI_VIEW_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of operations of the '<em>UI List View</em>' class.
@@ -2222,26 +2204,26 @@ public interface UiPackage extends EPackage {
 	EReference getUIClass_Actions();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link ui.UIClass#getClassViews <em>Class Views</em>}'.
+	 * Returns the meta object for the containment reference '{@link ui.UIClass#getClassView <em>Class View</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Class Views</em>'.
-	 * @see ui.UIClass#getClassViews()
+	 * @return the meta object for the containment reference '<em>Class View</em>'.
+	 * @see ui.UIClass#getClassView()
 	 * @see #getUIClass()
 	 * @generated
 	 */
-	EReference getUIClass_ClassViews();
+	EReference getUIClass_ClassView();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link ui.UIClass#getListViews <em>List Views</em>}'.
+	 * Returns the meta object for the containment reference '{@link ui.UIClass#getListView <em>List View</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>List Views</em>'.
-	 * @see ui.UIClass#getListViews()
+	 * @return the meta object for the containment reference '<em>List View</em>'.
+	 * @see ui.UIClass#getListView()
 	 * @see #getUIClass()
 	 * @generated
 	 */
-	EReference getUIClass_ListViews();
+	EReference getUIClass_ListView();
 
 	/**
 	 * Returns the meta object for the reference list '{@link ui.UIClass#getChildClassViews <em>Child Class Views</em>}'.
@@ -2264,17 +2246,6 @@ public interface UiPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getUIClass_Abstract();
-
-	/**
-	 * Returns the meta object for the reference '{@link ui.UIClass#getSelector <em>Selector</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Selector</em>'.
-	 * @see ui.UIClass#getSelector()
-	 * @see #getUIClass()
-	 * @generated
-	 */
-	EReference getUIClass_Selector();
 
 	/**
 	 * Returns the meta object for the attribute '{@link ui.UIClass#isReadonly <em>Readonly</em>}'.
@@ -2991,17 +2962,6 @@ public interface UiPackage extends EPackage {
 	EReference getUIListView_DetailView();
 
 	/**
-	 * Returns the meta object for the reference '{@link ui.UIListView#getOwnerClass <em>Owner Class</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Owner Class</em>'.
-	 * @see ui.UIListView#getOwnerClass()
-	 * @see #getUIListView()
-	 * @generated
-	 */
-	EReference getUIListView_OwnerClass();
-
-	/**
 	 * Returns the meta object for class '{@link ui.UIClassView <em>UI Class View</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3301,20 +3261,20 @@ public interface UiPackage extends EPackage {
 		EReference UI_CLASS__ACTIONS = eINSTANCE.getUIClass_Actions();
 
 		/**
-		 * The meta object literal for the '<em><b>Class Views</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Class View</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference UI_CLASS__CLASS_VIEWS = eINSTANCE.getUIClass_ClassViews();
+		EReference UI_CLASS__CLASS_VIEW = eINSTANCE.getUIClass_ClassView();
 
 		/**
-		 * The meta object literal for the '<em><b>List Views</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>List View</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference UI_CLASS__LIST_VIEWS = eINSTANCE.getUIClass_ListViews();
+		EReference UI_CLASS__LIST_VIEW = eINSTANCE.getUIClass_ListView();
 
 		/**
 		 * The meta object literal for the '<em><b>Child Class Views</b></em>' reference list feature.
@@ -3331,14 +3291,6 @@ public interface UiPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute UI_CLASS__ABSTRACT = eINSTANCE.getUIClass_Abstract();
-
-		/**
-		 * The meta object literal for the '<em><b>Selector</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference UI_CLASS__SELECTOR = eINSTANCE.getUIClass_Selector();
 
 		/**
 		 * The meta object literal for the '<em><b>Readonly</b></em>' attribute feature.
@@ -3891,14 +3843,6 @@ public interface UiPackage extends EPackage {
 		 * @generated
 		 */
 		EReference UI_LIST_VIEW__DETAIL_VIEW = eINSTANCE.getUIListView_DetailView();
-
-		/**
-		 * The meta object literal for the '<em><b>Owner Class</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference UI_LIST_VIEW__OWNER_CLASS = eINSTANCE.getUIListView_OwnerClass();
 
 		/**
 		 * The meta object literal for the '{@link ui.impl.UIClassViewImpl <em>UI Class View</em>}' class.

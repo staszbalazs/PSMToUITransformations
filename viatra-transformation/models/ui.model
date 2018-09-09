@@ -1,2 +1,4 @@
 <?xml version="1.0" encoding="ASCII"?>
-<ui:UIBase xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ui="http://blackbelt.hu/judo/meta/psm/ui"/>
+<ui:UIBase xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ui="http://blackbelt.hu/judo/meta/psm/ui" xmi:id="_y1LcgK7hEei6TNRUv-4xJg">
+  <info xmi:id="_7N8o0K7iEei6TNRUv-4xJg"/>
+</ui:UIBase>

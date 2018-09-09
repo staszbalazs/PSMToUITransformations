@@ -6,9 +6,15 @@ import "http://blackbelt.hu/judo/meta/psm/ui/traceability"
 import "http://blackbelt.hu/judo/meta/psm/ui/mapping"
 
 
+//UIBase Queries
+pattern UIBaseQuery(uiBase: UIBase) {
+	UIBase(uiBase);
+}
+
 //JModel Queries
-pattern JModelQuery(jModel : JModel) {
+pattern domainJModelQuery(jModel : JModel) {
 	JModel(jModel);
+	JModel.framework(jModel, false);
 }
 
 //JUIFilter Queries
@@ -67,6 +73,16 @@ pattern findDescendantsForClass(uiClass : UIClass, descendant : UIClass) {
 	UIClass.^super+(descendant, uiClass);
 }
 
+pattern listViewForUIClass(uiClass : UIClass, view : UIListView) {
+	UIClass(uiClass);
+	UIClass.listView(uiClass, view);
+}
+
+pattern classViewForUIClass(uiClass : UIClass, view : UIClassView) {
+	UIClass(uiClass);
+	UIClass.classView(uiClass, view);
+}
+
 
 //JClass Queries
 pattern JClassQuery(jClass : JClass) {
@@ -76,6 +92,26 @@ pattern JClassQuery(jClass : JClass) {
 pattern JClassWithGuardConditionQuery(jClass : JClass) {
 	JClass.^package(jClass, jPackage);
 	find findUIRelevantPackages(jPackage);
+}
+
+pattern attributeGroupQuery(jClass : JClass, group : JUIAttributeGroup, attribute : JAttribute) {
+	JClass.attributeOrder(jClass, group);
+	JUIAttributeGroup.attributes(group, attribute);
+}
+
+pattern representsUserJClassQuery(jClass : JClass) {
+	JClass.representsUser(jClass, true);
+}
+
+//UIACtion Queries
+pattern resultViewForUIAction(action : UIAction, view : UIResultView) {
+	UIAction(action);
+	UIAction.resultView(action, view);
+}
+
+pattern paramViewForUIAction(action : UIAction, view : UIParamView) {
+	UIAction(action);
+	UIAction.paramView(action, view);
 }
 
 //JOperation Queries
@@ -91,6 +127,16 @@ pattern JParameterWithGuardQuery(jParameter : JParameter) {
 	JOperation.visibility(jOperation, JVisibility::PUBLIC);
 }
 
+pattern resultJParameter(jOperation : JOperation, jParameter : JParameter) {
+	JOperation.parameters(jOperation, jParameter);
+	JParameter.input(jParameter, false);
+}
+
+//UIMenuItem Queries
+pattern mainMenuQuery(menuItem : UIMenuItem) {
+	UIMenuItem.uuid(menuItem, "main_menu");
+}
+
 //JUIMenuItem Queries
 pattern findMenuItemForFilter(jFilter : JUIFilter, jMenuItem : JUIMenuItem) {
 	JUIMenuItem.uifilters(jMenuItem, jFilter);
@@ -98,6 +144,11 @@ pattern findMenuItemForFilter(jFilter : JUIFilter, jMenuItem : JUIMenuItem) {
 
 pattern findMenuItemWithParent(jMenuItem : JUIMenuItem) {
 	JUIMenuItem.parent(jMenuItem, _);
+}
+
+pattern menuRootChildren(menuItem : JUIMenuItem) {
+	JModel.rootMenuItems(_JModel, Root);
+	JUIMenuItem.children(Root, menuItem);
 }
 
 //JRole Queries

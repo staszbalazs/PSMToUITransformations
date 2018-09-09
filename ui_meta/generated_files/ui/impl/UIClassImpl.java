@@ -36,11 +36,10 @@ import ui.UiPackage;
  * </p>
  * <ul>
  *   <li>{@link ui.impl.UIClassImpl#getActions <em>Actions</em>}</li>
- *   <li>{@link ui.impl.UIClassImpl#getClassViews <em>Class Views</em>}</li>
- *   <li>{@link ui.impl.UIClassImpl#getListViews <em>List Views</em>}</li>
+ *   <li>{@link ui.impl.UIClassImpl#getClassView <em>Class View</em>}</li>
+ *   <li>{@link ui.impl.UIClassImpl#getListView <em>List View</em>}</li>
  *   <li>{@link ui.impl.UIClassImpl#getChildClassViews <em>Child Class Views</em>}</li>
  *   <li>{@link ui.impl.UIClassImpl#isAbstract <em>Abstract</em>}</li>
- *   <li>{@link ui.impl.UIClassImpl#getSelector <em>Selector</em>}</li>
  *   <li>{@link ui.impl.UIClassImpl#isReadonly <em>Readonly</em>}</li>
  *   <li>{@link ui.impl.UIClassImpl#isEnumClass <em>Enum Class</em>}</li>
  *   <li>{@link ui.impl.UIClassImpl#isSingleton <em>Singleton</em>}</li>
@@ -65,24 +64,24 @@ public class UIClassImpl extends IdentifiableImpl implements UIClass {
 	protected EList<UIAction> actions;
 
 	/**
-	 * The cached value of the '{@link #getClassViews() <em>Class Views</em>}' containment reference list.
+	 * The cached value of the '{@link #getClassView() <em>Class View</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getClassViews()
+	 * @see #getClassView()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<UIClassView> classViews;
+	protected UIClassView classView;
 
 	/**
-	 * The cached value of the '{@link #getListViews() <em>List Views</em>}' containment reference list.
+	 * The cached value of the '{@link #getListView() <em>List View</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getListViews()
+	 * @see #getListView()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<UIListView> listViews;
+	protected UIListView listView;
 
 	/**
 	 * The cached value of the '{@link #getChildClassViews() <em>Child Class Views</em>}' reference list.
@@ -113,16 +112,6 @@ public class UIClassImpl extends IdentifiableImpl implements UIClass {
 	 * @ordered
 	 */
 	protected boolean abstract_ = ABSTRACT_EDEFAULT;
-
-	/**
-	 * The cached value of the '{@link #getSelector() <em>Selector</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getSelector()
-	 * @generated
-	 * @ordered
-	 */
-	protected UIListView selector;
 
 	/**
 	 * The default value of the '{@link #isReadonly() <em>Readonly</em>}' attribute.
@@ -270,11 +259,8 @@ public class UIClassImpl extends IdentifiableImpl implements UIClass {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<UIClassView> getClassViews() {
-		if (classViews == null) {
-			classViews = new EObjectContainmentEList<UIClassView>(UIClassView.class, this, UiPackage.UI_CLASS__CLASS_VIEWS);
-		}
-		return classViews;
+	public UIClassView getClassView() {
+		return classView;
 	}
 
 	/**
@@ -282,11 +268,76 @@ public class UIClassImpl extends IdentifiableImpl implements UIClass {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<UIListView> getListViews() {
-		if (listViews == null) {
-			listViews = new EObjectContainmentEList<UIListView>(UIListView.class, this, UiPackage.UI_CLASS__LIST_VIEWS);
+	public NotificationChain basicSetClassView(UIClassView newClassView, NotificationChain msgs) {
+		UIClassView oldClassView = classView;
+		classView = newClassView;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, UiPackage.UI_CLASS__CLASS_VIEW, oldClassView, newClassView);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
-		return listViews;
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setClassView(UIClassView newClassView) {
+		if (newClassView != classView) {
+			NotificationChain msgs = null;
+			if (classView != null)
+				msgs = ((InternalEObject)classView).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - UiPackage.UI_CLASS__CLASS_VIEW, null, msgs);
+			if (newClassView != null)
+				msgs = ((InternalEObject)newClassView).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - UiPackage.UI_CLASS__CLASS_VIEW, null, msgs);
+			msgs = basicSetClassView(newClassView, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, UiPackage.UI_CLASS__CLASS_VIEW, newClassView, newClassView));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public UIListView getListView() {
+		return listView;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetListView(UIListView newListView, NotificationChain msgs) {
+		UIListView oldListView = listView;
+		listView = newListView;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, UiPackage.UI_CLASS__LIST_VIEW, oldListView, newListView);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setListView(UIListView newListView) {
+		if (newListView != listView) {
+			NotificationChain msgs = null;
+			if (listView != null)
+				msgs = ((InternalEObject)listView).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - UiPackage.UI_CLASS__LIST_VIEW, null, msgs);
+			if (newListView != null)
+				msgs = ((InternalEObject)newListView).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - UiPackage.UI_CLASS__LIST_VIEW, null, msgs);
+			msgs = basicSetListView(newListView, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, UiPackage.UI_CLASS__LIST_VIEW, newListView, newListView));
 	}
 
 	/**
@@ -320,66 +371,6 @@ public class UIClassImpl extends IdentifiableImpl implements UIClass {
 		abstract_ = newAbstract;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, UiPackage.UI_CLASS__ABSTRACT, oldAbstract, abstract_));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public UIListView getSelector() {
-		if (selector != null && selector.eIsProxy()) {
-			InternalEObject oldSelector = (InternalEObject)selector;
-			selector = (UIListView)eResolveProxy(oldSelector);
-			if (selector != oldSelector) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, UiPackage.UI_CLASS__SELECTOR, oldSelector, selector));
-			}
-		}
-		return selector;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public UIListView basicGetSelector() {
-		return selector;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetSelector(UIListView newSelector, NotificationChain msgs) {
-		UIListView oldSelector = selector;
-		selector = newSelector;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, UiPackage.UI_CLASS__SELECTOR, oldSelector, newSelector);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setSelector(UIListView newSelector) {
-		if (newSelector != selector) {
-			NotificationChain msgs = null;
-			if (selector != null)
-				msgs = ((InternalEObject)selector).eInverseRemove(this, UiPackage.UI_LIST_VIEW__OWNER_CLASS, UIListView.class, msgs);
-			if (newSelector != null)
-				msgs = ((InternalEObject)newSelector).eInverseAdd(this, UiPackage.UI_LIST_VIEW__OWNER_CLASS, UIListView.class, msgs);
-			msgs = basicSetSelector(newSelector, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, UiPackage.UI_CLASS__SELECTOR, newSelector, newSelector));
 	}
 
 	/**
@@ -566,10 +557,6 @@ public class UIClassImpl extends IdentifiableImpl implements UIClass {
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case UiPackage.UI_CLASS__SELECTOR:
-				if (selector != null)
-					msgs = ((InternalEObject)selector).eInverseRemove(this, UiPackage.UI_LIST_VIEW__OWNER_CLASS, UIListView.class, msgs);
-				return basicSetSelector((UIListView)otherEnd, msgs);
 			case UiPackage.UI_CLASS__ATTRIBUTES:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getAttributes()).basicAdd(otherEnd, msgs);
 		}
@@ -586,12 +573,10 @@ public class UIClassImpl extends IdentifiableImpl implements UIClass {
 		switch (featureID) {
 			case UiPackage.UI_CLASS__ACTIONS:
 				return ((InternalEList<?>)getActions()).basicRemove(otherEnd, msgs);
-			case UiPackage.UI_CLASS__CLASS_VIEWS:
-				return ((InternalEList<?>)getClassViews()).basicRemove(otherEnd, msgs);
-			case UiPackage.UI_CLASS__LIST_VIEWS:
-				return ((InternalEList<?>)getListViews()).basicRemove(otherEnd, msgs);
-			case UiPackage.UI_CLASS__SELECTOR:
-				return basicSetSelector(null, msgs);
+			case UiPackage.UI_CLASS__CLASS_VIEW:
+				return basicSetClassView(null, msgs);
+			case UiPackage.UI_CLASS__LIST_VIEW:
+				return basicSetListView(null, msgs);
 			case UiPackage.UI_CLASS__ATTRIBUTES:
 				return ((InternalEList<?>)getAttributes()).basicRemove(otherEnd, msgs);
 		}
@@ -608,17 +593,14 @@ public class UIClassImpl extends IdentifiableImpl implements UIClass {
 		switch (featureID) {
 			case UiPackage.UI_CLASS__ACTIONS:
 				return getActions();
-			case UiPackage.UI_CLASS__CLASS_VIEWS:
-				return getClassViews();
-			case UiPackage.UI_CLASS__LIST_VIEWS:
-				return getListViews();
+			case UiPackage.UI_CLASS__CLASS_VIEW:
+				return getClassView();
+			case UiPackage.UI_CLASS__LIST_VIEW:
+				return getListView();
 			case UiPackage.UI_CLASS__CHILD_CLASS_VIEWS:
 				return getChildClassViews();
 			case UiPackage.UI_CLASS__ABSTRACT:
 				return isAbstract();
-			case UiPackage.UI_CLASS__SELECTOR:
-				if (resolve) return getSelector();
-				return basicGetSelector();
 			case UiPackage.UI_CLASS__READONLY:
 				return isReadonly();
 			case UiPackage.UI_CLASS__ENUM_CLASS:
@@ -654,13 +636,11 @@ public class UIClassImpl extends IdentifiableImpl implements UIClass {
 				getActions().clear();
 				getActions().addAll((Collection<? extends UIAction>)newValue);
 				return;
-			case UiPackage.UI_CLASS__CLASS_VIEWS:
-				getClassViews().clear();
-				getClassViews().addAll((Collection<? extends UIClassView>)newValue);
+			case UiPackage.UI_CLASS__CLASS_VIEW:
+				setClassView((UIClassView)newValue);
 				return;
-			case UiPackage.UI_CLASS__LIST_VIEWS:
-				getListViews().clear();
-				getListViews().addAll((Collection<? extends UIListView>)newValue);
+			case UiPackage.UI_CLASS__LIST_VIEW:
+				setListView((UIListView)newValue);
 				return;
 			case UiPackage.UI_CLASS__CHILD_CLASS_VIEWS:
 				getChildClassViews().clear();
@@ -668,9 +648,6 @@ public class UIClassImpl extends IdentifiableImpl implements UIClass {
 				return;
 			case UiPackage.UI_CLASS__ABSTRACT:
 				setAbstract((Boolean)newValue);
-				return;
-			case UiPackage.UI_CLASS__SELECTOR:
-				setSelector((UIListView)newValue);
 				return;
 			case UiPackage.UI_CLASS__READONLY:
 				setReadonly((Boolean)newValue);
@@ -714,20 +691,17 @@ public class UIClassImpl extends IdentifiableImpl implements UIClass {
 			case UiPackage.UI_CLASS__ACTIONS:
 				getActions().clear();
 				return;
-			case UiPackage.UI_CLASS__CLASS_VIEWS:
-				getClassViews().clear();
+			case UiPackage.UI_CLASS__CLASS_VIEW:
+				setClassView((UIClassView)null);
 				return;
-			case UiPackage.UI_CLASS__LIST_VIEWS:
-				getListViews().clear();
+			case UiPackage.UI_CLASS__LIST_VIEW:
+				setListView((UIListView)null);
 				return;
 			case UiPackage.UI_CLASS__CHILD_CLASS_VIEWS:
 				getChildClassViews().clear();
 				return;
 			case UiPackage.UI_CLASS__ABSTRACT:
 				setAbstract(ABSTRACT_EDEFAULT);
-				return;
-			case UiPackage.UI_CLASS__SELECTOR:
-				setSelector((UIListView)null);
 				return;
 			case UiPackage.UI_CLASS__READONLY:
 				setReadonly(READONLY_EDEFAULT);
@@ -767,16 +741,14 @@ public class UIClassImpl extends IdentifiableImpl implements UIClass {
 		switch (featureID) {
 			case UiPackage.UI_CLASS__ACTIONS:
 				return actions != null && !actions.isEmpty();
-			case UiPackage.UI_CLASS__CLASS_VIEWS:
-				return classViews != null && !classViews.isEmpty();
-			case UiPackage.UI_CLASS__LIST_VIEWS:
-				return listViews != null && !listViews.isEmpty();
+			case UiPackage.UI_CLASS__CLASS_VIEW:
+				return classView != null;
+			case UiPackage.UI_CLASS__LIST_VIEW:
+				return listView != null;
 			case UiPackage.UI_CLASS__CHILD_CLASS_VIEWS:
 				return childClassViews != null && !childClassViews.isEmpty();
 			case UiPackage.UI_CLASS__ABSTRACT:
 				return abstract_ != ABSTRACT_EDEFAULT;
-			case UiPackage.UI_CLASS__SELECTOR:
-				return selector != null;
 			case UiPackage.UI_CLASS__READONLY:
 				return readonly != READONLY_EDEFAULT;
 			case UiPackage.UI_CLASS__ENUM_CLASS:

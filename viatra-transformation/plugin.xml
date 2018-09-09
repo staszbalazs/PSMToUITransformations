@@ -12,7 +12,7 @@
     <package class="ui.UiPackage" genModel="platform:/resource/traceability_meta/model/traceability.genmodel" uri="http://blackbelt.hu/judo/meta/psm/ui"/>
   </extension>
   <extension point="org.eclipse.ui.commands">
-    <command defaultHandler="viatra_transformation.src.handlers.ToggleTransformationHandler" id="viatra_transformation.command" name="Toggle Transformation"/>
+    <command defaultHandler="viatra_transformation.handlers.ToggleTransformationHandler" id="viatra_transformation.command" name="Toggle Transformation"/>
   </extension>
   <extension point="org.eclipse.ui.menus">
     <menuContribution allPopups="false" locationURI="popup:org.eclipse.ui.popup.any?after=additions">
@@ -28,18 +28,28 @@
       </command>
     </menuContribution>
   </extension>
-    <extension id="queries.PatternProvider" point="org.eclipse.viatra.query.runtime.queryspecification">
+  <extension id="queries.PatternProvider" point="org.eclipse.viatra.query.runtime.queryspecification">
     <group group="org.eclipse.viatra.query.runtime.extensibility.SingletonExtensionFactory:queries.PatternProvider" id="queries.PatternProvider">
-      <query-specification fqn="queries.JModelQuery"/>
+      <query-specification fqn="queries.UIBaseQuery"/>
+      <query-specification fqn="queries.domainJModelQuery"/>
       <query-specification fqn="queries.JUIFilterQuery"/>
       <query-specification fqn="queries.JPackageToUIModuleQuery"/>
       <query-specification fqn="queries.findDescendantsForClass"/>
+      <query-specification fqn="queries.listViewForUIClass"/>
+      <query-specification fqn="queries.classViewForUIClass"/>
       <query-specification fqn="queries.JClassQuery"/>
       <query-specification fqn="queries.JClassWithGuardConditionQuery"/>
+      <query-specification fqn="queries.attributeGroupQuery"/>
+      <query-specification fqn="queries.representsUserJClassQuery"/>
+      <query-specification fqn="queries.resultViewForUIAction"/>
+      <query-specification fqn="queries.paramViewForUIAction"/>
       <query-specification fqn="queries.JOperationWithGuardQuery"/>
       <query-specification fqn="queries.JParameterWithGuardQuery"/>
+      <query-specification fqn="queries.resultJParameter"/>
+      <query-specification fqn="queries.mainMenuQuery"/>
       <query-specification fqn="queries.findMenuItemForFilter"/>
       <query-specification fqn="queries.findMenuItemWithParent"/>
+      <query-specification fqn="queries.menuRootChildren"/>
       <query-specification fqn="queries.JRoleQuery"/>
       <query-specification fqn="queries.JAttributeQuery"/>
       <query-specification fqn="queries.psmToUiTrace"/>

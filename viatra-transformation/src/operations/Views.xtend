@@ -25,15 +25,10 @@ class Views {
 	
 	extension UiPackage uiPackage = UiPackage::eINSTANCE
 	
-	public def createClassView(UIClass uiClass, JClass jClass, JUIAlias alias, Boolean isDefault, ViatraQueryEngine engine) {
-		val UIClassView classView = uiClass.createChild(UIClass_ClassViews, UIClassView) as UIClassView
-		if (alias !== null) {
-			classView.uuid = uiClass.uuid.replace("\\.", "_") + "_oview_" + alias.name
-			classView.name = alias.name
-		} else {
-			classView.uuid = uiClass.uuid.replace("\\.", "_") + "_oview_default"
-			classView.name = uiClass.name
-		}
+	public def createClassView(UIClass uiClass, JClass jClass, Boolean isDefault, ViatraQueryEngine engine) {
+		val UIClassView classView = uiClass.createChild(UIClass_ClassView, UIClassView) as UIClassView
+		classView.uuid = uiClass.uuid.replace("\\.", "_") + "_oview_default"
+		classView.name = uiClass.name
 		
 		classView.isDefault = isDefault
 		
@@ -102,15 +97,10 @@ class Views {
 	}
 	
 	
-	public def createListView(UIClass uiClass, JClass jClass, JUIAlias alias, UIClassView classView, Boolean isDefault, ViatraQueryEngine engine) {
-		val UIListView listView = uiClass.createChild(UIClass_ListViews, UIListView) as UIListView
-		if (alias !== null) {
-			listView.uuid = uiClass.uuid.replace("\\.", "_") + "_lview_" + alias.name
-			listView.name = alias.name;
-		} else {
-			listView.uuid = uiClass.uuid.replace("\\.", "_") + "_lview_default"
-			listView.name = uiClass.name;
-		}
+	public def createListView(UIClass uiClass, JClass jClass, UIClassView classView, Boolean isDefault, ViatraQueryEngine engine) {
+		val UIListView listView = uiClass.createChild(UIClass_ListView, UIListView) as UIListView
+		listView.uuid = uiClass.uuid.replace("\\.", "_") + "_lview_default"
+		listView.name = uiClass.name;
 		
 		listView.isDefault = isDefault;
 		listView.pageSize = 20;

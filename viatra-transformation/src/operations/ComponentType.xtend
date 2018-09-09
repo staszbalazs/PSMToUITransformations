@@ -59,7 +59,7 @@ class ComponentType {
 		uiBaseType.type = componentType.name
 		
 		//create intervals
-		createIntervals(uiBaseType)
+		createIntervals(uiBaseType, uiBaseType.ownerClass.uuid)
 		
 		return uiBaseType
 	}
@@ -130,7 +130,7 @@ class ComponentType {
 		}
 		
 		//create intervals
-		createIntervals(uiReferenceType)
+		createIntervals(uiReferenceType, uiReferenceType.ownerClass.uuid)
 		
 		return uiReferenceType
 	}

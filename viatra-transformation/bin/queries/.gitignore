@@ -35,3 +35,14 @@
 /JRoleQuery.java
 /.JOperationWithGuardQuery.java._trace
 /.JParameterWithGuardQuery.java._trace
+/.ResultJParameter.java._trace
+/.ResultViewForUIAction.java._trace
+/.ParamViewForUIAction.java._trace
+/.ListViewForUIClass.java._trace
+/.ClassViewForUIClass.java._trace
+/.AttributeGroupQuery.java._trace
+/.DomainJModelQuery.java._trace
+/.RepresentUserJClassQuery.java._trace
+/.RepresentsUserJClassQuery.java._trace
+/.MenuRootChildren.java._trace
+/.MainMenuQuery.java._trace

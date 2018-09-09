@@ -16,6 +16,8 @@ import org.eclipse.viatra.query.runtime.api.IPatternMatch
 import org.eclipse.viatra.transformation.runtime.emf.rules.eventdriven.EventDrivenTransformationRule
 import psm.JClass
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
+import ui.UIListView
+import ui.UIClassView
 
 class ClassRuleFactory {
 	
@@ -86,6 +88,18 @@ class ClassRuleFactory {
 							trace.addTo(PSMToUITrace_UiElements, superType)
 						}
 					}
+					
+					//create classView
+					val classView = uiClass.createChild(getUIClass_ClassView, UIClassView) as UIClassView
+					classView.uuid = uiClass.uuid.replace("\\.", "_") + "_oview_default"
+					classView.name = uiClass.name
+					
+					//create listView
+					val listView = uiClass.createChild(getUIClass_ListView, UIListView) as UIListView
+					listView.uuid = uiClass.uuid.replace("\\.", "_") + "_lview_default"
+					listView.name = uiClass.name;
+					listView.pageSize = 20;
+					listView.detailView = classView;
 					
 				].action(CRUDActivationStateEnum.UPDATED) [
 				].action(CRUDActivationStateEnum.DELETED) [
