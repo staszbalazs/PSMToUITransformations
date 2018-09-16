@@ -1,9 +1,9 @@
 package queries
 
-import "http://blackbelt.hu/judo/meta/psm"
-import "http://blackbelt.hu/judo/meta/psm/ui"
-import "http://blackbelt.hu/judo/meta/psm/ui/traceability"
-import "http://blackbelt.hu/judo/meta/psm/ui/mapping"
+import "platform:/resource/psm_meta/src/model/psm.ecore"
+import "platform:/resource/ui_meta/src/model/ui.ecore"
+import "platform:/resource/ui_meta/src/model/psmToUiTypeMapping.ecore"
+import "platform:/resource/traceability_meta/model/traceability.ecore"
 
 
 //UIBase Queries
@@ -162,7 +162,7 @@ pattern JAttributeQuery(jAttribute : JAttribute) {
 }
 
 //Trace Queries
-pattern psmToUiTrace(jElement, identifiable) {
+pattern psmToUiTrace(jElement : JElement, identifiable : Identifiable) {
 	PSMToUITrace.psmElements(trace, jElement);
 	PSMToUITrace.uiElements(trace, identifiable);
 }

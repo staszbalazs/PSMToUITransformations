@@ -419,7 +419,7 @@ public abstract class UIComponentTypeImpl extends IdentifiableImpl implements UI
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
-		StringBuilder result = new StringBuilder(super.toString());
+		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (value: ");
 		result.append(value);
 		result.append(", lower: ");

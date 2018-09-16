@@ -1,29 +1,29 @@
 package transformations
 
+import operations.Interval
+import org.eclipse.viatra.query.runtime.api.IPatternMatch
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
+import org.eclipse.viatra.query.runtime.api.ViatraQueryMatcher
 import org.eclipse.viatra.transformation.evm.specific.Lifecycles
 import org.eclipse.viatra.transformation.evm.specific.crud.CRUDActivationStateEnum
-import org.eclipse.viatra.transformation.runtime.emf.rules.eventdriven.EventDrivenTransformationRuleFactory
-import queries.PatternProvider
-import org.eclipse.viatra.query.runtime.api.ViatraQueryMatcher
-import org.eclipse.viatra.query.runtime.api.IPatternMatch
-import org.eclipse.viatra.transformation.runtime.emf.rules.eventdriven.EventDrivenTransformationRule
-import psm.JParameter
-import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
-import ui.UIAction
-import ui.UiPackage
-import traceability.TraceabilityPackage
 import org.eclipse.viatra.transformation.runtime.emf.modelmanipulation.IModelManipulations
-import ui.UIParameterComponentType
+import org.eclipse.viatra.transformation.runtime.emf.modelmanipulation.SimpleModelManipulations
+import org.eclipse.viatra.transformation.runtime.emf.rules.eventdriven.EventDrivenTransformationRule
+import org.eclipse.viatra.transformation.runtime.emf.rules.eventdriven.EventDrivenTransformationRuleFactory
 import psm.JClass
-import ui.UIClass
-import operations.ComponentType
-import ui.UIBaseComponentType
-import ui.UIResultView
-import ui.UIViewFieldSet
-import ui.UIViewField
-import operations.Interval
-import ui.UIParamView
+import psm.JParameter
+import queries.PatternProvider
 import traceability.PSMToUI
+import traceability.TraceabilityPackage
+import ui.UIAction
+import ui.UIBaseComponentType
+import ui.UIClass
+import ui.UIParamView
+import ui.UIParameterComponentType
+import ui.UIResultView
+import ui.UIViewField
+import ui.UIViewFieldSet
+import ui.UiPackage
 
 class ParameterRuleFactory {
 	
@@ -39,10 +39,17 @@ class ParameterRuleFactory {
 	
 	public def getParameterRule(PSMToUI psm2ui, ViatraQueryEngine engine) {
 		if (parameterRule === null) {
+			manipulation = new SimpleModelManipulations(engine)
+			interval = new Interval(engine)
+			
 			parameterRule = createRule.name("ParameterRule").precondition(PatternProvider.instance().getJParameterWithGuardQuery())
 				.action(CRUDActivationStateEnum.CREATED) [
 					
 					val JParameter jParameter = it.JParameter as JParameter
+					
+					System.out.println("Transforming parameter: " + jParameter.uuid)
+					
+					
 					val UIAction uiAction = PatternProvider.instance().getPsmToUiTrace(engine)
 												.getOneArbitraryMatch(jParameter.ownerOperation, null)
 												.get()

@@ -13,6 +13,7 @@ import ui.UIReferenceComponentType
 import ui.UiPackage
 import traceability.PSMToUI
 import traceability.TraceabilityPackage
+import org.eclipse.viatra.transformation.runtime.emf.modelmanipulation.SimpleModelManipulations
 
 class ComponentType {
 
@@ -22,6 +23,11 @@ class ComponentType {
 	extension TraceabilityPackage trPackage = TraceabilityPackage::eINSTANCE
 	
 	extension Interval interval
+	
+	new(ViatraQueryEngine engine) {
+		manipulation = new SimpleModelManipulations(engine)
+		interval = new Interval(engine)
+	}
 
 	public def createUIBaseType(UIClass owner, JAttribute jAttr, ViatraQueryEngine engine) {
 		//create UIBaseComponentType
@@ -69,11 +75,11 @@ class ComponentType {
 		var UIReferenceComponentType uiReferenceType = null
 		val match = PatternProvider.instance().getPsmToUiTrace(engine)
 											.getOneArbitraryMatch(jRole, null)
-											.get()
+										
 			
-		if (match !== null) {
-			uiReferenceType = match.getIdentifiable as UIReferenceComponentType
-			owner.addTo(getUIClass_Attributes, uiReferenceType)
+		if (match.isPresent) {
+			uiReferenceType = match.get().getIdentifiable as UIReferenceComponentType
+			uiReferenceType.moveTo(owner, getUIClass_Attributes)
 		}
 		
 		if (uiReferenceType === null) {
@@ -104,10 +110,9 @@ class ComponentType {
 		//set opposite and type
 		val potentialOpposite = PatternProvider.instance().getPsmToUiTrace(engine)
 									.getOneArbitraryMatch(jRole.opposite(), null)
-									.get()
 									
-		if (potentialOpposite !== null) {
-			val opposite = potentialOpposite.getIdentifiable as UIReferenceComponentType
+		if (potentialOpposite.isPresent) {
+			val opposite = potentialOpposite.get().getIdentifiable as UIReferenceComponentType
 			uiReferenceType.opposite = opposite
 			uiReferenceType.referenced = opposite.ownerClass
 			uiReferenceType.type = opposite.ownerClass.name
@@ -116,7 +121,7 @@ class ComponentType {
 			
 			val trace = psm2ui.createChild(PSMToUI_Traces, PSMToUITrace)
 			trace.addTo(PSMToUITrace_PsmElements, jRole.opposite())
-			trace.addTo(PSMToUITrace_UiElements, UIReferenceComponentType)
+			trace.addTo(PSMToUITrace_UiElements, opposite)
 			
 			uiReferenceType.opposite = opposite
 			

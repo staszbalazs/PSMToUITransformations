@@ -1,5 +1,6 @@
 package handlers;
 
+import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
@@ -28,12 +29,15 @@ public class ToggleTransformationHandler extends AbstractHandler implements IHan
                 try {
                     engine = ViatraQueryEngine.on(new EMFScope(tracemodel.eResource().getResourceSet()));
                     transformation = new EventDrivenPsmToUi(tracemodel, engine);
+                    transformation.execute();
                 } catch (ViatraQueryException e) {
                     throw new ExecutionException(e.getMessage(), e);
                 }
             }
         } else {
             transformation.dispose();
+            transformation = null;
+            engine = null;
         }
 
         return null;

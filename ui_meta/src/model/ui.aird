@@ -14,6 +14,10 @@
     <semanticResources>psmToUiTypeMapping.ecore</semanticResources>
     <semanticResources>ui.genmodel</semanticResources>
     <semanticResources>platform:/resource/psm_meta/src/library/psmTypes.model</semanticResources>
+    <semanticResources>psmToUiTypeMapping.genmodel</semanticResources>
+    <semanticResources>http://blackbelt.hu/judo/meta/psm/ui</semanticResources>
+    <semanticResources>platform:/resource/psm_meta/src/model/psm.ecore</semanticResources>
+    <semanticResources>platform:/resource/psm_meta/src/model/psm.genmodel</semanticResources>
     <ownedViews xmi:type="viewpoint:DView" xmi:id="_x3ZxkKd1EeewXONo54bgNA">
       <viewpoint xmi:type="description:Viewpoint" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']"/>
       <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" xmi:id="_XUoUwMlnEeeZWafPuerDaA" name="ui" repPath="#_WeEo4KE_EeivEv4sugDT1w">

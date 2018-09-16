@@ -10,6 +10,7 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 import psm.PsmPackage;
 
+import psmToUiTypeMapping.PsmToUiTypeMappingPackage;
 import traceability.PSMToUI;
 import traceability.PSMToUITrace;
 import traceability.TraceabilityFactory;
@@ -66,7 +67,7 @@ public class TraceabilityPackageImpl extends EPackageImpl implements Traceabilit
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 *
+	 * 
 	 * <p>This method is used to initialize {@link TraceabilityPackage#eINSTANCE} when that field is accessed.
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
@@ -80,13 +81,13 @@ public class TraceabilityPackageImpl extends EPackageImpl implements Traceabilit
 		if (isInited) return (TraceabilityPackage)EPackage.Registry.INSTANCE.getEPackage(TraceabilityPackage.eNS_URI);
 
 		// Obtain or create and register package
-		Object registeredTraceabilityPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
-		TraceabilityPackageImpl theTraceabilityPackage = registeredTraceabilityPackage instanceof TraceabilityPackageImpl ? (TraceabilityPackageImpl)registeredTraceabilityPackage : new TraceabilityPackageImpl();
+		TraceabilityPackageImpl theTraceabilityPackage = (TraceabilityPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof TraceabilityPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new TraceabilityPackageImpl());
 
 		isInited = true;
 
 		// Initialize simple dependencies
 		PsmPackage.eINSTANCE.eClass();
+		PsmToUiTypeMappingPackage.eINSTANCE.eClass();
 		UiPackage.eINSTANCE.eClass();
 
 		// Create package meta-data objects
@@ -98,6 +99,7 @@ public class TraceabilityPackageImpl extends EPackageImpl implements Traceabilit
 		// Mark meta-data to indicate it can't be changed
 		theTraceabilityPackage.freeze();
 
+  
 		// Update the registry and return the package
 		EPackage.Registry.INSTANCE.put(TraceabilityPackage.eNS_URI, theTraceabilityPackage);
 		return theTraceabilityPackage;
@@ -137,6 +139,15 @@ public class TraceabilityPackageImpl extends EPackageImpl implements Traceabilit
 	 */
 	public EReference getPSMToUI_UiBase() {
 		return (EReference)psmToUIEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getPSMToUI_TypeMappings() {
+		return (EReference)psmToUIEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -198,6 +209,7 @@ public class TraceabilityPackageImpl extends EPackageImpl implements Traceabilit
 		createEReference(psmToUIEClass, PSM_TO_UI__TRACES);
 		createEReference(psmToUIEClass, PSM_TO_UI__JMODEL);
 		createEReference(psmToUIEClass, PSM_TO_UI__UI_BASE);
+		createEReference(psmToUIEClass, PSM_TO_UI__TYPE_MAPPINGS);
 
 		psmToUITraceEClass = createEClass(PSM_TO_UI_TRACE);
 		createEReference(psmToUITraceEClass, PSM_TO_UI_TRACE__UI_ELEMENTS);
@@ -230,6 +242,7 @@ public class TraceabilityPackageImpl extends EPackageImpl implements Traceabilit
 		// Obtain other dependent packages
 		PsmPackage thePsmPackage = (PsmPackage)EPackage.Registry.INSTANCE.getEPackage(PsmPackage.eNS_URI);
 		UiPackage theUiPackage = (UiPackage)EPackage.Registry.INSTANCE.getEPackage(UiPackage.eNS_URI);
+		PsmToUiTypeMappingPackage thePsmToUiTypeMappingPackage = (PsmToUiTypeMappingPackage)EPackage.Registry.INSTANCE.getEPackage(PsmToUiTypeMappingPackage.eNS_URI);
 
 		// Create type parameters
 
@@ -239,9 +252,10 @@ public class TraceabilityPackageImpl extends EPackageImpl implements Traceabilit
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(psmToUIEClass, PSMToUI.class, "PSMToUI", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getPSMToUI_Traces(), this.getPSMToUITrace(), null, "traces", null, 0, -1, PSMToUI.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getPSMToUI_Traces(), this.getPSMToUITrace(), null, "traces", null, 0, -1, PSMToUI.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getPSMToUI_JModel(), thePsmPackage.getJModel(), null, "jModel", null, 0, 1, PSMToUI.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getPSMToUI_UiBase(), theUiPackage.getUIBase(), null, "uiBase", null, 0, 1, PSMToUI.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getPSMToUI_TypeMappings(), thePsmToUiTypeMappingPackage.getMappings(), null, "typeMappings", null, 0, 1, PSMToUI.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(psmToUITraceEClass, PSMToUITrace.class, "PSMToUITrace", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getPSMToUITrace_UiElements(), theUiPackage.getIdentifiable(), null, "uiElements", null, 0, -1, PSMToUITrace.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

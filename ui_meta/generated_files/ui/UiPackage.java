@@ -667,22 +667,13 @@ public interface UiPackage extends EPackage {
 	int UI_VIEW__PAGE_SIZE = IDENTIFIABLE_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>Is Default</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UI_VIEW__IS_DEFAULT = IDENTIFIABLE_FEATURE_COUNT + 2;
-
-	/**
 	 * The feature id for the '<em><b>Columns</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int UI_VIEW__COLUMNS = IDENTIFIABLE_FEATURE_COUNT + 3;
+	int UI_VIEW__COLUMNS = IDENTIFIABLE_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>UI View</em>' class.
@@ -691,7 +682,7 @@ public interface UiPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UI_VIEW_FEATURE_COUNT = IDENTIFIABLE_FEATURE_COUNT + 4;
+	int UI_VIEW_FEATURE_COUNT = IDENTIFIABLE_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of operations of the '<em>UI View</em>' class.
@@ -1232,15 +1223,6 @@ public interface UiPackage extends EPackage {
 	int UI_LIST_VIEW__PAGE_SIZE = UI_VIEW__PAGE_SIZE;
 
 	/**
-	 * The feature id for the '<em><b>Is Default</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UI_LIST_VIEW__IS_DEFAULT = UI_VIEW__IS_DEFAULT;
-
-	/**
 	 * The feature id for the '<em><b>Columns</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1323,15 +1305,6 @@ public interface UiPackage extends EPackage {
 	int UI_CLASS_VIEW__PAGE_SIZE = UI_VIEW__PAGE_SIZE;
 
 	/**
-	 * The feature id for the '<em><b>Is Default</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UI_CLASS_VIEW__IS_DEFAULT = UI_VIEW__IS_DEFAULT;
-
-	/**
 	 * The feature id for the '<em><b>Columns</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1405,15 +1378,6 @@ public interface UiPackage extends EPackage {
 	int UI_RESULT_VIEW__PAGE_SIZE = UI_VIEW__PAGE_SIZE;
 
 	/**
-	 * The feature id for the '<em><b>Is Default</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UI_RESULT_VIEW__IS_DEFAULT = UI_VIEW__IS_DEFAULT;
-
-	/**
 	 * The feature id for the '<em><b>Columns</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1485,15 +1449,6 @@ public interface UiPackage extends EPackage {
 	 * @ordered
 	 */
 	int UI_PARAM_VIEW__PAGE_SIZE = UI_VIEW__PAGE_SIZE;
-
-	/**
-	 * The feature id for the '<em><b>Is Default</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UI_PARAM_VIEW__IS_DEFAULT = UI_VIEW__IS_DEFAULT;
 
 	/**
 	 * The feature id for the '<em><b>Columns</b></em>' attribute.
@@ -2574,17 +2529,6 @@ public interface UiPackage extends EPackage {
 	EAttribute getUIView_PageSize();
 
 	/**
-	 * Returns the meta object for the attribute '{@link ui.UIView#isIsDefault <em>Is Default</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Is Default</em>'.
-	 * @see ui.UIView#isIsDefault()
-	 * @see #getUIView()
-	 * @generated
-	 */
-	EAttribute getUIView_IsDefault();
-
-	/**
 	 * Returns the meta object for the attribute '{@link ui.UIView#getColumns <em>Columns</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3539,14 +3483,6 @@ public interface UiPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute UI_VIEW__PAGE_SIZE = eINSTANCE.getUIView_PageSize();
-
-		/**
-		 * The meta object literal for the '<em><b>Is Default</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute UI_VIEW__IS_DEFAULT = eINSTANCE.getUIView_IsDefault();
 
 		/**
 		 * The meta object literal for the '<em><b>Columns</b></em>' attribute feature.

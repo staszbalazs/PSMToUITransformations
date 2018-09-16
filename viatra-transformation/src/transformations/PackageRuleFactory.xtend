@@ -13,6 +13,8 @@ import org.eclipse.viatra.transformation.runtime.emf.rules.eventdriven.EventDriv
 import psm.JPackage
 import traceability.TraceabilityPackage
 import ui.UIModule
+import org.eclipse.viatra.transformation.runtime.emf.modelmanipulation.SimpleModelManipulations
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
 
 class PackageRuleFactory {
 	
@@ -25,12 +27,17 @@ class PackageRuleFactory {
 	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> packageRule
 	
 	//After Model
-	public def getPackageRule(PSMToUI psm2ui) {
+	public def getPackageRule(PSMToUI psm2ui, ViatraQueryEngine engine) {
 		if (packageRule === null) {
+			manipulation = new SimpleModelManipulations(engine);
+						
 			packageRule = createRule.name("PackageRule").precondition(PatternProvider.instance().getJPackageToUIModuleQuery())
 				.action(CRUDActivationStateEnum.CREATED) [
 					
 					val JPackage jPackage = it.getJPackage() as JPackage
+					
+					System.out.println("Transforming package: " + jPackage.uuid)
+					
 					
 					val UIModule uiModule = psm2ui.uiBase.createChild(getUIBase_Modules(), UIModule) as UIModule
 					

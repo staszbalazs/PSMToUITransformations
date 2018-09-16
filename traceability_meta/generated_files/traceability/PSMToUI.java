@@ -8,6 +8,7 @@ import org.eclipse.emf.ecore.EObject;
 
 import psm.JModel;
 
+import psmToUiTypeMapping.Mappings;
 import ui.UIBase;
 
 /**
@@ -22,6 +23,7 @@ import ui.UIBase;
  *   <li>{@link traceability.PSMToUI#getTraces <em>Traces</em>}</li>
  *   <li>{@link traceability.PSMToUI#getJModel <em>JModel</em>}</li>
  *   <li>{@link traceability.PSMToUI#getUiBase <em>Ui Base</em>}</li>
+ *   <li>{@link traceability.PSMToUI#getTypeMappings <em>Type Mappings</em>}</li>
  * </ul>
  *
  * @see traceability.TraceabilityPackage#getPSMToUI()
@@ -30,7 +32,7 @@ import ui.UIBase;
  */
 public interface PSMToUI extends EObject {
 	/**
-	 * Returns the value of the '<em><b>Traces</b></em>' reference list.
+	 * Returns the value of the '<em><b>Traces</b></em>' containment reference list.
 	 * The list contents are of type {@link traceability.PSMToUITrace}.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -38,9 +40,9 @@ public interface PSMToUI extends EObject {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Traces</em>' reference list.
+	 * @return the value of the '<em>Traces</em>' containment reference list.
 	 * @see traceability.TraceabilityPackage#getPSMToUI_Traces()
-	 * @model
+	 * @model containment="true"
 	 * @generated
 	 */
 	EList<PSMToUITrace> getTraces();
@@ -96,5 +98,31 @@ public interface PSMToUI extends EObject {
 	 * @generated
 	 */
 	void setUiBase(UIBase value);
+
+	/**
+	 * Returns the value of the '<em><b>Type Mappings</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Type Mappings</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Type Mappings</em>' reference.
+	 * @see #setTypeMappings(Mappings)
+	 * @see traceability.TraceabilityPackage#getPSMToUI_TypeMappings()
+	 * @model
+	 * @generated
+	 */
+	Mappings getTypeMappings();
+
+	/**
+	 * Sets the value of the '{@link traceability.PSMToUI#getTypeMappings <em>Type Mappings</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Type Mappings</em>' reference.
+	 * @see #getTypeMappings()
+	 * @generated
+	 */
+	void setTypeMappings(Mappings value);
 
 } // PSMToUI

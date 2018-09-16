@@ -16,6 +16,7 @@ import traceability.TraceabilityPackage
 import psm.JUIFilter
 import ui.UIFilter
 import ui.UIBaseComponentType
+import org.eclipse.viatra.transformation.runtime.emf.modelmanipulation.SimpleModelManipulations
 
 class FilterRuleFactory {
 	
@@ -23,15 +24,19 @@ class FilterRuleFactory {
 	extension UiPackage uiPackage = UiPackage::eINSTANCE
 	extension TraceabilityPackage trPackage = TraceabilityPackage::eINSTANCE
 	extension EventDrivenTransformationRuleFactory factory = new EventDrivenTransformationRuleFactory
-	
+		
 	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> filterRule
 	
 	public def getFilterRule(PSMToUI psm2ui, ViatraQueryEngine engine) {
 		if (filterRule === null) {
-			filterRule = createRule.name("FilterRule").precondition(PatternProvider.instance().getJUIFilterQuery())
+			manipulation = new SimpleModelManipulations(engine);
+			
+			filterRule = createRule.name("FilterRule").precondition(PatternProvider.instance.JUIFilterQuery)
 				.action(CRUDActivationStateEnum.CREATED) [
 					
 					val JUIFilter jFilter = it.getJFilter() as JUIFilter
+					
+					System.out.println("Transforming filter: " + jFilter.uuid)
 					
 					//Get containing JUIMenuItem for JUIFilter
 					val jMenuItem = PatternProvider.instance().getFindMenuItemForFilter(engine)

@@ -46,3 +46,17 @@
 /.RepresentsUserJClassQuery.java._trace
 /.MenuRootChildren.java._trace
 /.MainMenuQuery.java._trace
+/DomainJModelQuery.java
+/UIBaseQuery.java
+/AttributeGroupQuery.java
+/ClassViewForUIClass.java
+/JOperationWithGuardQuery.java
+/JParameterWithGuardQuery.java
+/ListViewForUIClass.java
+/MainMenuQuery.java
+/MenuRootChildren.java
+/ParamViewForUIAction.java
+/PsmToUiTrace.java
+/RepresentsUserJClassQuery.java
+/ResultJParameter.java
+/ResultViewForUIAction.java

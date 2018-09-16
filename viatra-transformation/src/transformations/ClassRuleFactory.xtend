@@ -18,6 +18,7 @@ import psm.JClass
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
 import ui.UIListView
 import ui.UIClassView
+import org.eclipse.viatra.transformation.runtime.emf.modelmanipulation.SimpleModelManipulations
 
 class ClassRuleFactory {
 	
@@ -30,10 +31,14 @@ class ClassRuleFactory {
 	
 	public def getClassRule(PSMToUI psm2ui, ViatraQueryEngine engine) {
 		if (classRule === null) {
+			manipulation = new SimpleModelManipulations(engine);
+			
 			classRule = createRule.name("ClassRule").precondition(PatternProvider.instance().getJClassWithGuardConditionQuery())
 				.action(CRUDActivationStateEnum.CREATED) [	
 					
 					val JClass jClass = it.getJClass() as JClass
+					
+					System.out.println("Transforming class: " + jClass.uuid)
 					
 					//Get the UIModule for the class
 					val match = PatternProvider.instance().getPsmToUiTrace(engine)
@@ -50,7 +55,7 @@ class ClassRuleFactory {
 					var UIClass uiClass
 					if (possibleMatch.isPresent) {
 						uiClass = possibleMatch.get().getIdentifiable as UIClass
-						module.addTo(getUIModule_Classes, uiClass)
+						uiClass.moveTo(module, UIModule_Classes)
 					} else {
 						uiClass = module.createChild(getUIModule_Classes, UIClass) as UIClass
 						
@@ -78,10 +83,10 @@ class ClassRuleFactory {
 												.getOneArbitraryMatch(jClass.supertype, null)
 									
 						if (potentialSuper.isPresent) {
-							uiClass.addTo(getUIClass_Super, potentialSuper.get().getIdentifiable as UIClass)
+							uiClass.^super = (potentialSuper.get().getIdentifiable as UIClass)
 						} else {
-							val superType = psm2ui.uiBase.eResource.create(UIClass)
-							uiClass.addTo(getUIClass_Super, superType)
+							val superType = psm2ui.uiBase.eResource.create(UIClass) as UIClass
+							uiClass.^super = superType
 							
 							val trace = psm2ui.createChild(PSMToUI_Traces, PSMToUITrace)
 							trace.addTo(PSMToUITrace_PsmElements, jClass.getSupertype)

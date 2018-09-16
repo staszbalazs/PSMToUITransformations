@@ -215,7 +215,7 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 *
+	 * 
 	 * <p>This method is used to initialize {@link UiPackage#eINSTANCE} when that field is accessed.
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
@@ -229,8 +229,7 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		if (isInited) return (UiPackage)EPackage.Registry.INSTANCE.getEPackage(UiPackage.eNS_URI);
 
 		// Obtain or create and register package
-		Object registeredUiPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
-		UiPackageImpl theUiPackage = registeredUiPackage instanceof UiPackageImpl ? (UiPackageImpl)registeredUiPackage : new UiPackageImpl();
+		UiPackageImpl theUiPackage = (UiPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof UiPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new UiPackageImpl());
 
 		isInited = true;
 
@@ -243,6 +242,7 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		// Mark meta-data to indicate it can't be changed
 		theUiPackage.freeze();
 
+  
 		// Update the registry and return the package
 		EPackage.Registry.INSTANCE.put(UiPackage.eNS_URI, theUiPackage);
 		return theUiPackage;
@@ -613,17 +613,8 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getUIView_IsDefault() {
-		return (EAttribute)uiViewEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EAttribute getUIView_Columns() {
-		return (EAttribute)uiViewEClass.getEStructuralFeatures().get(3);
+		return (EAttribute)uiViewEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -1194,7 +1185,6 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		uiViewEClass = createEClass(UI_VIEW);
 		createEReference(uiViewEClass, UI_VIEW__VIEW_FIELD_SETS);
 		createEAttribute(uiViewEClass, UI_VIEW__PAGE_SIZE);
-		createEAttribute(uiViewEClass, UI_VIEW__IS_DEFAULT);
 		createEAttribute(uiViewEClass, UI_VIEW__COLUMNS);
 
 		uiBaseEClass = createEClass(UI_BASE);
@@ -1363,7 +1353,6 @@ public class UiPackageImpl extends EPackageImpl implements UiPackage {
 		initEClass(uiViewEClass, UIView.class, "UIView", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getUIView_ViewFieldSets(), this.getUIViewFieldSet(), null, "viewFieldSets", null, 0, -1, UIView.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUIView_PageSize(), ecorePackage.getEInt(), "pageSize", "1", 0, 1, UIView.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getUIView_IsDefault(), ecorePackage.getEBoolean(), "isDefault", "true", 0, 1, UIView.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUIView_Columns(), ecorePackage.getEInt(), "columns", "2", 0, 1, UIView.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(uiBaseEClass, UIBase.class, "UIBase", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

@@ -7,6 +7,7 @@
         eType="#//PSMToUITrace" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="jModel" eType="ecore:EClass ../../psm_meta/src/model/psm.ecore#//JModel"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="uiBase" eType="ecore:EClass ../../ui_meta/src/model/ui.ecore#//UIBase"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="typeMappings" eType="ecore:EClass ../../ui_meta/src/model/psmToUiTypeMapping.ecore#//Mappings"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PSMToUITrace">
     <eStructuralFeatures xsi:type="ecore:EReference" name="uiElements" upperBound="-1"

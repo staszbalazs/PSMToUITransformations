@@ -11,8 +11,11 @@
     <!-- @generated traceability -->
     <package class="ui.UiPackage" genModel="platform:/resource/traceability_meta/model/traceability.genmodel" uri="http://blackbelt.hu/judo/meta/psm/ui"/>
   </extension>
+  <extension point="org.eclipse.emf.ecore.generated_package">
+    <package class="psmToUiTypeMapping.PsmToUiTypeMappingPackage" genModel="platform:/resource/ui_meta/src/model/psmToUiTypeMapping.genmodel" uri="http://blackbelt.hu/judo/meta/psm/ui/mapping"/>
+  </extension>
   <extension point="org.eclipse.ui.commands">
-    <command defaultHandler="viatra_transformation.handlers.ToggleTransformationHandler" id="viatra_transformation.command" name="Toggle Transformation"/>
+    <command defaultHandler="handlers.ToggleTransformationHandler" id="viatra_transformation.command" name="Toggle Transformation"/>
   </extension>
   <extension point="org.eclipse.ui.menus">
     <menuContribution allPopups="false" locationURI="popup:org.eclipse.ui.popup.any?after=additions">
@@ -21,7 +24,7 @@
           <with variable="selection">
             <count value="1"/>
             <iterate>
-              <adapt type="traceability_meta.generated_files.traceability.PSMToUI"/>
+              <adapt type="traceability.PSMToUI"/>
             </iterate>
           </with>
         </visibleWhen>

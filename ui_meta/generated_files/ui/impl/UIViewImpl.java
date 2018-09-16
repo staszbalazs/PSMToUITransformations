@@ -31,7 +31,6 @@ import ui.UiPackage;
  * <ul>
  *   <li>{@link ui.impl.UIViewImpl#getViewFieldSets <em>View Field Sets</em>}</li>
  *   <li>{@link ui.impl.UIViewImpl#getPageSize <em>Page Size</em>}</li>
- *   <li>{@link ui.impl.UIViewImpl#isIsDefault <em>Is Default</em>}</li>
  *   <li>{@link ui.impl.UIViewImpl#getColumns <em>Columns</em>}</li>
  * </ul>
  *
@@ -67,26 +66,6 @@ public abstract class UIViewImpl extends IdentifiableImpl implements UIView {
 	 * @ordered
 	 */
 	protected int pageSize = PAGE_SIZE_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #isIsDefault() <em>Is Default</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isIsDefault()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean IS_DEFAULT_EDEFAULT = true;
-
-	/**
-	 * The cached value of the '{@link #isIsDefault() <em>Is Default</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isIsDefault()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean isDefault = IS_DEFAULT_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getColumns() <em>Columns</em>}' attribute.
@@ -165,27 +144,6 @@ public abstract class UIViewImpl extends IdentifiableImpl implements UIView {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean isIsDefault() {
-		return isDefault;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setIsDefault(boolean newIsDefault) {
-		boolean oldIsDefault = isDefault;
-		isDefault = newIsDefault;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, UiPackage.UI_VIEW__IS_DEFAULT, oldIsDefault, isDefault));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public int getColumns() {
 		return columns;
 	}
@@ -228,8 +186,6 @@ public abstract class UIViewImpl extends IdentifiableImpl implements UIView {
 				return getViewFieldSets();
 			case UiPackage.UI_VIEW__PAGE_SIZE:
 				return getPageSize();
-			case UiPackage.UI_VIEW__IS_DEFAULT:
-				return isIsDefault();
 			case UiPackage.UI_VIEW__COLUMNS:
 				return getColumns();
 		}
@@ -252,9 +208,6 @@ public abstract class UIViewImpl extends IdentifiableImpl implements UIView {
 			case UiPackage.UI_VIEW__PAGE_SIZE:
 				setPageSize((Integer)newValue);
 				return;
-			case UiPackage.UI_VIEW__IS_DEFAULT:
-				setIsDefault((Boolean)newValue);
-				return;
 			case UiPackage.UI_VIEW__COLUMNS:
 				setColumns((Integer)newValue);
 				return;
@@ -276,9 +229,6 @@ public abstract class UIViewImpl extends IdentifiableImpl implements UIView {
 			case UiPackage.UI_VIEW__PAGE_SIZE:
 				setPageSize(PAGE_SIZE_EDEFAULT);
 				return;
-			case UiPackage.UI_VIEW__IS_DEFAULT:
-				setIsDefault(IS_DEFAULT_EDEFAULT);
-				return;
 			case UiPackage.UI_VIEW__COLUMNS:
 				setColumns(COLUMNS_EDEFAULT);
 				return;
@@ -298,8 +248,6 @@ public abstract class UIViewImpl extends IdentifiableImpl implements UIView {
 				return viewFieldSets != null && !viewFieldSets.isEmpty();
 			case UiPackage.UI_VIEW__PAGE_SIZE:
 				return pageSize != PAGE_SIZE_EDEFAULT;
-			case UiPackage.UI_VIEW__IS_DEFAULT:
-				return isDefault != IS_DEFAULT_EDEFAULT;
 			case UiPackage.UI_VIEW__COLUMNS:
 				return columns != COLUMNS_EDEFAULT;
 		}
@@ -315,11 +263,9 @@ public abstract class UIViewImpl extends IdentifiableImpl implements UIView {
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
-		StringBuilder result = new StringBuilder(super.toString());
+		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (pageSize: ");
 		result.append(pageSize);
-		result.append(", isDefault: ");
-		result.append(isDefault);
 		result.append(", columns: ");
 		result.append(columns);
 		result.append(')');

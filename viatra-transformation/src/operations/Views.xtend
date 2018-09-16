@@ -29,9 +29,7 @@ class Views {
 		val UIClassView classView = uiClass.createChild(UIClass_ClassView, UIClassView) as UIClassView
 		classView.uuid = uiClass.uuid.replace("\\.", "_") + "_oview_default"
 		classView.name = uiClass.name
-		
-		classView.isDefault = isDefault
-		
+				
 		var position = 1;
 		var Set<UIAttributeComponentType> remaining = uiClass.attributes as HashSet<UIAttributeComponentType>;
 		var String vfsName
@@ -102,7 +100,6 @@ class Views {
 		listView.uuid = uiClass.uuid.replace("\\.", "_") + "_lview_default"
 		listView.name = uiClass.name;
 		
-		listView.isDefault = isDefault;
 		listView.pageSize = 20;
 		listView.detailView = classView;
 		

@@ -15,7 +15,6 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link ui.UIView#getViewFieldSets <em>View Field Sets</em>}</li>
  *   <li>{@link ui.UIView#getPageSize <em>Page Size</em>}</li>
- *   <li>{@link ui.UIView#isIsDefault <em>Is Default</em>}</li>
  *   <li>{@link ui.UIView#getColumns <em>Columns</em>}</li>
  * </ul>
  *
@@ -66,33 +65,6 @@ public interface UIView extends Identifiable {
 	 * @generated
 	 */
 	void setPageSize(int value);
-
-	/**
-	 * Returns the value of the '<em><b>Is Default</b></em>' attribute.
-	 * The default value is <code>"true"</code>.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Is Default</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Is Default</em>' attribute.
-	 * @see #setIsDefault(boolean)
-	 * @see ui.UiPackage#getUIView_IsDefault()
-	 * @model default="true"
-	 * @generated
-	 */
-	boolean isIsDefault();
-
-	/**
-	 * Sets the value of the '{@link ui.UIView#isIsDefault <em>Is Default</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Is Default</em>' attribute.
-	 * @see #isIsDefault()
-	 * @generated
-	 */
-	void setIsDefault(boolean value);
 
 	/**
 	 * Returns the value of the '<em><b>Columns</b></em>' attribute.

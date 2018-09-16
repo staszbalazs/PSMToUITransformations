@@ -1,5 +1,6 @@
 package transformations
 
+import java.util.List
 import java.util.stream.Collectors
 import operations.ComponentType
 import org.eclipse.viatra.query.runtime.api.IPatternMatch
@@ -8,18 +9,17 @@ import org.eclipse.viatra.query.runtime.api.ViatraQueryMatcher
 import org.eclipse.viatra.transformation.evm.specific.Lifecycles
 import org.eclipse.viatra.transformation.evm.specific.crud.CRUDActivationStateEnum
 import org.eclipse.viatra.transformation.runtime.emf.modelmanipulation.IModelManipulations
+import org.eclipse.viatra.transformation.runtime.emf.modelmanipulation.SimpleModelManipulations
 import org.eclipse.viatra.transformation.runtime.emf.rules.eventdriven.EventDrivenTransformationRule
 import org.eclipse.viatra.transformation.runtime.emf.rules.eventdriven.EventDrivenTransformationRuleFactory
 import psm.JAttribute
+import psm.JUIAttributeGroup
 import queries.PatternProvider
 import traceability.PSMToUI
 import traceability.TraceabilityPackage
 import ui.UIClass
-import java.util.List
-import java.util.ArrayList
-import psm.JUIAttributeGroup
-import ui.UIViewFieldSet
 import ui.UIClassView
+import ui.UIViewFieldSet
 import ui.UiPackage
 
 class AttributeRuleFactory {
@@ -36,10 +36,16 @@ class AttributeRuleFactory {
 	
 	public def getAttributeRule(PSMToUI psm2ui, ViatraQueryEngine engine) {
 		if (attributeRule === null) {
+			manipulation = new SimpleModelManipulations(engine)
+			componentType = new ComponentType(engine)
+			
 			attributeRule = createRule.name("AttributeRule").precondition(PatternProvider.instance().getJAttributeQuery())
 				.action(CRUDActivationStateEnum.CREATED) [
 					
 					val JAttribute jAttr = it.JAttribute as JAttribute
+					
+					System.out.println("Transforming attribute: " + jAttr.uuid)
+					
 					//Get owner UIClass
 					val uiClass = PatternProvider.instance().getPsmToUiTrace(engine)
 												.getOneArbitraryMatch(jAttr.ownerClass, null)

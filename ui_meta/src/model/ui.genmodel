@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
-    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/ui_meta/generated_files" modelPluginID="viatra-model-transformation"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/ui_meta/generated_files" modelPluginID="ui_meta"
     modelName="Ui" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
-    operationReflection="true" importOrganizing="true">
+    editPluginID="ui_meta.edit" editorPluginID="ui_meta.editor" operationReflection="true"
+    importOrganizing="true">
   <foreignModel>ui.ecore</foreignModel>
   <genPackages prefix="Ui" disposableProviderFactory="true" ecorePackage="ui.ecore#/">
     <genClasses ecoreClass="ui.ecore#//UIModule">

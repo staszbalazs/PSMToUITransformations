@@ -1,11 +1,11 @@
 package operations
 
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
 import org.eclipse.viatra.transformation.runtime.emf.modelmanipulation.IModelManipulations
-import ui.UIAttributeComponentType
+import org.eclipse.viatra.transformation.runtime.emf.modelmanipulation.SimpleModelManipulations
+import ui.UIComponentType
 import ui.UIInterval
 import ui.UiPackage
-import ui.UIComponentType
-import ui.UIParameterComponentType
 
 class Interval {
 	
@@ -13,10 +13,14 @@ class Interval {
 	
 	extension UiPackage uiPackage = UiPackage::eINSTANCE
 	
+	new(ViatraQueryEngine engine) {
+		manipulation = new SimpleModelManipulations(engine)
+	}
+	
 	public def createIntervals(UIComponentType componentType, String classUuid) {
 		
 		if (componentType.interval !== null) {
-			val intervalList = componentType.interval.replace(" ", "").replace("\\],\\[", " ").replace("\\]", "").replace("\\[", "").split(" ");
+			val intervalList = componentType.interval.replace(" ", "").replace("],[", " ").replace("]", "").replace("[", "").split(" ");
 		
 			var int n = 1;
 			if (intervalList.get(0) != "") {

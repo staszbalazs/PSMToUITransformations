@@ -7,6 +7,15 @@
 <plugin>
 
    <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated psmToUiTypeMapping -->
+      <package
+            uri="http://blackbelt.hu/judo/meta/psm/ui/mapping"
+            class="psmToUiTypeMapping.PsmToUiTypeMappingPackage"
+            genModel="src/model/psmToUiTypeMapping.genmodel"/>
+   </extension>
+
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated ui -->
       <package
             uri="http://blackbelt.hu/judo/meta/psm/ui"

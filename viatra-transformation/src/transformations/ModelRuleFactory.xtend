@@ -14,6 +14,7 @@ import ui.UIBase
 import ui.UiPackage
 import traceability.TraceabilityPackage
 import org.eclipse.viatra.transformation.runtime.emf.modelmanipulation.IModelManipulations
+import org.eclipse.viatra.transformation.runtime.emf.modelmanipulation.SimpleModelManipulations
 import ui.UIMenuItem
 import ui.UIInfo
 import psm.JSubmodel
@@ -31,20 +32,22 @@ class ModelRuleFactory {
 	
 	public def getModelRule(PSMToUI psm2ui, ViatraQueryEngine engine) {
 		if (modelRule === null) {
+			manipulation = new SimpleModelManipulations(engine);
+			
 			modelRule = createRule.name("ModelRule").precondition(PatternProvider.instance().getDomainJModelQuery())
 				.action(CRUDActivationStateEnum.CREATED) [
 					
 					val JModel jModel = it.JModel as JModel
 					
-					val UIBase uiBase = PatternProvider.instance().getUIBaseQuery(engine)
-																		.getOneArbitraryMatch()
-																		.get()
-																		.getUiBase() as UIBase
+					System.out.println("Transforming model: " + jModel.uuid)
+					
+				
+					val UIBase uiBase = psm2ui.getUiBase
 																		
 					uiBase.name = jModel.name
 					uiBase.uuid = jModel.uuid
 					
-					val UIMenuItem mainMenu = uiBase.createChild(getUIBase_MainMenu, UIMenuItem) as UIMenuItem
+					val UIMenuItem mainMenu = uiBase.createChild(UIBase_MainMenu, UIMenuItem) as UIMenuItem
 					mainMenu.name = "main_menu"
 					mainMenu.uuid = "main_menu"
 					

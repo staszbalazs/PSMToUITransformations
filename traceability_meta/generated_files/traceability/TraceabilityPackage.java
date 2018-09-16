@@ -66,7 +66,7 @@ public interface TraceabilityPackage extends EPackage {
 	int PSM_TO_UI = 0;
 
 	/**
-	 * The feature id for the '<em><b>Traces</b></em>' reference list.
+	 * The feature id for the '<em><b>Traces</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -93,13 +93,22 @@ public interface TraceabilityPackage extends EPackage {
 	int PSM_TO_UI__UI_BASE = 2;
 
 	/**
+	 * The feature id for the '<em><b>Type Mappings</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PSM_TO_UI__TYPE_MAPPINGS = 3;
+
+	/**
 	 * The number of structural features of the '<em>PSM To UI</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PSM_TO_UI_FEATURE_COUNT = 3;
+	int PSM_TO_UI_FEATURE_COUNT = 4;
 
 	/**
 	 * The number of operations of the '<em>PSM To UI</em>' class.
@@ -168,10 +177,10 @@ public interface TraceabilityPackage extends EPackage {
 	EClass getPSMToUI();
 
 	/**
-	 * Returns the meta object for the reference list '{@link traceability.PSMToUI#getTraces <em>Traces</em>}'.
+	 * Returns the meta object for the containment reference list '{@link traceability.PSMToUI#getTraces <em>Traces</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Traces</em>'.
+	 * @return the meta object for the containment reference list '<em>Traces</em>'.
 	 * @see traceability.PSMToUI#getTraces()
 	 * @see #getPSMToUI()
 	 * @generated
@@ -199,6 +208,17 @@ public interface TraceabilityPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getPSMToUI_UiBase();
+
+	/**
+	 * Returns the meta object for the reference '{@link traceability.PSMToUI#getTypeMappings <em>Type Mappings</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Type Mappings</em>'.
+	 * @see traceability.PSMToUI#getTypeMappings()
+	 * @see #getPSMToUI()
+	 * @generated
+	 */
+	EReference getPSMToUI_TypeMappings();
 
 	/**
 	 * Returns the meta object for class '{@link traceability.PSMToUITrace <em>PSM To UI Trace</em>}'.
@@ -266,7 +286,7 @@ public interface TraceabilityPackage extends EPackage {
 		EClass PSM_TO_UI = eINSTANCE.getPSMToUI();
 
 		/**
-		 * The meta object literal for the '<em><b>Traces</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Traces</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -288,6 +308,14 @@ public interface TraceabilityPackage extends EPackage {
 		 * @generated
 		 */
 		EReference PSM_TO_UI__UI_BASE = eINSTANCE.getPSMToUI_UiBase();
+
+		/**
+		 * The meta object literal for the '<em><b>Type Mappings</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PSM_TO_UI__TYPE_MAPPINGS = eINSTANCE.getPSMToUI_TypeMappings();
 
 		/**
 		 * The meta object literal for the '{@link traceability.impl.PSMToUITraceImpl <em>PSM To UI Trace</em>}' class.

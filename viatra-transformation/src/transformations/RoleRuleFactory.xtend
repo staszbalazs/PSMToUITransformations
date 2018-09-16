@@ -15,6 +15,7 @@ import queries.PatternProvider
 import traceability.PSMToUI
 import traceability.TraceabilityPackage
 import ui.UIClass
+import org.eclipse.viatra.transformation.runtime.emf.modelmanipulation.SimpleModelManipulations
 
 class RoleRuleFactory {
 	
@@ -29,19 +30,23 @@ class RoleRuleFactory {
 	
 	public def getRoleRule(PSMToUI psm2ui, ViatraQueryEngine engine) {
 		if (roleRule === null) {
-			roleRule = createRule.name("RoleRule").precondition(PatternProvider.instance().getJRoleQuery())
+			manipulation = new SimpleModelManipulations(engine)
+			componentType = new ComponentType(engine)
+				
+			roleRule = createRule.name("RoleRule").precondition(PatternProvider.instance.JRoleQuery)
 				.action(CRUDActivationStateEnum.CREATED) [
 					
 					val JRole jRole = it.JRole as JRole
 					
-					//Get owner UIClass
-					val potentialOwner = psm2ui.traces.stream()
-										.filter[getPsmElements.contains(jRole.getOwnerClass)]
-										.map[getUiElements()]
-										.findFirst()
-										
-					val UIClass owner = potentialOwner.get.get(0) as UIClass
+					System.out.println("Transforming role: " + jRole.uuid)
 					
+					
+					//Get owner UIClass
+					val UIClass owner = PatternProvider.instance().getPsmToUiTrace(engine)
+												.getOneArbitraryMatch(jRole.ownerClass, null)
+												.get()
+												.getIdentifiable as UIClass
+															
 					//Create role for owner
 					var uiReferenceType = createUIReferenceComponentType(owner, jRole, engine, psm2ui)
 					val trace = psm2ui.createChild(PSMToUI_Traces, PSMToUITrace)

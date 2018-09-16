@@ -6,6 +6,7 @@ import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
@@ -14,10 +15,11 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
-
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 import psm.JModel;
 
+import psmToUiTypeMapping.Mappings;
 import traceability.PSMToUI;
 import traceability.PSMToUITrace;
 import traceability.TraceabilityPackage;
@@ -35,13 +37,14 @@ import ui.UIBase;
  *   <li>{@link traceability.impl.PSMToUIImpl#getTraces <em>Traces</em>}</li>
  *   <li>{@link traceability.impl.PSMToUIImpl#getJModel <em>JModel</em>}</li>
  *   <li>{@link traceability.impl.PSMToUIImpl#getUiBase <em>Ui Base</em>}</li>
+ *   <li>{@link traceability.impl.PSMToUIImpl#getTypeMappings <em>Type Mappings</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class PSMToUIImpl extends MinimalEObjectImpl.Container implements PSMToUI {
 	/**
-	 * The cached value of the '{@link #getTraces() <em>Traces</em>}' reference list.
+	 * The cached value of the '{@link #getTraces() <em>Traces</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getTraces()
@@ -71,6 +74,16 @@ public class PSMToUIImpl extends MinimalEObjectImpl.Container implements PSMToUI
 	protected UIBase uiBase;
 
 	/**
+	 * The cached value of the '{@link #getTypeMappings() <em>Type Mappings</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTypeMappings()
+	 * @generated
+	 * @ordered
+	 */
+	protected Mappings typeMappings;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -96,7 +109,7 @@ public class PSMToUIImpl extends MinimalEObjectImpl.Container implements PSMToUI
 	 */
 	public EList<PSMToUITrace> getTraces() {
 		if (traces == null) {
-			traces = new EObjectResolvingEList<PSMToUITrace>(PSMToUITrace.class, this, TraceabilityPackage.PSM_TO_UI__TRACES);
+			traces = new EObjectContainmentEList<PSMToUITrace>(PSMToUITrace.class, this, TraceabilityPackage.PSM_TO_UI__TRACES);
 		}
 		return traces;
 	}
@@ -182,6 +195,58 @@ public class PSMToUIImpl extends MinimalEObjectImpl.Container implements PSMToUI
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Mappings getTypeMappings() {
+		if (typeMappings != null && typeMappings.eIsProxy()) {
+			InternalEObject oldTypeMappings = (InternalEObject)typeMappings;
+			typeMappings = (Mappings)eResolveProxy(oldTypeMappings);
+			if (typeMappings != oldTypeMappings) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, TraceabilityPackage.PSM_TO_UI__TYPE_MAPPINGS, oldTypeMappings, typeMappings));
+			}
+		}
+		return typeMappings;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Mappings basicGetTypeMappings() {
+		return typeMappings;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setTypeMappings(Mappings newTypeMappings) {
+		Mappings oldTypeMappings = typeMappings;
+		typeMappings = newTypeMappings;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TraceabilityPackage.PSM_TO_UI__TYPE_MAPPINGS, oldTypeMappings, typeMappings));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case TraceabilityPackage.PSM_TO_UI__TRACES:
+				return ((InternalEList<?>)getTraces()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -193,6 +258,9 @@ public class PSMToUIImpl extends MinimalEObjectImpl.Container implements PSMToUI
 			case TraceabilityPackage.PSM_TO_UI__UI_BASE:
 				if (resolve) return getUiBase();
 				return basicGetUiBase();
+			case TraceabilityPackage.PSM_TO_UI__TYPE_MAPPINGS:
+				if (resolve) return getTypeMappings();
+				return basicGetTypeMappings();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -216,6 +284,9 @@ public class PSMToUIImpl extends MinimalEObjectImpl.Container implements PSMToUI
 			case TraceabilityPackage.PSM_TO_UI__UI_BASE:
 				setUiBase((UIBase)newValue);
 				return;
+			case TraceabilityPackage.PSM_TO_UI__TYPE_MAPPINGS:
+				setTypeMappings((Mappings)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -237,6 +308,9 @@ public class PSMToUIImpl extends MinimalEObjectImpl.Container implements PSMToUI
 			case TraceabilityPackage.PSM_TO_UI__UI_BASE:
 				setUiBase((UIBase)null);
 				return;
+			case TraceabilityPackage.PSM_TO_UI__TYPE_MAPPINGS:
+				setTypeMappings((Mappings)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -255,6 +329,8 @@ public class PSMToUIImpl extends MinimalEObjectImpl.Container implements PSMToUI
 				return jModel != null;
 			case TraceabilityPackage.PSM_TO_UI__UI_BASE:
 				return uiBase != null;
+			case TraceabilityPackage.PSM_TO_UI__TYPE_MAPPINGS:
+				return typeMappings != null;
 		}
 		return super.eIsSet(featureID);
 	}

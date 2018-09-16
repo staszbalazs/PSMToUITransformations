@@ -16,6 +16,7 @@ import org.eclipse.viatra.query.runtime.api.IPatternMatch
 import org.eclipse.viatra.transformation.runtime.emf.rules.eventdriven.EventDrivenTransformationRule
 import psm.JUIMenuItem
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
+import org.eclipse.viatra.transformation.runtime.emf.modelmanipulation.SimpleModelManipulations
 
 class MenuRuleFactory {
 	
@@ -30,10 +31,15 @@ class MenuRuleFactory {
 	
 	public def getMenuRule(PSMToUI psm2ui, ViatraQueryEngine engine) {
 		if (menuRule === null) {
+			manipulation = new SimpleModelManipulations(engine);
+			
 			menuRule = createRule.name("MenuRule").precondition(PatternProvider.instance().getFindMenuItemWithParent())
 				.action(CRUDActivationStateEnum.CREATED) [
 					
 					val JUIMenuItem jMenuItem = it.JMenuItem as JUIMenuItem;
+					
+					System.out.println("Transforming menuItem: " + jMenuItem.uuid)
+					
 					//Get or create parent MenuItem
 					var UIMenuItem parent
 					if (PatternProvider.instance().getMenuRootChildren(engine).hasMatch(jMenuItem)) {
@@ -64,25 +70,31 @@ class MenuRuleFactory {
 					var UIMenuItem uiMenuItem
 					if (potentialUiElements.isPresent()) {
 						uiMenuItem = potentialUiElements.get().getIdentifiable as UIMenuItem
-						parent.addTo(getUIMenuItem_MenuItems, uiMenuItem)
+						uiMenuItem.moveTo(parent, getUIMenuItem_MenuItems)
 					} else {
 						uiMenuItem = parent.createChild(getUIMenuItem_MenuItems, UIMenuItem) as UIMenuItem
 						uiMenuItem.name = jMenuItem.name
 						uiMenuItem.uuid = jMenuItem.uuid
 					}
 					
-					//Get menuView	
-					val UIClass represented = PatternProvider.instance().getPsmToUiTrace(engine)
+					val trace = psm2ui.createChild(getPSMToUI_Traces(), PSMToUITrace)
+					trace.addTo(getPSMToUITrace_PsmElements, jMenuItem)
+					trace.addTo(getPSMToUITrace_UiElements, uiMenuItem)
+					
+					//Get menuView
+					if (jMenuItem.getRepresent !== null) {
+						val UIClass represented = PatternProvider.instance().getPsmToUiTrace(engine)
 																.getOneArbitraryMatch(jMenuItem.getRepresent, null)
 																.get()
 																.getIdentifiable as UIClass
 					
-					if (jMenuItem.type == JMenuItemType::LIST) {
-						uiMenuItem.addTo(getUIMenuItem_MenuView(), represented.getListView)	
-					} else if (jMenuItem.type == JMenuItemType::OBJECT) {
-						uiMenuItem.addTo(getUIMenuItem_MenuView(), represented.getClassView)	
+						if (jMenuItem.type == JMenuItemType::LIST) {
+							uiMenuItem.menuView = represented.getListView
+						} else if (jMenuItem.type == JMenuItemType::OBJECT) {
+							uiMenuItem.menuView = represented.getClassView
+						}
 					}
-		
+						
 			].action(CRUDActivationStateEnum.UPDATED) [
 			].action(CRUDActivationStateEnum.DELETED) [
 			].addLifeCycle(Lifecycles.getDefault(true, true)).build

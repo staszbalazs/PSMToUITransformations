@@ -18,6 +18,7 @@ import traceability.PSMToUI
 import traceability.TraceabilityPackage
 import ui.UIParamView
 import ui.UIResultView
+import org.eclipse.viatra.transformation.runtime.emf.modelmanipulation.SimpleModelManipulations
 
 class OperationRuleFactory {
 	
@@ -31,10 +32,14 @@ class OperationRuleFactory {
 	
 	public def getOperationRule(PSMToUI psm2ui, ViatraQueryEngine engine) {
 		if (operationRule === null) {
+			manipulation = new SimpleModelManipulations(engine);
+			
 			operationRule = createRule.name("OperationRule").precondition(PatternProvider.instance().getJOperationWithGuardQuery())
 				.action(CRUDActivationStateEnum.CREATED) [
 					
 					val JOperation jOperation = it.JOperation as JOperation
+					
+					System.out.println("Transforming operation: " + jOperation.uuid)
 					
 					//get owner class
 					val match = PatternProvider.instance().getPsmToUiTrace(engine)

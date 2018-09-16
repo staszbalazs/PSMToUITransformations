@@ -26,7 +26,6 @@ import org.eclipse.viatra.query.runtime.api.impl.BasePatternMatch;
 import org.eclipse.viatra.query.runtime.emf.types.EClassTransitiveInstancesKey;
 import org.eclipse.viatra.query.runtime.emf.types.EStructuralFeatureInstancesKey;
 import org.eclipse.viatra.query.runtime.matchers.backend.QueryEvaluationHint;
-import org.eclipse.viatra.query.runtime.matchers.context.IInputKey;
 import org.eclipse.viatra.query.runtime.matchers.psystem.PBody;
 import org.eclipse.viatra.query.runtime.matchers.psystem.PVariable;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicdeferred.Equality;
@@ -45,7 +44,7 @@ import org.eclipse.viatra.query.runtime.util.ViatraQueryLoggingUtil;
  * <p>Original source:
  *         <code><pre>
  *         //Trace Queries
- *         pattern psmToUiTrace(jElement, identifiable) {
+ *         pattern psmToUiTrace(jElement : JElement, identifiable : Identifiable) {
  *         	PSMToUITrace.psmElements(trace, jElement);
  *         	PSMToUITrace.uiElements(trace, identifiable);
  *         }
@@ -250,7 +249,7 @@ public final class PsmToUiTrace extends BaseGeneratedEMFQuerySpecification<PsmTo
    * <p>Original source:
    * <code><pre>
    * //Trace Queries
-   * pattern psmToUiTrace(jElement, identifiable) {
+   * pattern psmToUiTrace(jElement : JElement, identifiable : Identifiable) {
    * 	PSMToUITrace.psmElements(trace, jElement);
    * 	PSMToUITrace.uiElements(trace, identifiable);
    * }
@@ -645,9 +644,9 @@ public final class PsmToUiTrace extends BaseGeneratedEMFQuerySpecification<PsmTo
   private static class GeneratedPQuery extends BaseGeneratedEMFPQuery {
     private final static PsmToUiTrace.GeneratedPQuery INSTANCE = new GeneratedPQuery();
     
-    private final PParameter parameter_jElement = new PParameter("jElement", "org.eclipse.emf.ecore.EObject", (IInputKey)null, PParameterDirection.INOUT);
+    private final PParameter parameter_jElement = new PParameter("jElement", "org.eclipse.emf.ecore.EObject", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://blackbelt.hu/judo/meta/psm", "JElement")), PParameterDirection.INOUT);
     
-    private final PParameter parameter_identifiable = new PParameter("identifiable", "org.eclipse.emf.ecore.EObject", (IInputKey)null, PParameterDirection.INOUT);
+    private final PParameter parameter_identifiable = new PParameter("identifiable", "org.eclipse.emf.ecore.EObject", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://blackbelt.hu/judo/meta/psm/ui", "Identifiable")), PParameterDirection.INOUT);
     
     private final List<PParameter> parameters = Arrays.asList(parameter_jElement, parameter_identifiable);
     
@@ -679,6 +678,8 @@ public final class PsmToUiTrace extends BaseGeneratedEMFQuerySpecification<PsmTo
           PVariable var_jElement = body.getOrCreateVariableByName("jElement");
           PVariable var_identifiable = body.getOrCreateVariableByName("identifiable");
           PVariable var_trace = body.getOrCreateVariableByName("trace");
+          new TypeConstraint(body, Tuples.flatTupleOf(var_jElement), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm", "JElement")));
+          new TypeConstraint(body, Tuples.flatTupleOf(var_identifiable), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm/ui", "Identifiable")));
           body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
              new ExportedParameter(body, var_jElement, parameter_jElement),
              new ExportedParameter(body, var_identifiable, parameter_identifiable)
