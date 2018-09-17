@@ -17,6 +17,7 @@ import psm.JUIFilter
 import ui.UIFilter
 import ui.UIBaseComponentType
 import org.eclipse.viatra.transformation.runtime.emf.modelmanipulation.SimpleModelManipulations
+import queries.JUIFilterQuery
 
 class FilterRuleFactory {
 	
@@ -31,7 +32,7 @@ class FilterRuleFactory {
 		if (filterRule === null) {
 			manipulation = new SimpleModelManipulations(engine);
 			
-			filterRule = createRule.name("FilterRule").precondition(PatternProvider.instance.JUIFilterQuery)
+			filterRule = createRule.name("FilterRule").precondition(JUIFilterQuery.Matcher.querySpecification())
 				.action(CRUDActivationStateEnum.CREATED) [
 					
 					val JUIFilter jFilter = it.getJFilter() as JUIFilter

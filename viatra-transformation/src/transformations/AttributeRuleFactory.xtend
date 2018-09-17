@@ -21,6 +21,7 @@ import ui.UIClass
 import ui.UIClassView
 import ui.UIViewFieldSet
 import ui.UiPackage
+import queries.JAttributeQuery
 
 class AttributeRuleFactory {
 	
@@ -39,7 +40,7 @@ class AttributeRuleFactory {
 			manipulation = new SimpleModelManipulations(engine)
 			componentType = new ComponentType(engine)
 			
-			attributeRule = createRule.name("AttributeRule").precondition(PatternProvider.instance().getJAttributeQuery())
+			attributeRule = createRule.name("AttributeRule").precondition(JAttributeQuery.Matcher.querySpecification())
 				.action(CRUDActivationStateEnum.CREATED) [
 					
 					val JAttribute jAttr = it.JAttribute as JAttribute

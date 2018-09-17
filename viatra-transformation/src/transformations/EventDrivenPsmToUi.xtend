@@ -6,7 +6,6 @@ import org.eclipse.viatra.transformation.evm.specific.resolver.InvertedDisappear
 import org.eclipse.viatra.transformation.runtime.emf.transformation.eventdriven.EventDrivenTransformation
 import queries.PatternProvider
 import traceability.PSMToUI
-import org.eclipse.viatra.transformation.debug.configuration.TransformationDebuggerConfiguration
 
 class EventDrivenPsmToUi {
     extension Logger logger = Logger.getLogger(EventDrivenPsmToUi)

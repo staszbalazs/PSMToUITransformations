@@ -17,6 +17,7 @@ import org.eclipse.viatra.transformation.runtime.emf.rules.eventdriven.EventDriv
 import psm.JUIMenuItem
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
 import org.eclipse.viatra.transformation.runtime.emf.modelmanipulation.SimpleModelManipulations
+import queries.FindMenuItemWithParent
 
 class MenuRuleFactory {
 	
@@ -33,7 +34,7 @@ class MenuRuleFactory {
 		if (menuRule === null) {
 			manipulation = new SimpleModelManipulations(engine);
 			
-			menuRule = createRule.name("MenuRule").precondition(PatternProvider.instance().getFindMenuItemWithParent())
+			menuRule = createRule.name("MenuRule").precondition(FindMenuItemWithParent.Matcher.querySpecification())
 				.action(CRUDActivationStateEnum.CREATED) [
 					
 					val JUIMenuItem jMenuItem = it.JMenuItem as JUIMenuItem;

@@ -16,6 +16,7 @@ import traceability.PSMToUI
 import traceability.TraceabilityPackage
 import ui.UIClass
 import org.eclipse.viatra.transformation.runtime.emf.modelmanipulation.SimpleModelManipulations
+import queries.JRoleQuery
 
 class RoleRuleFactory {
 	
@@ -33,7 +34,7 @@ class RoleRuleFactory {
 			manipulation = new SimpleModelManipulations(engine)
 			componentType = new ComponentType(engine)
 				
-			roleRule = createRule.name("RoleRule").precondition(PatternProvider.instance.JRoleQuery)
+			roleRule = createRule.name("RoleRule").precondition(JRoleQuery.Matcher.querySpecification())
 				.action(CRUDActivationStateEnum.CREATED) [
 					
 					val JRole jRole = it.JRole as JRole

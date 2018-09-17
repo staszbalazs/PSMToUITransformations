@@ -24,6 +24,7 @@ import ui.UIResultView
 import ui.UIViewField
 import ui.UIViewFieldSet
 import ui.UiPackage
+import queries.JParameterWithGuardQuery
 
 class ParameterRuleFactory {
 	
@@ -42,7 +43,7 @@ class ParameterRuleFactory {
 			manipulation = new SimpleModelManipulations(engine)
 			interval = new Interval(engine)
 			
-			parameterRule = createRule.name("ParameterRule").precondition(PatternProvider.instance().getJParameterWithGuardQuery())
+			parameterRule = createRule.name("ParameterRule").precondition(JParameterWithGuardQuery.Matcher.querySpecification())
 				.action(CRUDActivationStateEnum.CREATED) [
 					
 					val JParameter jParameter = it.JParameter as JParameter

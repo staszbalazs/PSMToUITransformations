@@ -19,6 +19,7 @@ import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
 import ui.UIListView
 import ui.UIClassView
 import org.eclipse.viatra.transformation.runtime.emf.modelmanipulation.SimpleModelManipulations
+import queries.JClassWithGuardConditionQuery
 
 class ClassRuleFactory {
 	
@@ -33,7 +34,7 @@ class ClassRuleFactory {
 		if (classRule === null) {
 			manipulation = new SimpleModelManipulations(engine);
 			
-			classRule = createRule.name("ClassRule").precondition(PatternProvider.instance().getJClassWithGuardConditionQuery())
+			classRule = createRule.name("ClassRule").precondition(JClassWithGuardConditionQuery.Matcher.querySpecification())
 				.action(CRUDActivationStateEnum.CREATED) [	
 					
 					val JClass jClass = it.getJClass() as JClass

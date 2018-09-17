@@ -1,20 +1,20 @@
 package transformations
 
+import org.eclipse.viatra.query.runtime.api.IPatternMatch
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
+import org.eclipse.viatra.query.runtime.api.ViatraQueryMatcher
 import org.eclipse.viatra.transformation.evm.specific.Lifecycles
 import org.eclipse.viatra.transformation.evm.specific.crud.CRUDActivationStateEnum
 import org.eclipse.viatra.transformation.runtime.emf.modelmanipulation.IModelManipulations
-import org.eclipse.viatra.transformation.runtime.emf.rules.eventdriven.EventDrivenTransformationRuleFactory
-import queries.PatternProvider
-import traceability.PSMToUI
-import ui.UiPackage
-import org.eclipse.viatra.query.runtime.api.ViatraQueryMatcher
-import org.eclipse.viatra.query.runtime.api.IPatternMatch
+import org.eclipse.viatra.transformation.runtime.emf.modelmanipulation.SimpleModelManipulations
 import org.eclipse.viatra.transformation.runtime.emf.rules.eventdriven.EventDrivenTransformationRule
+import org.eclipse.viatra.transformation.runtime.emf.rules.eventdriven.EventDrivenTransformationRuleFactory
 import psm.JPackage
+import queries.JPackageToUIModuleQuery
+import traceability.PSMToUI
 import traceability.TraceabilityPackage
 import ui.UIModule
-import org.eclipse.viatra.transformation.runtime.emf.modelmanipulation.SimpleModelManipulations
-import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
+import ui.UiPackage
 
 class PackageRuleFactory {
 	
@@ -31,7 +31,7 @@ class PackageRuleFactory {
 		if (packageRule === null) {
 			manipulation = new SimpleModelManipulations(engine);
 						
-			packageRule = createRule.name("PackageRule").precondition(PatternProvider.instance().getJPackageToUIModuleQuery())
+			packageRule = createRule.name("PackageRule").precondition(JPackageToUIModuleQuery.Matcher.querySpecification())
 				.action(CRUDActivationStateEnum.CREATED) [
 					
 					val JPackage jPackage = it.getJPackage() as JPackage

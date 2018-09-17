@@ -19,6 +19,7 @@ import traceability.TraceabilityPackage
 import ui.UIParamView
 import ui.UIResultView
 import org.eclipse.viatra.transformation.runtime.emf.modelmanipulation.SimpleModelManipulations
+import queries.JOperationWithGuardQuery
 
 class OperationRuleFactory {
 	
@@ -34,7 +35,7 @@ class OperationRuleFactory {
 		if (operationRule === null) {
 			manipulation = new SimpleModelManipulations(engine);
 			
-			operationRule = createRule.name("OperationRule").precondition(PatternProvider.instance().getJOperationWithGuardQuery())
+			operationRule = createRule.name("OperationRule").precondition(JOperationWithGuardQuery.Matcher.querySpecification())
 				.action(CRUDActivationStateEnum.CREATED) [
 					
 					val JOperation jOperation = it.JOperation as JOperation

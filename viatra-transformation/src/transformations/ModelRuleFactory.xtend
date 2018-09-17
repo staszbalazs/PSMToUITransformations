@@ -19,6 +19,7 @@ import ui.UIMenuItem
 import ui.UIInfo
 import psm.JSubmodel
 import psm.JClass
+import queries.DomainJModelQuery
 
 class ModelRuleFactory {
 	
@@ -34,7 +35,7 @@ class ModelRuleFactory {
 		if (modelRule === null) {
 			manipulation = new SimpleModelManipulations(engine);
 			
-			modelRule = createRule.name("ModelRule").precondition(PatternProvider.instance().getDomainJModelQuery())
+			modelRule = createRule.name("ModelRule").precondition(DomainJModelQuery.Matcher.querySpecification())
 				.action(CRUDActivationStateEnum.CREATED) [
 					
 					val JModel jModel = it.JModel as JModel
