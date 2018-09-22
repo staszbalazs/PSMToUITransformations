@@ -32,8 +32,8 @@ import org.eclipse.viatra.query.runtime.matchers.psystem.PBody;
 import org.eclipse.viatra.query.runtime.matchers.psystem.PVariable;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicdeferred.Equality;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicdeferred.ExportedParameter;
-import org.eclipse.viatra.query.runtime.matchers.psystem.basicdeferred.NegativePatternCall;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicenumerables.ConstantValue;
+import org.eclipse.viatra.query.runtime.matchers.psystem.basicenumerables.PositivePatternCall;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicenumerables.TypeConstraint;
 import org.eclipse.viatra.query.runtime.matchers.psystem.queries.PParameter;
 import org.eclipse.viatra.query.runtime.matchers.psystem.queries.PParameterDirection;
@@ -48,14 +48,13 @@ import queries.AlreadyTransformed;
  * 
  * <p>Original source:
  *         <code><pre>
- *         //JOperation Queries
- *         pattern JOperationWithGuardQuery(jOperation : JOperation, uiClass : UIClass) {
+ *         pattern JOperationWithGuardQueryForModify(jOperation : JOperation, uiAction : UIAction, uiClass : UIClass, trace : PSMToUITrace) {
  *         	JOperation(jOperation);
  *         	JOperation.visibility(jOperation, JVisibility::PUBLIC);
  *         	JOperation.ownerClass(jOperation, jClass);
  *         	PSMToUITrace.psmElements(trace, jClass);
  *         	PSMToUITrace.uiElements(trace, uiClass);
- *         	neg find alreadyTransformed(jOperation, _, _);
+ *         	find alreadyTransformed(jOperation, uiAction, trace);
  *         }
  * </pre></code>
  * 
@@ -64,9 +63,9 @@ import queries.AlreadyTransformed;
  * 
  */
 @SuppressWarnings("all")
-public final class JOperationWithGuardQuery extends BaseGeneratedEMFQuerySpecification<JOperationWithGuardQuery.Matcher> {
+public final class JOperationWithGuardQueryForModify extends BaseGeneratedEMFQuerySpecification<JOperationWithGuardQueryForModify.Matcher> {
   /**
-   * Pattern-specific match representation of the queries.JOperationWithGuardQuery pattern,
+   * Pattern-specific match representation of the queries.JOperationWithGuardQueryForModify pattern,
    * to be used in conjunction with {@link Matcher}.
    * 
    * <p>Class fields correspond to parameters of the pattern. Fields with value null are considered unassigned.
@@ -80,19 +79,27 @@ public final class JOperationWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
   public static abstract class Match extends BasePatternMatch {
     private EObject fJOperation;
     
+    private EObject fUiAction;
+    
     private EObject fUiClass;
     
-    private static List<String> parameterNames = makeImmutableList("jOperation", "uiClass");
+    private EObject fTrace;
     
-    private Match(final EObject pJOperation, final EObject pUiClass) {
+    private static List<String> parameterNames = makeImmutableList("jOperation", "uiAction", "uiClass", "trace");
+    
+    private Match(final EObject pJOperation, final EObject pUiAction, final EObject pUiClass, final EObject pTrace) {
       this.fJOperation = pJOperation;
+      this.fUiAction = pUiAction;
       this.fUiClass = pUiClass;
+      this.fTrace = pTrace;
     }
     
     @Override
     public Object get(final String parameterName) {
       if ("jOperation".equals(parameterName)) return this.fJOperation;
+      if ("uiAction".equals(parameterName)) return this.fUiAction;
       if ("uiClass".equals(parameterName)) return this.fUiClass;
+      if ("trace".equals(parameterName)) return this.fTrace;
       return null;
     }
     
@@ -100,8 +107,16 @@ public final class JOperationWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
       return this.fJOperation;
     }
     
+    public EObject getUiAction() {
+      return this.fUiAction;
+    }
+    
     public EObject getUiClass() {
       return this.fUiClass;
+    }
+    
+    public EObject getTrace() {
+      return this.fTrace;
     }
     
     @Override
@@ -111,8 +126,16 @@ public final class JOperationWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
           this.fJOperation = (EObject) newValue;
           return true;
       }
+      if ("uiAction".equals(parameterName) ) {
+          this.fUiAction = (EObject) newValue;
+          return true;
+      }
       if ("uiClass".equals(parameterName) ) {
           this.fUiClass = (EObject) newValue;
+          return true;
+      }
+      if ("trace".equals(parameterName) ) {
+          this.fTrace = (EObject) newValue;
           return true;
       }
       return false;
@@ -123,42 +146,54 @@ public final class JOperationWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
       this.fJOperation = pJOperation;
     }
     
+    public void setUiAction(final EObject pUiAction) {
+      if (!isMutable()) throw new java.lang.UnsupportedOperationException();
+      this.fUiAction = pUiAction;
+    }
+    
     public void setUiClass(final EObject pUiClass) {
       if (!isMutable()) throw new java.lang.UnsupportedOperationException();
       this.fUiClass = pUiClass;
     }
     
+    public void setTrace(final EObject pTrace) {
+      if (!isMutable()) throw new java.lang.UnsupportedOperationException();
+      this.fTrace = pTrace;
+    }
+    
     @Override
     public String patternName() {
-      return "queries.JOperationWithGuardQuery";
+      return "queries.JOperationWithGuardQueryForModify";
     }
     
     @Override
     public List<String> parameterNames() {
-      return JOperationWithGuardQuery.Match.parameterNames;
+      return JOperationWithGuardQueryForModify.Match.parameterNames;
     }
     
     @Override
     public Object[] toArray() {
-      return new Object[]{fJOperation, fUiClass};
+      return new Object[]{fJOperation, fUiAction, fUiClass, fTrace};
     }
     
     @Override
-    public JOperationWithGuardQuery.Match toImmutable() {
-      return isMutable() ? newMatch(fJOperation, fUiClass) : this;
+    public JOperationWithGuardQueryForModify.Match toImmutable() {
+      return isMutable() ? newMatch(fJOperation, fUiAction, fUiClass, fTrace) : this;
     }
     
     @Override
     public String prettyPrint() {
       StringBuilder result = new StringBuilder();
       result.append("\"jOperation\"=" + prettyPrintValue(fJOperation) + ", ");
-      result.append("\"uiClass\"=" + prettyPrintValue(fUiClass));
+      result.append("\"uiAction\"=" + prettyPrintValue(fUiAction) + ", ");
+      result.append("\"uiClass\"=" + prettyPrintValue(fUiClass) + ", ");
+      result.append("\"trace\"=" + prettyPrintValue(fTrace));
       return result.toString();
     }
     
     @Override
     public int hashCode() {
-      return Objects.hash(fJOperation, fUiClass);
+      return Objects.hash(fJOperation, fUiAction, fUiClass, fTrace);
     }
     
     @Override
@@ -168,9 +203,9 @@ public final class JOperationWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
       if (obj == null) {
           return false;
       }
-      if ((obj instanceof JOperationWithGuardQuery.Match)) {
-          JOperationWithGuardQuery.Match other = (JOperationWithGuardQuery.Match) obj;
-          return Objects.equals(fJOperation, other.fJOperation) && Objects.equals(fUiClass, other.fUiClass);
+      if ((obj instanceof JOperationWithGuardQueryForModify.Match)) {
+          JOperationWithGuardQueryForModify.Match other = (JOperationWithGuardQueryForModify.Match) obj;
+          return Objects.equals(fJOperation, other.fJOperation) && Objects.equals(fUiAction, other.fUiAction) && Objects.equals(fUiClass, other.fUiClass) && Objects.equals(fTrace, other.fTrace);
       } else {
           // this should be infrequent
           if (!(obj instanceof IPatternMatch)) {
@@ -182,8 +217,8 @@ public final class JOperationWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
     }
     
     @Override
-    public JOperationWithGuardQuery specification() {
-      return JOperationWithGuardQuery.instance();
+    public JOperationWithGuardQueryForModify specification() {
+      return JOperationWithGuardQueryForModify.instance();
     }
     
     /**
@@ -193,8 +228,8 @@ public final class JOperationWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
      * @return the empty match.
      * 
      */
-    public static JOperationWithGuardQuery.Match newEmptyMatch() {
-      return new Mutable(null, null);
+    public static JOperationWithGuardQueryForModify.Match newEmptyMatch() {
+      return new Mutable(null, null, null, null);
     }
     
     /**
@@ -202,12 +237,14 @@ public final class JOperationWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
      * Fields of the mutable match can be filled to create a partial match, usable as matcher input.
      * 
      * @param pJOperation the fixed value of pattern parameter jOperation, or null if not bound.
+     * @param pUiAction the fixed value of pattern parameter uiAction, or null if not bound.
      * @param pUiClass the fixed value of pattern parameter uiClass, or null if not bound.
+     * @param pTrace the fixed value of pattern parameter trace, or null if not bound.
      * @return the new, mutable (partial) match object.
      * 
      */
-    public static JOperationWithGuardQuery.Match newMutableMatch(final EObject pJOperation, final EObject pUiClass) {
-      return new Mutable(pJOperation, pUiClass);
+    public static JOperationWithGuardQueryForModify.Match newMutableMatch(final EObject pJOperation, final EObject pUiAction, final EObject pUiClass, final EObject pTrace) {
+      return new Mutable(pJOperation, pUiAction, pUiClass, pTrace);
     }
     
     /**
@@ -215,17 +252,19 @@ public final class JOperationWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
      * This can be used e.g. to call the matcher with a partial match.
      * <p>The returned match will be immutable. Use {@link #newEmptyMatch()} to obtain a mutable match object.
      * @param pJOperation the fixed value of pattern parameter jOperation, or null if not bound.
+     * @param pUiAction the fixed value of pattern parameter uiAction, or null if not bound.
      * @param pUiClass the fixed value of pattern parameter uiClass, or null if not bound.
+     * @param pTrace the fixed value of pattern parameter trace, or null if not bound.
      * @return the (partial) match object.
      * 
      */
-    public static JOperationWithGuardQuery.Match newMatch(final EObject pJOperation, final EObject pUiClass) {
-      return new Immutable(pJOperation, pUiClass);
+    public static JOperationWithGuardQueryForModify.Match newMatch(final EObject pJOperation, final EObject pUiAction, final EObject pUiClass, final EObject pTrace) {
+      return new Immutable(pJOperation, pUiAction, pUiClass, pTrace);
     }
     
-    private static final class Mutable extends JOperationWithGuardQuery.Match {
-      Mutable(final EObject pJOperation, final EObject pUiClass) {
-        super(pJOperation, pUiClass);
+    private static final class Mutable extends JOperationWithGuardQueryForModify.Match {
+      Mutable(final EObject pJOperation, final EObject pUiAction, final EObject pUiClass, final EObject pTrace) {
+        super(pJOperation, pUiAction, pUiClass, pTrace);
       }
       
       @Override
@@ -234,9 +273,9 @@ public final class JOperationWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
       }
     }
     
-    private static final class Immutable extends JOperationWithGuardQuery.Match {
-      Immutable(final EObject pJOperation, final EObject pUiClass) {
-        super(pJOperation, pUiClass);
+    private static final class Immutable extends JOperationWithGuardQueryForModify.Match {
+      Immutable(final EObject pJOperation, final EObject pUiAction, final EObject pUiClass, final EObject pTrace) {
+        super(pJOperation, pUiAction, pUiClass, pTrace);
       }
       
       @Override
@@ -247,7 +286,7 @@ public final class JOperationWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
   }
   
   /**
-   * Generated pattern matcher API of the queries.JOperationWithGuardQuery pattern,
+   * Generated pattern matcher API of the queries.JOperationWithGuardQueryForModify pattern,
    * providing pattern-specific query methods.
    * 
    * <p>Use the pattern matcher on a given model via {@link #on(ViatraQueryEngine)},
@@ -257,22 +296,21 @@ public final class JOperationWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
    * 
    * <p>Original source:
    * <code><pre>
-   * //JOperation Queries
-   * pattern JOperationWithGuardQuery(jOperation : JOperation, uiClass : UIClass) {
+   * pattern JOperationWithGuardQueryForModify(jOperation : JOperation, uiAction : UIAction, uiClass : UIClass, trace : PSMToUITrace) {
    * 	JOperation(jOperation);
    * 	JOperation.visibility(jOperation, JVisibility::PUBLIC);
    * 	JOperation.ownerClass(jOperation, jClass);
    * 	PSMToUITrace.psmElements(trace, jClass);
    * 	PSMToUITrace.uiElements(trace, uiClass);
-   * 	neg find alreadyTransformed(jOperation, _, _);
+   * 	find alreadyTransformed(jOperation, uiAction, trace);
    * }
    * </pre></code>
    * 
    * @see Match
-   * @see JOperationWithGuardQuery
+   * @see JOperationWithGuardQueryForModify
    * 
    */
-  public static class Matcher extends BaseMatcher<JOperationWithGuardQuery.Match> {
+  public static class Matcher extends BaseMatcher<JOperationWithGuardQueryForModify.Match> {
     /**
      * Initializes the pattern matcher within an existing VIATRA Query engine.
      * If the pattern matcher is already constructed in the engine, only a light-weight reference is returned.
@@ -281,7 +319,7 @@ public final class JOperationWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
      * @throws ViatraQueryRuntimeException if an error occurs during pattern matcher creation
      * 
      */
-    public static JOperationWithGuardQuery.Matcher on(final ViatraQueryEngine engine) {
+    public static JOperationWithGuardQueryForModify.Matcher on(final ViatraQueryEngine engine) {
       // check if matcher already exists
       Matcher matcher = engine.getExistingMatcher(querySpecification());
       if (matcher == null) {
@@ -296,15 +334,19 @@ public final class JOperationWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
      * @noreference This method is for internal matcher initialization by the framework, do not call it manually.
      * 
      */
-    public static JOperationWithGuardQuery.Matcher create() {
+    public static JOperationWithGuardQueryForModify.Matcher create() {
       return new Matcher();
     }
     
     private final static int POSITION_JOPERATION = 0;
     
-    private final static int POSITION_UICLASS = 1;
+    private final static int POSITION_UIACTION = 1;
     
-    private final static Logger LOGGER = ViatraQueryLoggingUtil.getLogger(JOperationWithGuardQuery.Matcher.class);
+    private final static int POSITION_UICLASS = 2;
+    
+    private final static int POSITION_TRACE = 3;
+    
+    private final static Logger LOGGER = ViatraQueryLoggingUtil.getLogger(JOperationWithGuardQueryForModify.Matcher.class);
     
     /**
      * Initializes the pattern matcher within an existing VIATRA Query engine.
@@ -321,12 +363,14 @@ public final class JOperationWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
     /**
      * Returns the set of all matches of the pattern that conform to the given fixed values of some parameters.
      * @param pJOperation the fixed value of pattern parameter jOperation, or null if not bound.
+     * @param pUiAction the fixed value of pattern parameter uiAction, or null if not bound.
      * @param pUiClass the fixed value of pattern parameter uiClass, or null if not bound.
+     * @param pTrace the fixed value of pattern parameter trace, or null if not bound.
      * @return matches represented as a Match object.
      * 
      */
-    public Collection<JOperationWithGuardQuery.Match> getAllMatches(final EObject pJOperation, final EObject pUiClass) {
-      return rawStreamAllMatches(new Object[]{pJOperation, pUiClass}).collect(Collectors.toSet());
+    public Collection<JOperationWithGuardQueryForModify.Match> getAllMatches(final EObject pJOperation, final EObject pUiAction, final EObject pUiClass, final EObject pTrace) {
+      return rawStreamAllMatches(new Object[]{pJOperation, pUiAction, pUiClass, pTrace}).collect(Collectors.toSet());
     }
     
     /**
@@ -336,60 +380,70 @@ public final class JOperationWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
      * If the match set of the pattern changes during processing, the contents of the stream is <strong>undefined</strong>.
      * In such cases, either rely on {@link #getAllMatches()} or collect the results of the stream in end-user code.
      * @param pJOperation the fixed value of pattern parameter jOperation, or null if not bound.
+     * @param pUiAction the fixed value of pattern parameter uiAction, or null if not bound.
      * @param pUiClass the fixed value of pattern parameter uiClass, or null if not bound.
+     * @param pTrace the fixed value of pattern parameter trace, or null if not bound.
      * @return a stream of matches represented as a Match object.
      * 
      */
-    public Stream<JOperationWithGuardQuery.Match> streamAllMatches(final EObject pJOperation, final EObject pUiClass) {
-      return rawStreamAllMatches(new Object[]{pJOperation, pUiClass});
+    public Stream<JOperationWithGuardQueryForModify.Match> streamAllMatches(final EObject pJOperation, final EObject pUiAction, final EObject pUiClass, final EObject pTrace) {
+      return rawStreamAllMatches(new Object[]{pJOperation, pUiAction, pUiClass, pTrace});
     }
     
     /**
      * Returns an arbitrarily chosen match of the pattern that conforms to the given fixed values of some parameters.
      * Neither determinism nor randomness of selection is guaranteed.
      * @param pJOperation the fixed value of pattern parameter jOperation, or null if not bound.
+     * @param pUiAction the fixed value of pattern parameter uiAction, or null if not bound.
      * @param pUiClass the fixed value of pattern parameter uiClass, or null if not bound.
+     * @param pTrace the fixed value of pattern parameter trace, or null if not bound.
      * @return a match represented as a Match object, or null if no match is found.
      * 
      */
-    public Optional<JOperationWithGuardQuery.Match> getOneArbitraryMatch(final EObject pJOperation, final EObject pUiClass) {
-      return rawGetOneArbitraryMatch(new Object[]{pJOperation, pUiClass});
+    public Optional<JOperationWithGuardQueryForModify.Match> getOneArbitraryMatch(final EObject pJOperation, final EObject pUiAction, final EObject pUiClass, final EObject pTrace) {
+      return rawGetOneArbitraryMatch(new Object[]{pJOperation, pUiAction, pUiClass, pTrace});
     }
     
     /**
      * Indicates whether the given combination of specified pattern parameters constitute a valid pattern match,
      * under any possible substitution of the unspecified parameters (if any).
      * @param pJOperation the fixed value of pattern parameter jOperation, or null if not bound.
+     * @param pUiAction the fixed value of pattern parameter uiAction, or null if not bound.
      * @param pUiClass the fixed value of pattern parameter uiClass, or null if not bound.
+     * @param pTrace the fixed value of pattern parameter trace, or null if not bound.
      * @return true if the input is a valid (partial) match of the pattern.
      * 
      */
-    public boolean hasMatch(final EObject pJOperation, final EObject pUiClass) {
-      return rawHasMatch(new Object[]{pJOperation, pUiClass});
+    public boolean hasMatch(final EObject pJOperation, final EObject pUiAction, final EObject pUiClass, final EObject pTrace) {
+      return rawHasMatch(new Object[]{pJOperation, pUiAction, pUiClass, pTrace});
     }
     
     /**
      * Returns the number of all matches of the pattern that conform to the given fixed values of some parameters.
      * @param pJOperation the fixed value of pattern parameter jOperation, or null if not bound.
+     * @param pUiAction the fixed value of pattern parameter uiAction, or null if not bound.
      * @param pUiClass the fixed value of pattern parameter uiClass, or null if not bound.
+     * @param pTrace the fixed value of pattern parameter trace, or null if not bound.
      * @return the number of pattern matches found.
      * 
      */
-    public int countMatches(final EObject pJOperation, final EObject pUiClass) {
-      return rawCountMatches(new Object[]{pJOperation, pUiClass});
+    public int countMatches(final EObject pJOperation, final EObject pUiAction, final EObject pUiClass, final EObject pTrace) {
+      return rawCountMatches(new Object[]{pJOperation, pUiAction, pUiClass, pTrace});
     }
     
     /**
      * Executes the given processor on an arbitrarily chosen match of the pattern that conforms to the given fixed values of some parameters.
      * Neither determinism nor randomness of selection is guaranteed.
      * @param pJOperation the fixed value of pattern parameter jOperation, or null if not bound.
+     * @param pUiAction the fixed value of pattern parameter uiAction, or null if not bound.
      * @param pUiClass the fixed value of pattern parameter uiClass, or null if not bound.
+     * @param pTrace the fixed value of pattern parameter trace, or null if not bound.
      * @param processor the action that will process the selected match.
      * @return true if the pattern has at least one match with the given parameter values, false if the processor was not invoked
      * 
      */
-    public boolean forOneArbitraryMatch(final EObject pJOperation, final EObject pUiClass, final Consumer<? super JOperationWithGuardQuery.Match> processor) {
-      return rawForOneArbitraryMatch(new Object[]{pJOperation, pUiClass}, processor);
+    public boolean forOneArbitraryMatch(final EObject pJOperation, final EObject pUiAction, final EObject pUiClass, final EObject pTrace, final Consumer<? super JOperationWithGuardQueryForModify.Match> processor) {
+      return rawForOneArbitraryMatch(new Object[]{pJOperation, pUiAction, pUiClass, pTrace}, processor);
     }
     
     /**
@@ -397,12 +451,14 @@ public final class JOperationWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
      * This can be used e.g. to call the matcher with a partial match.
      * <p>The returned match will be immutable. Use {@link #newEmptyMatch()} to obtain a mutable match object.
      * @param pJOperation the fixed value of pattern parameter jOperation, or null if not bound.
+     * @param pUiAction the fixed value of pattern parameter uiAction, or null if not bound.
      * @param pUiClass the fixed value of pattern parameter uiClass, or null if not bound.
+     * @param pTrace the fixed value of pattern parameter trace, or null if not bound.
      * @return the (partial) match object.
      * 
      */
-    public JOperationWithGuardQuery.Match newMatch(final EObject pJOperation, final EObject pUiClass) {
-      return JOperationWithGuardQuery.Match.newMatch(pJOperation, pUiClass);
+    public JOperationWithGuardQueryForModify.Match newMatch(final EObject pJOperation, final EObject pUiAction, final EObject pUiClass, final EObject pTrace) {
+      return JOperationWithGuardQueryForModify.Match.newMatch(pJOperation, pUiAction, pUiClass, pTrace);
     }
     
     /**
@@ -442,7 +498,7 @@ public final class JOperationWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
      * @return the Stream of all values or empty set if there are no matches
      * 
      */
-    public Stream<EObject> streamAllValuesOfjOperation(final JOperationWithGuardQuery.Match partialMatch) {
+    public Stream<EObject> streamAllValuesOfjOperation(final JOperationWithGuardQueryForModify.Match partialMatch) {
       return rawStreamAllValuesOfjOperation(partialMatch.toArray());
     }
     
@@ -456,8 +512,8 @@ public final class JOperationWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
      * @return the Stream of all values or empty set if there are no matches
      * 
      */
-    public Stream<EObject> streamAllValuesOfjOperation(final EObject pUiClass) {
-      return rawStreamAllValuesOfjOperation(new Object[]{null, pUiClass});
+    public Stream<EObject> streamAllValuesOfjOperation(final EObject pUiAction, final EObject pUiClass, final EObject pTrace) {
+      return rawStreamAllValuesOfjOperation(new Object[]{null, pUiAction, pUiClass, pTrace});
     }
     
     /**
@@ -465,7 +521,7 @@ public final class JOperationWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
      * @return the Set of all values or empty set if there are no matches
      * 
      */
-    public Set<EObject> getAllValuesOfjOperation(final JOperationWithGuardQuery.Match partialMatch) {
+    public Set<EObject> getAllValuesOfjOperation(final JOperationWithGuardQueryForModify.Match partialMatch) {
       return rawStreamAllValuesOfjOperation(partialMatch.toArray()).collect(Collectors.toSet());
     }
     
@@ -474,8 +530,81 @@ public final class JOperationWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
      * @return the Set of all values or empty set if there are no matches
      * 
      */
-    public Set<EObject> getAllValuesOfjOperation(final EObject pUiClass) {
-      return rawStreamAllValuesOfjOperation(new Object[]{null, pUiClass}).collect(Collectors.toSet());
+    public Set<EObject> getAllValuesOfjOperation(final EObject pUiAction, final EObject pUiClass, final EObject pTrace) {
+      return rawStreamAllValuesOfjOperation(new Object[]{null, pUiAction, pUiClass, pTrace}).collect(Collectors.toSet());
+    }
+    
+    /**
+     * Retrieve the set of values that occur in matches for uiAction.
+     * @return the Set of all values or empty set if there are no matches
+     * 
+     */
+    protected Stream<EObject> rawStreamAllValuesOfuiAction(final Object[] parameters) {
+      return rawStreamAllValues(POSITION_UIACTION, parameters).map(EObject.class::cast);
+    }
+    
+    /**
+     * Retrieve the set of values that occur in matches for uiAction.
+     * @return the Set of all values or empty set if there are no matches
+     * 
+     */
+    public Set<EObject> getAllValuesOfuiAction() {
+      return rawStreamAllValuesOfuiAction(emptyArray()).collect(Collectors.toSet());
+    }
+    
+    /**
+     * Retrieve the set of values that occur in matches for uiAction.
+     * @return the Set of all values or empty set if there are no matches
+     * 
+     */
+    public Stream<EObject> streamAllValuesOfuiAction() {
+      return rawStreamAllValuesOfuiAction(emptyArray());
+    }
+    
+    /**
+     * Retrieve the set of values that occur in matches for uiAction.
+     * </p>
+     * <strong>NOTE</strong>: It is important not to modify the source model while the stream is being processed.
+     * If the match set of the pattern changes during processing, the contents of the stream is <strong>undefined</strong>.
+     * In such cases, either rely on {@link #getAllMatches()} or collect the results of the stream in end-user code.
+     *      
+     * @return the Stream of all values or empty set if there are no matches
+     * 
+     */
+    public Stream<EObject> streamAllValuesOfuiAction(final JOperationWithGuardQueryForModify.Match partialMatch) {
+      return rawStreamAllValuesOfuiAction(partialMatch.toArray());
+    }
+    
+    /**
+     * Retrieve the set of values that occur in matches for uiAction.
+     * </p>
+     * <strong>NOTE</strong>: It is important not to modify the source model while the stream is being processed.
+     * If the match set of the pattern changes during processing, the contents of the stream is <strong>undefined</strong>.
+     * In such cases, either rely on {@link #getAllMatches()} or collect the results of the stream in end-user code.
+     *      
+     * @return the Stream of all values or empty set if there are no matches
+     * 
+     */
+    public Stream<EObject> streamAllValuesOfuiAction(final EObject pJOperation, final EObject pUiClass, final EObject pTrace) {
+      return rawStreamAllValuesOfuiAction(new Object[]{pJOperation, null, pUiClass, pTrace});
+    }
+    
+    /**
+     * Retrieve the set of values that occur in matches for uiAction.
+     * @return the Set of all values or empty set if there are no matches
+     * 
+     */
+    public Set<EObject> getAllValuesOfuiAction(final JOperationWithGuardQueryForModify.Match partialMatch) {
+      return rawStreamAllValuesOfuiAction(partialMatch.toArray()).collect(Collectors.toSet());
+    }
+    
+    /**
+     * Retrieve the set of values that occur in matches for uiAction.
+     * @return the Set of all values or empty set if there are no matches
+     * 
+     */
+    public Set<EObject> getAllValuesOfuiAction(final EObject pJOperation, final EObject pUiClass, final EObject pTrace) {
+      return rawStreamAllValuesOfuiAction(new Object[]{pJOperation, null, pUiClass, pTrace}).collect(Collectors.toSet());
     }
     
     /**
@@ -515,7 +644,7 @@ public final class JOperationWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
      * @return the Stream of all values or empty set if there are no matches
      * 
      */
-    public Stream<EObject> streamAllValuesOfuiClass(final JOperationWithGuardQuery.Match partialMatch) {
+    public Stream<EObject> streamAllValuesOfuiClass(final JOperationWithGuardQueryForModify.Match partialMatch) {
       return rawStreamAllValuesOfuiClass(partialMatch.toArray());
     }
     
@@ -529,8 +658,8 @@ public final class JOperationWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
      * @return the Stream of all values or empty set if there are no matches
      * 
      */
-    public Stream<EObject> streamAllValuesOfuiClass(final EObject pJOperation) {
-      return rawStreamAllValuesOfuiClass(new Object[]{pJOperation, null});
+    public Stream<EObject> streamAllValuesOfuiClass(final EObject pJOperation, final EObject pUiAction, final EObject pTrace) {
+      return rawStreamAllValuesOfuiClass(new Object[]{pJOperation, pUiAction, null, pTrace});
     }
     
     /**
@@ -538,7 +667,7 @@ public final class JOperationWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
      * @return the Set of all values or empty set if there are no matches
      * 
      */
-    public Set<EObject> getAllValuesOfuiClass(final JOperationWithGuardQuery.Match partialMatch) {
+    public Set<EObject> getAllValuesOfuiClass(final JOperationWithGuardQueryForModify.Match partialMatch) {
       return rawStreamAllValuesOfuiClass(partialMatch.toArray()).collect(Collectors.toSet());
     }
     
@@ -547,14 +676,87 @@ public final class JOperationWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
      * @return the Set of all values or empty set if there are no matches
      * 
      */
-    public Set<EObject> getAllValuesOfuiClass(final EObject pJOperation) {
-      return rawStreamAllValuesOfuiClass(new Object[]{pJOperation, null}).collect(Collectors.toSet());
+    public Set<EObject> getAllValuesOfuiClass(final EObject pJOperation, final EObject pUiAction, final EObject pTrace) {
+      return rawStreamAllValuesOfuiClass(new Object[]{pJOperation, pUiAction, null, pTrace}).collect(Collectors.toSet());
+    }
+    
+    /**
+     * Retrieve the set of values that occur in matches for trace.
+     * @return the Set of all values or empty set if there are no matches
+     * 
+     */
+    protected Stream<EObject> rawStreamAllValuesOftrace(final Object[] parameters) {
+      return rawStreamAllValues(POSITION_TRACE, parameters).map(EObject.class::cast);
+    }
+    
+    /**
+     * Retrieve the set of values that occur in matches for trace.
+     * @return the Set of all values or empty set if there are no matches
+     * 
+     */
+    public Set<EObject> getAllValuesOftrace() {
+      return rawStreamAllValuesOftrace(emptyArray()).collect(Collectors.toSet());
+    }
+    
+    /**
+     * Retrieve the set of values that occur in matches for trace.
+     * @return the Set of all values or empty set if there are no matches
+     * 
+     */
+    public Stream<EObject> streamAllValuesOftrace() {
+      return rawStreamAllValuesOftrace(emptyArray());
+    }
+    
+    /**
+     * Retrieve the set of values that occur in matches for trace.
+     * </p>
+     * <strong>NOTE</strong>: It is important not to modify the source model while the stream is being processed.
+     * If the match set of the pattern changes during processing, the contents of the stream is <strong>undefined</strong>.
+     * In such cases, either rely on {@link #getAllMatches()} or collect the results of the stream in end-user code.
+     *      
+     * @return the Stream of all values or empty set if there are no matches
+     * 
+     */
+    public Stream<EObject> streamAllValuesOftrace(final JOperationWithGuardQueryForModify.Match partialMatch) {
+      return rawStreamAllValuesOftrace(partialMatch.toArray());
+    }
+    
+    /**
+     * Retrieve the set of values that occur in matches for trace.
+     * </p>
+     * <strong>NOTE</strong>: It is important not to modify the source model while the stream is being processed.
+     * If the match set of the pattern changes during processing, the contents of the stream is <strong>undefined</strong>.
+     * In such cases, either rely on {@link #getAllMatches()} or collect the results of the stream in end-user code.
+     *      
+     * @return the Stream of all values or empty set if there are no matches
+     * 
+     */
+    public Stream<EObject> streamAllValuesOftrace(final EObject pJOperation, final EObject pUiAction, final EObject pUiClass) {
+      return rawStreamAllValuesOftrace(new Object[]{pJOperation, pUiAction, pUiClass, null});
+    }
+    
+    /**
+     * Retrieve the set of values that occur in matches for trace.
+     * @return the Set of all values or empty set if there are no matches
+     * 
+     */
+    public Set<EObject> getAllValuesOftrace(final JOperationWithGuardQueryForModify.Match partialMatch) {
+      return rawStreamAllValuesOftrace(partialMatch.toArray()).collect(Collectors.toSet());
+    }
+    
+    /**
+     * Retrieve the set of values that occur in matches for trace.
+     * @return the Set of all values or empty set if there are no matches
+     * 
+     */
+    public Set<EObject> getAllValuesOftrace(final EObject pJOperation, final EObject pUiAction, final EObject pUiClass) {
+      return rawStreamAllValuesOftrace(new Object[]{pJOperation, pUiAction, pUiClass, null}).collect(Collectors.toSet());
     }
     
     @Override
-    protected JOperationWithGuardQuery.Match tupleToMatch(final Tuple t) {
+    protected JOperationWithGuardQueryForModify.Match tupleToMatch(final Tuple t) {
       try {
-          return JOperationWithGuardQuery.Match.newMatch((EObject) t.get(POSITION_JOPERATION), (EObject) t.get(POSITION_UICLASS));
+          return JOperationWithGuardQueryForModify.Match.newMatch((EObject) t.get(POSITION_JOPERATION), (EObject) t.get(POSITION_UIACTION), (EObject) t.get(POSITION_UICLASS), (EObject) t.get(POSITION_TRACE));
       } catch(ClassCastException e) {
           LOGGER.error("Element(s) in tuple not properly typed!",e);
           return null;
@@ -562,9 +764,9 @@ public final class JOperationWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
     }
     
     @Override
-    protected JOperationWithGuardQuery.Match arrayToMatch(final Object[] match) {
+    protected JOperationWithGuardQueryForModify.Match arrayToMatch(final Object[] match) {
       try {
-          return JOperationWithGuardQuery.Match.newMatch((EObject) match[POSITION_JOPERATION], (EObject) match[POSITION_UICLASS]);
+          return JOperationWithGuardQueryForModify.Match.newMatch((EObject) match[POSITION_JOPERATION], (EObject) match[POSITION_UIACTION], (EObject) match[POSITION_UICLASS], (EObject) match[POSITION_TRACE]);
       } catch(ClassCastException e) {
           LOGGER.error("Element(s) in array not properly typed!",e);
           return null;
@@ -572,9 +774,9 @@ public final class JOperationWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
     }
     
     @Override
-    protected JOperationWithGuardQuery.Match arrayToMatchMutable(final Object[] match) {
+    protected JOperationWithGuardQueryForModify.Match arrayToMatchMutable(final Object[] match) {
       try {
-          return JOperationWithGuardQuery.Match.newMutableMatch((EObject) match[POSITION_JOPERATION], (EObject) match[POSITION_UICLASS]);
+          return JOperationWithGuardQueryForModify.Match.newMutableMatch((EObject) match[POSITION_JOPERATION], (EObject) match[POSITION_UIACTION], (EObject) match[POSITION_UICLASS], (EObject) match[POSITION_TRACE]);
       } catch(ClassCastException e) {
           LOGGER.error("Element(s) in array not properly typed!",e);
           return null;
@@ -586,12 +788,12 @@ public final class JOperationWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
      * @throws ViatraQueryRuntimeException if the pattern definition could not be loaded
      * 
      */
-    public static IQuerySpecification<JOperationWithGuardQuery.Matcher> querySpecification() {
-      return JOperationWithGuardQuery.instance();
+    public static IQuerySpecification<JOperationWithGuardQueryForModify.Matcher> querySpecification() {
+      return JOperationWithGuardQueryForModify.instance();
     }
   }
   
-  private JOperationWithGuardQuery() {
+  private JOperationWithGuardQueryForModify() {
     super(GeneratedPQuery.INSTANCE);
   }
   
@@ -600,7 +802,7 @@ public final class JOperationWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
    * @throws ViatraQueryRuntimeException if the pattern definition could not be loaded
    * 
    */
-  public static JOperationWithGuardQuery instance() {
+  public static JOperationWithGuardQueryForModify instance() {
     try{
         return LazyHolder.INSTANCE;
     } catch (ExceptionInInitializerError err) {
@@ -609,35 +811,35 @@ public final class JOperationWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
   }
   
   @Override
-  protected JOperationWithGuardQuery.Matcher instantiate(final ViatraQueryEngine engine) {
-    return JOperationWithGuardQuery.Matcher.on(engine);
+  protected JOperationWithGuardQueryForModify.Matcher instantiate(final ViatraQueryEngine engine) {
+    return JOperationWithGuardQueryForModify.Matcher.on(engine);
   }
   
   @Override
-  public JOperationWithGuardQuery.Matcher instantiate() {
-    return JOperationWithGuardQuery.Matcher.create();
+  public JOperationWithGuardQueryForModify.Matcher instantiate() {
+    return JOperationWithGuardQueryForModify.Matcher.create();
   }
   
   @Override
-  public JOperationWithGuardQuery.Match newEmptyMatch() {
-    return JOperationWithGuardQuery.Match.newEmptyMatch();
+  public JOperationWithGuardQueryForModify.Match newEmptyMatch() {
+    return JOperationWithGuardQueryForModify.Match.newEmptyMatch();
   }
   
   @Override
-  public JOperationWithGuardQuery.Match newMatch(final Object... parameters) {
-    return JOperationWithGuardQuery.Match.newMatch((org.eclipse.emf.ecore.EObject) parameters[0], (org.eclipse.emf.ecore.EObject) parameters[1]);
+  public JOperationWithGuardQueryForModify.Match newMatch(final Object... parameters) {
+    return JOperationWithGuardQueryForModify.Match.newMatch((org.eclipse.emf.ecore.EObject) parameters[0], (org.eclipse.emf.ecore.EObject) parameters[1], (org.eclipse.emf.ecore.EObject) parameters[2], (org.eclipse.emf.ecore.EObject) parameters[3]);
   }
   
   /**
-   * Inner class allowing the singleton instance of {@link JvmGenericType: queries.JOperationWithGuardQuery (visibility: PUBLIC, simpleName: JOperationWithGuardQuery, identifier: queries.JOperationWithGuardQuery, deprecated: <unset>) (abstract: false, static: false, final: true, packageName: queries) (interface: false, strictFloatingPoint: false, anonymous: false)} to be created 
+   * Inner class allowing the singleton instance of {@link JvmGenericType: queries.JOperationWithGuardQueryForModify (visibility: PUBLIC, simpleName: JOperationWithGuardQueryForModify, identifier: queries.JOperationWithGuardQueryForModify, deprecated: <unset>) (abstract: false, static: false, final: true, packageName: queries) (interface: false, strictFloatingPoint: false, anonymous: false)} to be created 
    *     <b>not</b> at the class load time of the outer class, 
-   *     but rather at the first call to {@link JvmGenericType: queries.JOperationWithGuardQuery (visibility: PUBLIC, simpleName: JOperationWithGuardQuery, identifier: queries.JOperationWithGuardQuery, deprecated: <unset>) (abstract: false, static: false, final: true, packageName: queries) (interface: false, strictFloatingPoint: false, anonymous: false)#instance()}.
+   *     but rather at the first call to {@link JvmGenericType: queries.JOperationWithGuardQueryForModify (visibility: PUBLIC, simpleName: JOperationWithGuardQueryForModify, identifier: queries.JOperationWithGuardQueryForModify, deprecated: <unset>) (abstract: false, static: false, final: true, packageName: queries) (interface: false, strictFloatingPoint: false, anonymous: false)#instance()}.
    * 
    * <p> This workaround is required e.g. to support recursion.
    * 
    */
   private static class LazyHolder {
-    private final static JOperationWithGuardQuery INSTANCE = new JOperationWithGuardQuery();
+    private final static JOperationWithGuardQueryForModify INSTANCE = new JOperationWithGuardQueryForModify();
     
     /**
      * Statically initializes the query specification <b>after</b> the field {@link #INSTANCE} is assigned.
@@ -655,13 +857,17 @@ public final class JOperationWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
   }
   
   private static class GeneratedPQuery extends BaseGeneratedEMFPQuery {
-    private final static JOperationWithGuardQuery.GeneratedPQuery INSTANCE = new GeneratedPQuery();
+    private final static JOperationWithGuardQueryForModify.GeneratedPQuery INSTANCE = new GeneratedPQuery();
     
     private final PParameter parameter_jOperation = new PParameter("jOperation", "org.eclipse.emf.ecore.EObject", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://blackbelt.hu/judo/meta/psm", "JOperation")), PParameterDirection.INOUT);
     
+    private final PParameter parameter_uiAction = new PParameter("uiAction", "org.eclipse.emf.ecore.EObject", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://blackbelt.hu/judo/meta/psm/ui", "UIAction")), PParameterDirection.INOUT);
+    
     private final PParameter parameter_uiClass = new PParameter("uiClass", "org.eclipse.emf.ecore.EObject", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://blackbelt.hu/judo/meta/psm/ui", "UIClass")), PParameterDirection.INOUT);
     
-    private final List<PParameter> parameters = Arrays.asList(parameter_jOperation, parameter_uiClass);
+    private final PParameter parameter_trace = new PParameter("trace", "org.eclipse.emf.ecore.EObject", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://blackbelt.hu/judo/meta/psm/ui/traceability", "PSMToUITrace")), PParameterDirection.INOUT);
+    
+    private final List<PParameter> parameters = Arrays.asList(parameter_jOperation, parameter_uiAction, parameter_uiClass, parameter_trace);
     
     private GeneratedPQuery() {
       super(PVisibility.PUBLIC);
@@ -669,12 +875,12 @@ public final class JOperationWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
     
     @Override
     public String getFullyQualifiedName() {
-      return "queries.JOperationWithGuardQuery";
+      return "queries.JOperationWithGuardQueryForModify";
     }
     
     @Override
     public List<String> getParameterNames() {
-      return Arrays.asList("jOperation","uiClass");
+      return Arrays.asList("jOperation","uiAction","uiClass","trace");
     }
     
     @Override
@@ -689,16 +895,19 @@ public final class JOperationWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
       {
           PBody body = new PBody(this);
           PVariable var_jOperation = body.getOrCreateVariableByName("jOperation");
+          PVariable var_uiAction = body.getOrCreateVariableByName("uiAction");
           PVariable var_uiClass = body.getOrCreateVariableByName("uiClass");
-          PVariable var_jClass = body.getOrCreateVariableByName("jClass");
           PVariable var_trace = body.getOrCreateVariableByName("trace");
-          PVariable var___0_ = body.getOrCreateVariableByName("_<0>");
-          PVariable var___1_ = body.getOrCreateVariableByName("_<1>");
+          PVariable var_jClass = body.getOrCreateVariableByName("jClass");
           new TypeConstraint(body, Tuples.flatTupleOf(var_jOperation), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm", "JOperation")));
+          new TypeConstraint(body, Tuples.flatTupleOf(var_uiAction), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm/ui", "UIAction")));
           new TypeConstraint(body, Tuples.flatTupleOf(var_uiClass), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm/ui", "UIClass")));
+          new TypeConstraint(body, Tuples.flatTupleOf(var_trace), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm/ui/traceability", "PSMToUITrace")));
           body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
              new ExportedParameter(body, var_jOperation, parameter_jOperation),
-             new ExportedParameter(body, var_uiClass, parameter_uiClass)
+             new ExportedParameter(body, var_uiAction, parameter_uiAction),
+             new ExportedParameter(body, var_uiClass, parameter_uiClass),
+             new ExportedParameter(body, var_trace, parameter_trace)
           ));
           // 	JOperation(jOperation)
           new TypeConstraint(body, Tuples.flatTupleOf(var_jOperation), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm", "JOperation")));
@@ -728,8 +937,8 @@ public final class JOperationWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
           new TypeConstraint(body, Tuples.flatTupleOf(var_trace, var__virtual_4_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://blackbelt.hu/judo/meta/psm/ui/traceability", "PSMToUITrace", "uiElements")));
           new TypeConstraint(body, Tuples.flatTupleOf(var__virtual_4_), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm/ui", "Identifiable")));
           new Equality(body, var__virtual_4_, var_uiClass);
-          // 	neg find alreadyTransformed(jOperation, _, _)
-          new NegativePatternCall(body, Tuples.flatTupleOf(var_jOperation, var___0_, var___1_), AlreadyTransformed.instance().getInternalQueryRepresentation());
+          // 	find alreadyTransformed(jOperation, uiAction, trace)
+          new PositivePatternCall(body, Tuples.flatTupleOf(var_jOperation, var_uiAction, var_trace), AlreadyTransformed.instance().getInternalQueryRepresentation());
           bodies.add(body);
       }
       return bodies;

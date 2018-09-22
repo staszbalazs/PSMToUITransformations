@@ -6,7 +6,7 @@ import org.eclipse.emf.ecore.EObject;
 
 import psm.JPrimitive;
 
-import ui.UIComponentType;
+import ui.UIBaseComponentType;
 
 /**
  * <!-- begin-user-doc -->
@@ -62,12 +62,12 @@ public interface Mapping extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Component Type</em>' reference.
-	 * @see #setComponentType(UIComponentType)
+	 * @see #setComponentType(UIBaseComponentType)
 	 * @see psmToUiTypeMapping.PsmToUiTypeMappingPackage#getMapping_ComponentType()
 	 * @model required="true"
 	 * @generated
 	 */
-	UIComponentType getComponentType();
+	UIBaseComponentType getComponentType();
 
 	/**
 	 * Sets the value of the '{@link psmToUiTypeMapping.Mapping#getComponentType <em>Component Type</em>}' reference.
@@ -77,7 +77,7 @@ public interface Mapping extends EObject {
 	 * @see #getComponentType()
 	 * @generated
 	 */
-	void setComponentType(UIComponentType value);
+	void setComponentType(UIBaseComponentType value);
 
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.

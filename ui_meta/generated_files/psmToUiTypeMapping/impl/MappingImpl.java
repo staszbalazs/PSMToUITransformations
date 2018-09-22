@@ -15,7 +15,7 @@ import psm.JPrimitive;
 import psmToUiTypeMapping.Mapping;
 import psmToUiTypeMapping.PsmToUiTypeMappingPackage;
 
-import ui.UIComponentType;
+import ui.UIBaseComponentType;
 
 /**
  * <!-- begin-user-doc -->
@@ -51,7 +51,7 @@ public class MappingImpl extends MinimalEObjectImpl.Container implements Mapping
 	 * @generated
 	 * @ordered
 	 */
-	protected UIComponentType componentType;
+	protected UIBaseComponentType componentType;
 
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -135,10 +135,10 @@ public class MappingImpl extends MinimalEObjectImpl.Container implements Mapping
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public UIComponentType getComponentType() {
+	public UIBaseComponentType getComponentType() {
 		if (componentType != null && componentType.eIsProxy()) {
 			InternalEObject oldComponentType = (InternalEObject)componentType;
-			componentType = (UIComponentType)eResolveProxy(oldComponentType);
+			componentType = (UIBaseComponentType)eResolveProxy(oldComponentType);
 			if (componentType != oldComponentType) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, PsmToUiTypeMappingPackage.MAPPING__COMPONENT_TYPE, oldComponentType, componentType));
@@ -152,7 +152,7 @@ public class MappingImpl extends MinimalEObjectImpl.Container implements Mapping
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public UIComponentType basicGetComponentType() {
+	public UIBaseComponentType basicGetComponentType() {
 		return componentType;
 	}
 
@@ -161,8 +161,8 @@ public class MappingImpl extends MinimalEObjectImpl.Container implements Mapping
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setComponentType(UIComponentType newComponentType) {
-		UIComponentType oldComponentType = componentType;
+	public void setComponentType(UIBaseComponentType newComponentType) {
+		UIBaseComponentType oldComponentType = componentType;
 		componentType = newComponentType;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, PsmToUiTypeMappingPackage.MAPPING__COMPONENT_TYPE, oldComponentType, componentType));
@@ -221,7 +221,7 @@ public class MappingImpl extends MinimalEObjectImpl.Container implements Mapping
 				setPsmType((JPrimitive)newValue);
 				return;
 			case PsmToUiTypeMappingPackage.MAPPING__COMPONENT_TYPE:
-				setComponentType((UIComponentType)newValue);
+				setComponentType((UIBaseComponentType)newValue);
 				return;
 			case PsmToUiTypeMappingPackage.MAPPING__NAME:
 				setName((String)newValue);
@@ -242,7 +242,7 @@ public class MappingImpl extends MinimalEObjectImpl.Container implements Mapping
 				setPsmType((JPrimitive)null);
 				return;
 			case PsmToUiTypeMappingPackage.MAPPING__COMPONENT_TYPE:
-				setComponentType((UIComponentType)null);
+				setComponentType((UIBaseComponentType)null);
 				return;
 			case PsmToUiTypeMappingPackage.MAPPING__NAME:
 				setName(NAME_EDEFAULT);

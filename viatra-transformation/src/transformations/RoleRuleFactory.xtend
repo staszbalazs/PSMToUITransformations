@@ -22,26 +22,32 @@ class RoleRuleFactory {
 	
 	extension IModelManipulations manipulation
 	extension EventDrivenTransformationRuleFactory factory = new EventDrivenTransformationRuleFactory
+	extension ViatraQueryEngine engine
 	
 	extension TraceabilityPackage trPackage = TraceabilityPackage::eINSTANCE
+	
+	extension PSMToUI psm2ui
 	
 	extension ComponentType componentType
 	
 	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> roleRule
 	
-	public def getRoleRule(PSMToUI psm2ui, ViatraQueryEngine engine) {
+	new(PSMToUI psm2ui, ViatraQueryEngine engine) {
+		this.manipulation = new SimpleModelManipulations(engine);
+		this.engine = engine;
+		this.psm2ui = psm2ui;
+		this.componentType = new ComponentType(engine)
+	}
+	
+	public def getRoleRule() {
 		if (roleRule === null) {
-			manipulation = new SimpleModelManipulations(engine)
-			componentType = new ComponentType(engine)
-				
 			roleRule = createRule.name("RoleRule").precondition(JRoleQuery.Matcher.querySpecification())
 				.action(CRUDActivationStateEnum.CREATED) [
 					
 					val JRole jRole = it.JRole as JRole
 					
 					System.out.println("Transforming role: " + jRole.uuid)
-					
-					
+									
 					//Get owner UIClass
 					val UIClass owner = PatternProvider.instance().getPsmToUiTrace(engine)
 												.getOneArbitraryMatch(jRole.ownerClass, null)

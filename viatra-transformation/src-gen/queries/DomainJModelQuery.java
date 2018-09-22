@@ -32,6 +32,7 @@ import org.eclipse.viatra.query.runtime.matchers.psystem.PBody;
 import org.eclipse.viatra.query.runtime.matchers.psystem.PVariable;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicdeferred.Equality;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicdeferred.ExportedParameter;
+import org.eclipse.viatra.query.runtime.matchers.psystem.basicdeferred.NegativePatternCall;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicenumerables.ConstantValue;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicenumerables.TypeConstraint;
 import org.eclipse.viatra.query.runtime.matchers.psystem.queries.PParameter;
@@ -40,6 +41,7 @@ import org.eclipse.viatra.query.runtime.matchers.psystem.queries.PVisibility;
 import org.eclipse.viatra.query.runtime.matchers.tuple.Tuple;
 import org.eclipse.viatra.query.runtime.matchers.tuple.Tuples;
 import org.eclipse.viatra.query.runtime.util.ViatraQueryLoggingUtil;
+import queries.AlreadyTransformed;
 
 /**
  * A pattern-specific query specification that can instantiate Matcher in a type-safe way.
@@ -48,8 +50,8 @@ import org.eclipse.viatra.query.runtime.util.ViatraQueryLoggingUtil;
  *         <code><pre>
  *         //JModel Queries
  *         pattern domainJModelQuery(jModel : JModel) {
- *         	JModel(jModel);
  *         	JModel.framework(jModel, false);
+ *         	neg find alreadyTransformed(jModel, _, _);
  *         }
  * </pre></code>
  * 
@@ -233,8 +235,8 @@ public final class DomainJModelQuery extends BaseGeneratedEMFQuerySpecification<
    * <code><pre>
    * //JModel Queries
    * pattern domainJModelQuery(jModel : JModel) {
-   * 	JModel(jModel);
    * 	JModel.framework(jModel, false);
+   * 	neg find alreadyTransformed(jModel, _, _);
    * }
    * </pre></code>
    * 
@@ -529,12 +531,12 @@ public final class DomainJModelQuery extends BaseGeneratedEMFQuerySpecification<
       {
           PBody body = new PBody(this);
           PVariable var_jModel = body.getOrCreateVariableByName("jModel");
+          PVariable var___0_ = body.getOrCreateVariableByName("_<0>");
+          PVariable var___1_ = body.getOrCreateVariableByName("_<1>");
           new TypeConstraint(body, Tuples.flatTupleOf(var_jModel), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm", "JModel")));
           body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
              new ExportedParameter(body, var_jModel, parameter_jModel)
           ));
-          // 	JModel(jModel)
-          new TypeConstraint(body, Tuples.flatTupleOf(var_jModel), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm", "JModel")));
           // 	JModel.framework(jModel, false)
           PVariable var__virtual_0_ = body.getOrCreateVariableByName(".virtual{0}");
           new ConstantValue(body, var__virtual_0_, false);
@@ -543,6 +545,8 @@ public final class DomainJModelQuery extends BaseGeneratedEMFQuerySpecification<
           new TypeConstraint(body, Tuples.flatTupleOf(var_jModel, var__virtual_1_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://blackbelt.hu/judo/meta/psm", "JElement", "framework")));
           new TypeConstraint(body, Tuples.flatTupleOf(var__virtual_1_), new EDataTypeInSlotsKey((EDataType)getClassifierLiteral("http://www.eclipse.org/emf/2002/Ecore", "EBoolean")));
           new Equality(body, var__virtual_1_, var__virtual_0_);
+          // 	neg find alreadyTransformed(jModel, _, _)
+          new NegativePatternCall(body, Tuples.flatTupleOf(var_jModel, var___0_, var___1_), AlreadyTransformed.instance().getInternalQueryRepresentation());
           bodies.add(body);
       }
       return bodies;

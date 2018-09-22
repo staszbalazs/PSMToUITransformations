@@ -27,7 +27,7 @@ public class ToggleTransformationHandler extends AbstractHandler implements IHan
         if(transformation == null) {
             if(engine == null) {
                 try {
-                    engine = ViatraQueryEngine.on(new EMFScope(tracemodel.eResource().getResourceSet()));
+                    engine = ViatraQueryEngine.on(new EMFScope(tracemodel.getJModel().eResource().getResourceSet()));
                     transformation = new EventDrivenPsmToUi(tracemodel, engine);
                     transformation.execute();
                 } catch (ViatraQueryException e) {

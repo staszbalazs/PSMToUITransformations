@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.viatra.query.runtime.api.IPatternMatch;
 import org.eclipse.viatra.query.runtime.api.IQuerySpecification;
@@ -24,12 +25,15 @@ import org.eclipse.viatra.query.runtime.api.impl.BaseGeneratedEMFQuerySpecificat
 import org.eclipse.viatra.query.runtime.api.impl.BaseMatcher;
 import org.eclipse.viatra.query.runtime.api.impl.BasePatternMatch;
 import org.eclipse.viatra.query.runtime.emf.types.EClassTransitiveInstancesKey;
+import org.eclipse.viatra.query.runtime.emf.types.EDataTypeInSlotsKey;
 import org.eclipse.viatra.query.runtime.emf.types.EStructuralFeatureInstancesKey;
 import org.eclipse.viatra.query.runtime.matchers.backend.QueryEvaluationHint;
 import org.eclipse.viatra.query.runtime.matchers.psystem.PBody;
 import org.eclipse.viatra.query.runtime.matchers.psystem.PVariable;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicdeferred.Equality;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicdeferred.ExportedParameter;
+import org.eclipse.viatra.query.runtime.matchers.psystem.basicdeferred.NegativePatternCall;
+import org.eclipse.viatra.query.runtime.matchers.psystem.basicenumerables.ConstantValue;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicenumerables.TypeConstraint;
 import org.eclipse.viatra.query.runtime.matchers.psystem.queries.PParameter;
 import org.eclipse.viatra.query.runtime.matchers.psystem.queries.PParameterDirection;
@@ -37,16 +41,18 @@ import org.eclipse.viatra.query.runtime.matchers.psystem.queries.PVisibility;
 import org.eclipse.viatra.query.runtime.matchers.tuple.Tuple;
 import org.eclipse.viatra.query.runtime.matchers.tuple.Tuples;
 import org.eclipse.viatra.query.runtime.util.ViatraQueryLoggingUtil;
+import queries.AlreadyTransformed;
 
 /**
  * A pattern-specific query specification that can instantiate Matcher in a type-safe way.
  * 
  * <p>Original source:
  *         <code><pre>
- *         //UIAction Queries
- *         pattern resultViewForUIAction(action : UIAction, view : UIResultView) {
- *         	UIAction(action);
- *         	UIAction.resultView(action, view);
+ *         //JInfo Queries
+ *         pattern JInfoQuery(jInfo : JInfo, jClass : JClass) {
+ *         	JInfo(jInfo);
+ *         	JClass.representsUser(jClass, true);
+ *         	neg find alreadyTransformed(jInfo, _, _);
  *         }
  * </pre></code>
  * 
@@ -55,9 +61,9 @@ import org.eclipse.viatra.query.runtime.util.ViatraQueryLoggingUtil;
  * 
  */
 @SuppressWarnings("all")
-public final class ResultViewForUIAction extends BaseGeneratedEMFQuerySpecification<ResultViewForUIAction.Matcher> {
+public final class JInfoQuery extends BaseGeneratedEMFQuerySpecification<JInfoQuery.Matcher> {
   /**
-   * Pattern-specific match representation of the queries.resultViewForUIAction pattern,
+   * Pattern-specific match representation of the queries.JInfoQuery pattern,
    * to be used in conjunction with {@link Matcher}.
    * 
    * <p>Class fields correspond to parameters of the pattern. Fields with value null are considered unassigned.
@@ -69,87 +75,87 @@ public final class ResultViewForUIAction extends BaseGeneratedEMFQuerySpecificat
    * 
    */
   public static abstract class Match extends BasePatternMatch {
-    private EObject fAction;
+    private EObject fJInfo;
     
-    private EObject fView;
+    private EObject fJClass;
     
-    private static List<String> parameterNames = makeImmutableList("action", "view");
+    private static List<String> parameterNames = makeImmutableList("jInfo", "jClass");
     
-    private Match(final EObject pAction, final EObject pView) {
-      this.fAction = pAction;
-      this.fView = pView;
+    private Match(final EObject pJInfo, final EObject pJClass) {
+      this.fJInfo = pJInfo;
+      this.fJClass = pJClass;
     }
     
     @Override
     public Object get(final String parameterName) {
-      if ("action".equals(parameterName)) return this.fAction;
-      if ("view".equals(parameterName)) return this.fView;
+      if ("jInfo".equals(parameterName)) return this.fJInfo;
+      if ("jClass".equals(parameterName)) return this.fJClass;
       return null;
     }
     
-    public EObject getAction() {
-      return this.fAction;
+    public EObject getJInfo() {
+      return this.fJInfo;
     }
     
-    public EObject getView() {
-      return this.fView;
+    public EObject getJClass() {
+      return this.fJClass;
     }
     
     @Override
     public boolean set(final String parameterName, final Object newValue) {
       if (!isMutable()) throw new java.lang.UnsupportedOperationException();
-      if ("action".equals(parameterName) ) {
-          this.fAction = (EObject) newValue;
+      if ("jInfo".equals(parameterName) ) {
+          this.fJInfo = (EObject) newValue;
           return true;
       }
-      if ("view".equals(parameterName) ) {
-          this.fView = (EObject) newValue;
+      if ("jClass".equals(parameterName) ) {
+          this.fJClass = (EObject) newValue;
           return true;
       }
       return false;
     }
     
-    public void setAction(final EObject pAction) {
+    public void setJInfo(final EObject pJInfo) {
       if (!isMutable()) throw new java.lang.UnsupportedOperationException();
-      this.fAction = pAction;
+      this.fJInfo = pJInfo;
     }
     
-    public void setView(final EObject pView) {
+    public void setJClass(final EObject pJClass) {
       if (!isMutable()) throw new java.lang.UnsupportedOperationException();
-      this.fView = pView;
+      this.fJClass = pJClass;
     }
     
     @Override
     public String patternName() {
-      return "queries.resultViewForUIAction";
+      return "queries.JInfoQuery";
     }
     
     @Override
     public List<String> parameterNames() {
-      return ResultViewForUIAction.Match.parameterNames;
+      return JInfoQuery.Match.parameterNames;
     }
     
     @Override
     public Object[] toArray() {
-      return new Object[]{fAction, fView};
+      return new Object[]{fJInfo, fJClass};
     }
     
     @Override
-    public ResultViewForUIAction.Match toImmutable() {
-      return isMutable() ? newMatch(fAction, fView) : this;
+    public JInfoQuery.Match toImmutable() {
+      return isMutable() ? newMatch(fJInfo, fJClass) : this;
     }
     
     @Override
     public String prettyPrint() {
       StringBuilder result = new StringBuilder();
-      result.append("\"action\"=" + prettyPrintValue(fAction) + ", ");
-      result.append("\"view\"=" + prettyPrintValue(fView));
+      result.append("\"jInfo\"=" + prettyPrintValue(fJInfo) + ", ");
+      result.append("\"jClass\"=" + prettyPrintValue(fJClass));
       return result.toString();
     }
     
     @Override
     public int hashCode() {
-      return Objects.hash(fAction, fView);
+      return Objects.hash(fJInfo, fJClass);
     }
     
     @Override
@@ -159,9 +165,9 @@ public final class ResultViewForUIAction extends BaseGeneratedEMFQuerySpecificat
       if (obj == null) {
           return false;
       }
-      if ((obj instanceof ResultViewForUIAction.Match)) {
-          ResultViewForUIAction.Match other = (ResultViewForUIAction.Match) obj;
-          return Objects.equals(fAction, other.fAction) && Objects.equals(fView, other.fView);
+      if ((obj instanceof JInfoQuery.Match)) {
+          JInfoQuery.Match other = (JInfoQuery.Match) obj;
+          return Objects.equals(fJInfo, other.fJInfo) && Objects.equals(fJClass, other.fJClass);
       } else {
           // this should be infrequent
           if (!(obj instanceof IPatternMatch)) {
@@ -173,8 +179,8 @@ public final class ResultViewForUIAction extends BaseGeneratedEMFQuerySpecificat
     }
     
     @Override
-    public ResultViewForUIAction specification() {
-      return ResultViewForUIAction.instance();
+    public JInfoQuery specification() {
+      return JInfoQuery.instance();
     }
     
     /**
@@ -184,7 +190,7 @@ public final class ResultViewForUIAction extends BaseGeneratedEMFQuerySpecificat
      * @return the empty match.
      * 
      */
-    public static ResultViewForUIAction.Match newEmptyMatch() {
+    public static JInfoQuery.Match newEmptyMatch() {
       return new Mutable(null, null);
     }
     
@@ -192,31 +198,31 @@ public final class ResultViewForUIAction extends BaseGeneratedEMFQuerySpecificat
      * Returns a mutable (partial) match.
      * Fields of the mutable match can be filled to create a partial match, usable as matcher input.
      * 
-     * @param pAction the fixed value of pattern parameter action, or null if not bound.
-     * @param pView the fixed value of pattern parameter view, or null if not bound.
+     * @param pJInfo the fixed value of pattern parameter jInfo, or null if not bound.
+     * @param pJClass the fixed value of pattern parameter jClass, or null if not bound.
      * @return the new, mutable (partial) match object.
      * 
      */
-    public static ResultViewForUIAction.Match newMutableMatch(final EObject pAction, final EObject pView) {
-      return new Mutable(pAction, pView);
+    public static JInfoQuery.Match newMutableMatch(final EObject pJInfo, final EObject pJClass) {
+      return new Mutable(pJInfo, pJClass);
     }
     
     /**
      * Returns a new (partial) match.
      * This can be used e.g. to call the matcher with a partial match.
      * <p>The returned match will be immutable. Use {@link #newEmptyMatch()} to obtain a mutable match object.
-     * @param pAction the fixed value of pattern parameter action, or null if not bound.
-     * @param pView the fixed value of pattern parameter view, or null if not bound.
+     * @param pJInfo the fixed value of pattern parameter jInfo, or null if not bound.
+     * @param pJClass the fixed value of pattern parameter jClass, or null if not bound.
      * @return the (partial) match object.
      * 
      */
-    public static ResultViewForUIAction.Match newMatch(final EObject pAction, final EObject pView) {
-      return new Immutable(pAction, pView);
+    public static JInfoQuery.Match newMatch(final EObject pJInfo, final EObject pJClass) {
+      return new Immutable(pJInfo, pJClass);
     }
     
-    private static final class Mutable extends ResultViewForUIAction.Match {
-      Mutable(final EObject pAction, final EObject pView) {
-        super(pAction, pView);
+    private static final class Mutable extends JInfoQuery.Match {
+      Mutable(final EObject pJInfo, final EObject pJClass) {
+        super(pJInfo, pJClass);
       }
       
       @Override
@@ -225,9 +231,9 @@ public final class ResultViewForUIAction extends BaseGeneratedEMFQuerySpecificat
       }
     }
     
-    private static final class Immutable extends ResultViewForUIAction.Match {
-      Immutable(final EObject pAction, final EObject pView) {
-        super(pAction, pView);
+    private static final class Immutable extends JInfoQuery.Match {
+      Immutable(final EObject pJInfo, final EObject pJClass) {
+        super(pJInfo, pJClass);
       }
       
       @Override
@@ -238,7 +244,7 @@ public final class ResultViewForUIAction extends BaseGeneratedEMFQuerySpecificat
   }
   
   /**
-   * Generated pattern matcher API of the queries.resultViewForUIAction pattern,
+   * Generated pattern matcher API of the queries.JInfoQuery pattern,
    * providing pattern-specific query methods.
    * 
    * <p>Use the pattern matcher on a given model via {@link #on(ViatraQueryEngine)},
@@ -248,18 +254,19 @@ public final class ResultViewForUIAction extends BaseGeneratedEMFQuerySpecificat
    * 
    * <p>Original source:
    * <code><pre>
-   * //UIAction Queries
-   * pattern resultViewForUIAction(action : UIAction, view : UIResultView) {
-   * 	UIAction(action);
-   * 	UIAction.resultView(action, view);
+   * //JInfo Queries
+   * pattern JInfoQuery(jInfo : JInfo, jClass : JClass) {
+   * 	JInfo(jInfo);
+   * 	JClass.representsUser(jClass, true);
+   * 	neg find alreadyTransformed(jInfo, _, _);
    * }
    * </pre></code>
    * 
    * @see Match
-   * @see ResultViewForUIAction
+   * @see JInfoQuery
    * 
    */
-  public static class Matcher extends BaseMatcher<ResultViewForUIAction.Match> {
+  public static class Matcher extends BaseMatcher<JInfoQuery.Match> {
     /**
      * Initializes the pattern matcher within an existing VIATRA Query engine.
      * If the pattern matcher is already constructed in the engine, only a light-weight reference is returned.
@@ -268,7 +275,7 @@ public final class ResultViewForUIAction extends BaseGeneratedEMFQuerySpecificat
      * @throws ViatraQueryRuntimeException if an error occurs during pattern matcher creation
      * 
      */
-    public static ResultViewForUIAction.Matcher on(final ViatraQueryEngine engine) {
+    public static JInfoQuery.Matcher on(final ViatraQueryEngine engine) {
       // check if matcher already exists
       Matcher matcher = engine.getExistingMatcher(querySpecification());
       if (matcher == null) {
@@ -283,15 +290,15 @@ public final class ResultViewForUIAction extends BaseGeneratedEMFQuerySpecificat
      * @noreference This method is for internal matcher initialization by the framework, do not call it manually.
      * 
      */
-    public static ResultViewForUIAction.Matcher create() {
+    public static JInfoQuery.Matcher create() {
       return new Matcher();
     }
     
-    private final static int POSITION_ACTION = 0;
+    private final static int POSITION_JINFO = 0;
     
-    private final static int POSITION_VIEW = 1;
+    private final static int POSITION_JCLASS = 1;
     
-    private final static Logger LOGGER = ViatraQueryLoggingUtil.getLogger(ResultViewForUIAction.Matcher.class);
+    private final static Logger LOGGER = ViatraQueryLoggingUtil.getLogger(JInfoQuery.Matcher.class);
     
     /**
      * Initializes the pattern matcher within an existing VIATRA Query engine.
@@ -307,13 +314,13 @@ public final class ResultViewForUIAction extends BaseGeneratedEMFQuerySpecificat
     
     /**
      * Returns the set of all matches of the pattern that conform to the given fixed values of some parameters.
-     * @param pAction the fixed value of pattern parameter action, or null if not bound.
-     * @param pView the fixed value of pattern parameter view, or null if not bound.
+     * @param pJInfo the fixed value of pattern parameter jInfo, or null if not bound.
+     * @param pJClass the fixed value of pattern parameter jClass, or null if not bound.
      * @return matches represented as a Match object.
      * 
      */
-    public Collection<ResultViewForUIAction.Match> getAllMatches(final EObject pAction, final EObject pView) {
-      return rawStreamAllMatches(new Object[]{pAction, pView}).collect(Collectors.toSet());
+    public Collection<JInfoQuery.Match> getAllMatches(final EObject pJInfo, final EObject pJClass) {
+      return rawStreamAllMatches(new Object[]{pJInfo, pJClass}).collect(Collectors.toSet());
     }
     
     /**
@@ -322,105 +329,105 @@ public final class ResultViewForUIAction extends BaseGeneratedEMFQuerySpecificat
      * <strong>NOTE</strong>: It is important not to modify the source model while the stream is being processed.
      * If the match set of the pattern changes during processing, the contents of the stream is <strong>undefined</strong>.
      * In such cases, either rely on {@link #getAllMatches()} or collect the results of the stream in end-user code.
-     * @param pAction the fixed value of pattern parameter action, or null if not bound.
-     * @param pView the fixed value of pattern parameter view, or null if not bound.
+     * @param pJInfo the fixed value of pattern parameter jInfo, or null if not bound.
+     * @param pJClass the fixed value of pattern parameter jClass, or null if not bound.
      * @return a stream of matches represented as a Match object.
      * 
      */
-    public Stream<ResultViewForUIAction.Match> streamAllMatches(final EObject pAction, final EObject pView) {
-      return rawStreamAllMatches(new Object[]{pAction, pView});
+    public Stream<JInfoQuery.Match> streamAllMatches(final EObject pJInfo, final EObject pJClass) {
+      return rawStreamAllMatches(new Object[]{pJInfo, pJClass});
     }
     
     /**
      * Returns an arbitrarily chosen match of the pattern that conforms to the given fixed values of some parameters.
      * Neither determinism nor randomness of selection is guaranteed.
-     * @param pAction the fixed value of pattern parameter action, or null if not bound.
-     * @param pView the fixed value of pattern parameter view, or null if not bound.
+     * @param pJInfo the fixed value of pattern parameter jInfo, or null if not bound.
+     * @param pJClass the fixed value of pattern parameter jClass, or null if not bound.
      * @return a match represented as a Match object, or null if no match is found.
      * 
      */
-    public Optional<ResultViewForUIAction.Match> getOneArbitraryMatch(final EObject pAction, final EObject pView) {
-      return rawGetOneArbitraryMatch(new Object[]{pAction, pView});
+    public Optional<JInfoQuery.Match> getOneArbitraryMatch(final EObject pJInfo, final EObject pJClass) {
+      return rawGetOneArbitraryMatch(new Object[]{pJInfo, pJClass});
     }
     
     /**
      * Indicates whether the given combination of specified pattern parameters constitute a valid pattern match,
      * under any possible substitution of the unspecified parameters (if any).
-     * @param pAction the fixed value of pattern parameter action, or null if not bound.
-     * @param pView the fixed value of pattern parameter view, or null if not bound.
+     * @param pJInfo the fixed value of pattern parameter jInfo, or null if not bound.
+     * @param pJClass the fixed value of pattern parameter jClass, or null if not bound.
      * @return true if the input is a valid (partial) match of the pattern.
      * 
      */
-    public boolean hasMatch(final EObject pAction, final EObject pView) {
-      return rawHasMatch(new Object[]{pAction, pView});
+    public boolean hasMatch(final EObject pJInfo, final EObject pJClass) {
+      return rawHasMatch(new Object[]{pJInfo, pJClass});
     }
     
     /**
      * Returns the number of all matches of the pattern that conform to the given fixed values of some parameters.
-     * @param pAction the fixed value of pattern parameter action, or null if not bound.
-     * @param pView the fixed value of pattern parameter view, or null if not bound.
+     * @param pJInfo the fixed value of pattern parameter jInfo, or null if not bound.
+     * @param pJClass the fixed value of pattern parameter jClass, or null if not bound.
      * @return the number of pattern matches found.
      * 
      */
-    public int countMatches(final EObject pAction, final EObject pView) {
-      return rawCountMatches(new Object[]{pAction, pView});
+    public int countMatches(final EObject pJInfo, final EObject pJClass) {
+      return rawCountMatches(new Object[]{pJInfo, pJClass});
     }
     
     /**
      * Executes the given processor on an arbitrarily chosen match of the pattern that conforms to the given fixed values of some parameters.
      * Neither determinism nor randomness of selection is guaranteed.
-     * @param pAction the fixed value of pattern parameter action, or null if not bound.
-     * @param pView the fixed value of pattern parameter view, or null if not bound.
+     * @param pJInfo the fixed value of pattern parameter jInfo, or null if not bound.
+     * @param pJClass the fixed value of pattern parameter jClass, or null if not bound.
      * @param processor the action that will process the selected match.
      * @return true if the pattern has at least one match with the given parameter values, false if the processor was not invoked
      * 
      */
-    public boolean forOneArbitraryMatch(final EObject pAction, final EObject pView, final Consumer<? super ResultViewForUIAction.Match> processor) {
-      return rawForOneArbitraryMatch(new Object[]{pAction, pView}, processor);
+    public boolean forOneArbitraryMatch(final EObject pJInfo, final EObject pJClass, final Consumer<? super JInfoQuery.Match> processor) {
+      return rawForOneArbitraryMatch(new Object[]{pJInfo, pJClass}, processor);
     }
     
     /**
      * Returns a new (partial) match.
      * This can be used e.g. to call the matcher with a partial match.
      * <p>The returned match will be immutable. Use {@link #newEmptyMatch()} to obtain a mutable match object.
-     * @param pAction the fixed value of pattern parameter action, or null if not bound.
-     * @param pView the fixed value of pattern parameter view, or null if not bound.
+     * @param pJInfo the fixed value of pattern parameter jInfo, or null if not bound.
+     * @param pJClass the fixed value of pattern parameter jClass, or null if not bound.
      * @return the (partial) match object.
      * 
      */
-    public ResultViewForUIAction.Match newMatch(final EObject pAction, final EObject pView) {
-      return ResultViewForUIAction.Match.newMatch(pAction, pView);
+    public JInfoQuery.Match newMatch(final EObject pJInfo, final EObject pJClass) {
+      return JInfoQuery.Match.newMatch(pJInfo, pJClass);
     }
     
     /**
-     * Retrieve the set of values that occur in matches for action.
+     * Retrieve the set of values that occur in matches for jInfo.
      * @return the Set of all values or empty set if there are no matches
      * 
      */
-    protected Stream<EObject> rawStreamAllValuesOfaction(final Object[] parameters) {
-      return rawStreamAllValues(POSITION_ACTION, parameters).map(EObject.class::cast);
+    protected Stream<EObject> rawStreamAllValuesOfjInfo(final Object[] parameters) {
+      return rawStreamAllValues(POSITION_JINFO, parameters).map(EObject.class::cast);
     }
     
     /**
-     * Retrieve the set of values that occur in matches for action.
+     * Retrieve the set of values that occur in matches for jInfo.
      * @return the Set of all values or empty set if there are no matches
      * 
      */
-    public Set<EObject> getAllValuesOfaction() {
-      return rawStreamAllValuesOfaction(emptyArray()).collect(Collectors.toSet());
+    public Set<EObject> getAllValuesOfjInfo() {
+      return rawStreamAllValuesOfjInfo(emptyArray()).collect(Collectors.toSet());
     }
     
     /**
-     * Retrieve the set of values that occur in matches for action.
+     * Retrieve the set of values that occur in matches for jInfo.
      * @return the Set of all values or empty set if there are no matches
      * 
      */
-    public Stream<EObject> streamAllValuesOfaction() {
-      return rawStreamAllValuesOfaction(emptyArray());
+    public Stream<EObject> streamAllValuesOfjInfo() {
+      return rawStreamAllValuesOfjInfo(emptyArray());
     }
     
     /**
-     * Retrieve the set of values that occur in matches for action.
+     * Retrieve the set of values that occur in matches for jInfo.
      * </p>
      * <strong>NOTE</strong>: It is important not to modify the source model while the stream is being processed.
      * If the match set of the pattern changes during processing, the contents of the stream is <strong>undefined</strong>.
@@ -429,12 +436,12 @@ public final class ResultViewForUIAction extends BaseGeneratedEMFQuerySpecificat
      * @return the Stream of all values or empty set if there are no matches
      * 
      */
-    public Stream<EObject> streamAllValuesOfaction(final ResultViewForUIAction.Match partialMatch) {
-      return rawStreamAllValuesOfaction(partialMatch.toArray());
+    public Stream<EObject> streamAllValuesOfjInfo(final JInfoQuery.Match partialMatch) {
+      return rawStreamAllValuesOfjInfo(partialMatch.toArray());
     }
     
     /**
-     * Retrieve the set of values that occur in matches for action.
+     * Retrieve the set of values that occur in matches for jInfo.
      * </p>
      * <strong>NOTE</strong>: It is important not to modify the source model while the stream is being processed.
      * If the match set of the pattern changes during processing, the contents of the stream is <strong>undefined</strong>.
@@ -443,57 +450,57 @@ public final class ResultViewForUIAction extends BaseGeneratedEMFQuerySpecificat
      * @return the Stream of all values or empty set if there are no matches
      * 
      */
-    public Stream<EObject> streamAllValuesOfaction(final EObject pView) {
-      return rawStreamAllValuesOfaction(new Object[]{null, pView});
+    public Stream<EObject> streamAllValuesOfjInfo(final EObject pJClass) {
+      return rawStreamAllValuesOfjInfo(new Object[]{null, pJClass});
     }
     
     /**
-     * Retrieve the set of values that occur in matches for action.
+     * Retrieve the set of values that occur in matches for jInfo.
      * @return the Set of all values or empty set if there are no matches
      * 
      */
-    public Set<EObject> getAllValuesOfaction(final ResultViewForUIAction.Match partialMatch) {
-      return rawStreamAllValuesOfaction(partialMatch.toArray()).collect(Collectors.toSet());
+    public Set<EObject> getAllValuesOfjInfo(final JInfoQuery.Match partialMatch) {
+      return rawStreamAllValuesOfjInfo(partialMatch.toArray()).collect(Collectors.toSet());
     }
     
     /**
-     * Retrieve the set of values that occur in matches for action.
+     * Retrieve the set of values that occur in matches for jInfo.
      * @return the Set of all values or empty set if there are no matches
      * 
      */
-    public Set<EObject> getAllValuesOfaction(final EObject pView) {
-      return rawStreamAllValuesOfaction(new Object[]{null, pView}).collect(Collectors.toSet());
+    public Set<EObject> getAllValuesOfjInfo(final EObject pJClass) {
+      return rawStreamAllValuesOfjInfo(new Object[]{null, pJClass}).collect(Collectors.toSet());
     }
     
     /**
-     * Retrieve the set of values that occur in matches for view.
+     * Retrieve the set of values that occur in matches for jClass.
      * @return the Set of all values or empty set if there are no matches
      * 
      */
-    protected Stream<EObject> rawStreamAllValuesOfview(final Object[] parameters) {
-      return rawStreamAllValues(POSITION_VIEW, parameters).map(EObject.class::cast);
+    protected Stream<EObject> rawStreamAllValuesOfjClass(final Object[] parameters) {
+      return rawStreamAllValues(POSITION_JCLASS, parameters).map(EObject.class::cast);
     }
     
     /**
-     * Retrieve the set of values that occur in matches for view.
+     * Retrieve the set of values that occur in matches for jClass.
      * @return the Set of all values or empty set if there are no matches
      * 
      */
-    public Set<EObject> getAllValuesOfview() {
-      return rawStreamAllValuesOfview(emptyArray()).collect(Collectors.toSet());
+    public Set<EObject> getAllValuesOfjClass() {
+      return rawStreamAllValuesOfjClass(emptyArray()).collect(Collectors.toSet());
     }
     
     /**
-     * Retrieve the set of values that occur in matches for view.
+     * Retrieve the set of values that occur in matches for jClass.
      * @return the Set of all values or empty set if there are no matches
      * 
      */
-    public Stream<EObject> streamAllValuesOfview() {
-      return rawStreamAllValuesOfview(emptyArray());
+    public Stream<EObject> streamAllValuesOfjClass() {
+      return rawStreamAllValuesOfjClass(emptyArray());
     }
     
     /**
-     * Retrieve the set of values that occur in matches for view.
+     * Retrieve the set of values that occur in matches for jClass.
      * </p>
      * <strong>NOTE</strong>: It is important not to modify the source model while the stream is being processed.
      * If the match set of the pattern changes during processing, the contents of the stream is <strong>undefined</strong>.
@@ -502,12 +509,12 @@ public final class ResultViewForUIAction extends BaseGeneratedEMFQuerySpecificat
      * @return the Stream of all values or empty set if there are no matches
      * 
      */
-    public Stream<EObject> streamAllValuesOfview(final ResultViewForUIAction.Match partialMatch) {
-      return rawStreamAllValuesOfview(partialMatch.toArray());
+    public Stream<EObject> streamAllValuesOfjClass(final JInfoQuery.Match partialMatch) {
+      return rawStreamAllValuesOfjClass(partialMatch.toArray());
     }
     
     /**
-     * Retrieve the set of values that occur in matches for view.
+     * Retrieve the set of values that occur in matches for jClass.
      * </p>
      * <strong>NOTE</strong>: It is important not to modify the source model while the stream is being processed.
      * If the match set of the pattern changes during processing, the contents of the stream is <strong>undefined</strong>.
@@ -516,32 +523,32 @@ public final class ResultViewForUIAction extends BaseGeneratedEMFQuerySpecificat
      * @return the Stream of all values or empty set if there are no matches
      * 
      */
-    public Stream<EObject> streamAllValuesOfview(final EObject pAction) {
-      return rawStreamAllValuesOfview(new Object[]{pAction, null});
+    public Stream<EObject> streamAllValuesOfjClass(final EObject pJInfo) {
+      return rawStreamAllValuesOfjClass(new Object[]{pJInfo, null});
     }
     
     /**
-     * Retrieve the set of values that occur in matches for view.
+     * Retrieve the set of values that occur in matches for jClass.
      * @return the Set of all values or empty set if there are no matches
      * 
      */
-    public Set<EObject> getAllValuesOfview(final ResultViewForUIAction.Match partialMatch) {
-      return rawStreamAllValuesOfview(partialMatch.toArray()).collect(Collectors.toSet());
+    public Set<EObject> getAllValuesOfjClass(final JInfoQuery.Match partialMatch) {
+      return rawStreamAllValuesOfjClass(partialMatch.toArray()).collect(Collectors.toSet());
     }
     
     /**
-     * Retrieve the set of values that occur in matches for view.
+     * Retrieve the set of values that occur in matches for jClass.
      * @return the Set of all values or empty set if there are no matches
      * 
      */
-    public Set<EObject> getAllValuesOfview(final EObject pAction) {
-      return rawStreamAllValuesOfview(new Object[]{pAction, null}).collect(Collectors.toSet());
+    public Set<EObject> getAllValuesOfjClass(final EObject pJInfo) {
+      return rawStreamAllValuesOfjClass(new Object[]{pJInfo, null}).collect(Collectors.toSet());
     }
     
     @Override
-    protected ResultViewForUIAction.Match tupleToMatch(final Tuple t) {
+    protected JInfoQuery.Match tupleToMatch(final Tuple t) {
       try {
-          return ResultViewForUIAction.Match.newMatch((EObject) t.get(POSITION_ACTION), (EObject) t.get(POSITION_VIEW));
+          return JInfoQuery.Match.newMatch((EObject) t.get(POSITION_JINFO), (EObject) t.get(POSITION_JCLASS));
       } catch(ClassCastException e) {
           LOGGER.error("Element(s) in tuple not properly typed!",e);
           return null;
@@ -549,9 +556,9 @@ public final class ResultViewForUIAction extends BaseGeneratedEMFQuerySpecificat
     }
     
     @Override
-    protected ResultViewForUIAction.Match arrayToMatch(final Object[] match) {
+    protected JInfoQuery.Match arrayToMatch(final Object[] match) {
       try {
-          return ResultViewForUIAction.Match.newMatch((EObject) match[POSITION_ACTION], (EObject) match[POSITION_VIEW]);
+          return JInfoQuery.Match.newMatch((EObject) match[POSITION_JINFO], (EObject) match[POSITION_JCLASS]);
       } catch(ClassCastException e) {
           LOGGER.error("Element(s) in array not properly typed!",e);
           return null;
@@ -559,9 +566,9 @@ public final class ResultViewForUIAction extends BaseGeneratedEMFQuerySpecificat
     }
     
     @Override
-    protected ResultViewForUIAction.Match arrayToMatchMutable(final Object[] match) {
+    protected JInfoQuery.Match arrayToMatchMutable(final Object[] match) {
       try {
-          return ResultViewForUIAction.Match.newMutableMatch((EObject) match[POSITION_ACTION], (EObject) match[POSITION_VIEW]);
+          return JInfoQuery.Match.newMutableMatch((EObject) match[POSITION_JINFO], (EObject) match[POSITION_JCLASS]);
       } catch(ClassCastException e) {
           LOGGER.error("Element(s) in array not properly typed!",e);
           return null;
@@ -573,12 +580,12 @@ public final class ResultViewForUIAction extends BaseGeneratedEMFQuerySpecificat
      * @throws ViatraQueryRuntimeException if the pattern definition could not be loaded
      * 
      */
-    public static IQuerySpecification<ResultViewForUIAction.Matcher> querySpecification() {
-      return ResultViewForUIAction.instance();
+    public static IQuerySpecification<JInfoQuery.Matcher> querySpecification() {
+      return JInfoQuery.instance();
     }
   }
   
-  private ResultViewForUIAction() {
+  private JInfoQuery() {
     super(GeneratedPQuery.INSTANCE);
   }
   
@@ -587,7 +594,7 @@ public final class ResultViewForUIAction extends BaseGeneratedEMFQuerySpecificat
    * @throws ViatraQueryRuntimeException if the pattern definition could not be loaded
    * 
    */
-  public static ResultViewForUIAction instance() {
+  public static JInfoQuery instance() {
     try{
         return LazyHolder.INSTANCE;
     } catch (ExceptionInInitializerError err) {
@@ -596,35 +603,35 @@ public final class ResultViewForUIAction extends BaseGeneratedEMFQuerySpecificat
   }
   
   @Override
-  protected ResultViewForUIAction.Matcher instantiate(final ViatraQueryEngine engine) {
-    return ResultViewForUIAction.Matcher.on(engine);
+  protected JInfoQuery.Matcher instantiate(final ViatraQueryEngine engine) {
+    return JInfoQuery.Matcher.on(engine);
   }
   
   @Override
-  public ResultViewForUIAction.Matcher instantiate() {
-    return ResultViewForUIAction.Matcher.create();
+  public JInfoQuery.Matcher instantiate() {
+    return JInfoQuery.Matcher.create();
   }
   
   @Override
-  public ResultViewForUIAction.Match newEmptyMatch() {
-    return ResultViewForUIAction.Match.newEmptyMatch();
+  public JInfoQuery.Match newEmptyMatch() {
+    return JInfoQuery.Match.newEmptyMatch();
   }
   
   @Override
-  public ResultViewForUIAction.Match newMatch(final Object... parameters) {
-    return ResultViewForUIAction.Match.newMatch((org.eclipse.emf.ecore.EObject) parameters[0], (org.eclipse.emf.ecore.EObject) parameters[1]);
+  public JInfoQuery.Match newMatch(final Object... parameters) {
+    return JInfoQuery.Match.newMatch((org.eclipse.emf.ecore.EObject) parameters[0], (org.eclipse.emf.ecore.EObject) parameters[1]);
   }
   
   /**
-   * Inner class allowing the singleton instance of {@link JvmGenericType: queries.ResultViewForUIAction (visibility: PUBLIC, simpleName: ResultViewForUIAction, identifier: queries.ResultViewForUIAction, deprecated: <unset>) (abstract: false, static: false, final: true, packageName: queries) (interface: false, strictFloatingPoint: false, anonymous: false)} to be created 
+   * Inner class allowing the singleton instance of {@link JvmGenericType: queries.JInfoQuery (visibility: PUBLIC, simpleName: JInfoQuery, identifier: queries.JInfoQuery, deprecated: <unset>) (abstract: false, static: false, final: true, packageName: queries) (interface: false, strictFloatingPoint: false, anonymous: false)} to be created 
    *     <b>not</b> at the class load time of the outer class, 
-   *     but rather at the first call to {@link JvmGenericType: queries.ResultViewForUIAction (visibility: PUBLIC, simpleName: ResultViewForUIAction, identifier: queries.ResultViewForUIAction, deprecated: <unset>) (abstract: false, static: false, final: true, packageName: queries) (interface: false, strictFloatingPoint: false, anonymous: false)#instance()}.
+   *     but rather at the first call to {@link JvmGenericType: queries.JInfoQuery (visibility: PUBLIC, simpleName: JInfoQuery, identifier: queries.JInfoQuery, deprecated: <unset>) (abstract: false, static: false, final: true, packageName: queries) (interface: false, strictFloatingPoint: false, anonymous: false)#instance()}.
    * 
    * <p> This workaround is required e.g. to support recursion.
    * 
    */
   private static class LazyHolder {
-    private final static ResultViewForUIAction INSTANCE = new ResultViewForUIAction();
+    private final static JInfoQuery INSTANCE = new JInfoQuery();
     
     /**
      * Statically initializes the query specification <b>after</b> the field {@link #INSTANCE} is assigned.
@@ -642,13 +649,13 @@ public final class ResultViewForUIAction extends BaseGeneratedEMFQuerySpecificat
   }
   
   private static class GeneratedPQuery extends BaseGeneratedEMFPQuery {
-    private final static ResultViewForUIAction.GeneratedPQuery INSTANCE = new GeneratedPQuery();
+    private final static JInfoQuery.GeneratedPQuery INSTANCE = new GeneratedPQuery();
     
-    private final PParameter parameter_action = new PParameter("action", "org.eclipse.emf.ecore.EObject", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://blackbelt.hu/judo/meta/psm/ui", "UIAction")), PParameterDirection.INOUT);
+    private final PParameter parameter_jInfo = new PParameter("jInfo", "org.eclipse.emf.ecore.EObject", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://blackbelt.hu/judo/meta/psm", "JInfo")), PParameterDirection.INOUT);
     
-    private final PParameter parameter_view = new PParameter("view", "org.eclipse.emf.ecore.EObject", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://blackbelt.hu/judo/meta/psm/ui", "UIResultView")), PParameterDirection.INOUT);
+    private final PParameter parameter_jClass = new PParameter("jClass", "org.eclipse.emf.ecore.EObject", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://blackbelt.hu/judo/meta/psm", "JClass")), PParameterDirection.INOUT);
     
-    private final List<PParameter> parameters = Arrays.asList(parameter_action, parameter_view);
+    private final List<PParameter> parameters = Arrays.asList(parameter_jInfo, parameter_jClass);
     
     private GeneratedPQuery() {
       super(PVisibility.PUBLIC);
@@ -656,12 +663,12 @@ public final class ResultViewForUIAction extends BaseGeneratedEMFQuerySpecificat
     
     @Override
     public String getFullyQualifiedName() {
-      return "queries.resultViewForUIAction";
+      return "queries.JInfoQuery";
     }
     
     @Override
     public List<String> getParameterNames() {
-      return Arrays.asList("action","view");
+      return Arrays.asList("jInfo","jClass");
     }
     
     @Override
@@ -675,25 +682,35 @@ public final class ResultViewForUIAction extends BaseGeneratedEMFQuerySpecificat
       Set<PBody> bodies = new LinkedHashSet<>();
       {
           PBody body = new PBody(this);
-          PVariable var_action = body.getOrCreateVariableByName("action");
-          PVariable var_view = body.getOrCreateVariableByName("view");
-          new TypeConstraint(body, Tuples.flatTupleOf(var_action), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm/ui", "UIAction")));
-          new TypeConstraint(body, Tuples.flatTupleOf(var_view), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm/ui", "UIResultView")));
+          PVariable var_jInfo = body.getOrCreateVariableByName("jInfo");
+          PVariable var_jClass = body.getOrCreateVariableByName("jClass");
+          PVariable var___0_ = body.getOrCreateVariableByName("_<0>");
+          PVariable var___1_ = body.getOrCreateVariableByName("_<1>");
+          new TypeConstraint(body, Tuples.flatTupleOf(var_jInfo), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm", "JInfo")));
+          new TypeConstraint(body, Tuples.flatTupleOf(var_jClass), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm", "JClass")));
           body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
-             new ExportedParameter(body, var_action, parameter_action),
-             new ExportedParameter(body, var_view, parameter_view)
+             new ExportedParameter(body, var_jInfo, parameter_jInfo),
+             new ExportedParameter(body, var_jClass, parameter_jClass)
           ));
-          // 	UIAction(action)
-          new TypeConstraint(body, Tuples.flatTupleOf(var_action), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm/ui", "UIAction")));
-          // 	UIAction.resultView(action, view)
-          new TypeConstraint(body, Tuples.flatTupleOf(var_action), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm/ui", "UIAction")));
+          // 	JInfo(jInfo)
+          new TypeConstraint(body, Tuples.flatTupleOf(var_jInfo), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm", "JInfo")));
+          // 	JClass.representsUser(jClass, true)
           PVariable var__virtual_0_ = body.getOrCreateVariableByName(".virtual{0}");
-          new TypeConstraint(body, Tuples.flatTupleOf(var_action, var__virtual_0_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://blackbelt.hu/judo/meta/psm/ui", "UIAction", "resultView")));
-          new TypeConstraint(body, Tuples.flatTupleOf(var__virtual_0_), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm/ui", "UIResultView")));
-          new Equality(body, var__virtual_0_, var_view);
+          new ConstantValue(body, var__virtual_0_, true);
+          new TypeConstraint(body, Tuples.flatTupleOf(var_jClass), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm", "JClass")));
+          PVariable var__virtual_1_ = body.getOrCreateVariableByName(".virtual{1}");
+          new TypeConstraint(body, Tuples.flatTupleOf(var_jClass, var__virtual_1_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://blackbelt.hu/judo/meta/psm", "JClass", "representsUser")));
+          new TypeConstraint(body, Tuples.flatTupleOf(var__virtual_1_), new EDataTypeInSlotsKey((EDataType)getClassifierLiteral("http://www.eclipse.org/emf/2002/Ecore", "EBoolean")));
+          new Equality(body, var__virtual_1_, var__virtual_0_);
+          // 	neg find alreadyTransformed(jInfo, _, _)
+          new NegativePatternCall(body, Tuples.flatTupleOf(var_jInfo, var___0_, var___1_), AlreadyTransformed.instance().getInternalQueryRepresentation());
           bodies.add(body);
       }
       return bodies;
     }
+  }
+  
+  private static boolean evaluateExpression_1_1() {
+    return true;
   }
 }

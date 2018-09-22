@@ -46,6 +46,7 @@ class EventDrivenPsmToUi {
 		fixedPriorityResolver.setPriority(getParameterRule().ruleSpecification, 7)
 		fixedPriorityResolver.setPriority(getMenuRule().ruleSpecification, 8)
     	fixedPriorityResolver.setPriority(getFilterRule().ruleSpecification, 9)
+    	fixedPriorityResolver.setPriority(getInfoRule().ruleSpecification, 10)
     	
         //Initialize event-driven transformation
         transformation = EventDrivenTransformation.forEngine(engine)
@@ -59,7 +60,7 @@ class EventDrivenPsmToUi {
             .addRule(getParameterRule)
             .addRule(getMenuRule)
             .addRule(getFilterRule)
-            //.addAdapterConfiguration(new TransformationDebuggerConfiguration("eventDrivenPsmToUiDebugger"))
+            .addRule(getInfoRule)
             .build
     }
 

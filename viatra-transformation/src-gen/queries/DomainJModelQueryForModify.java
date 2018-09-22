@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.viatra.query.runtime.api.IPatternMatch;
 import org.eclipse.viatra.query.runtime.api.IQuerySpecification;
@@ -25,15 +24,11 @@ import org.eclipse.viatra.query.runtime.api.impl.BaseGeneratedEMFQuerySpecificat
 import org.eclipse.viatra.query.runtime.api.impl.BaseMatcher;
 import org.eclipse.viatra.query.runtime.api.impl.BasePatternMatch;
 import org.eclipse.viatra.query.runtime.emf.types.EClassTransitiveInstancesKey;
-import org.eclipse.viatra.query.runtime.emf.types.EDataTypeInSlotsKey;
-import org.eclipse.viatra.query.runtime.emf.types.EStructuralFeatureInstancesKey;
 import org.eclipse.viatra.query.runtime.matchers.backend.QueryEvaluationHint;
 import org.eclipse.viatra.query.runtime.matchers.psystem.PBody;
 import org.eclipse.viatra.query.runtime.matchers.psystem.PVariable;
-import org.eclipse.viatra.query.runtime.matchers.psystem.basicdeferred.Equality;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicdeferred.ExportedParameter;
-import org.eclipse.viatra.query.runtime.matchers.psystem.basicdeferred.NegativePatternCall;
-import org.eclipse.viatra.query.runtime.matchers.psystem.basicenumerables.ConstantValue;
+import org.eclipse.viatra.query.runtime.matchers.psystem.basicenumerables.PositivePatternCall;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicenumerables.TypeConstraint;
 import org.eclipse.viatra.query.runtime.matchers.psystem.queries.PParameter;
 import org.eclipse.viatra.query.runtime.matchers.psystem.queries.PParameterDirection;
@@ -48,12 +43,8 @@ import queries.AlreadyTransformed;
  * 
  * <p>Original source:
  *         <code><pre>
- *         //JParameter Queries
- *         pattern JParameterWithGuardQuery(jParameter : JParameter) {
- *         	JParameter(jParameter);
- *         	JOperation.parameters(jOperation, jParameter);
- *         	JOperation.visibility(jOperation, JVisibility::PUBLIC);
- *         	neg find alreadyTransformed(jParameter, _, _);
+ *         pattern domainJModelQueryForModify(jModel : JModel) {
+ *         	find alreadyTransformed(jModel, _, _);
  *         }
  * </pre></code>
  * 
@@ -62,9 +53,9 @@ import queries.AlreadyTransformed;
  * 
  */
 @SuppressWarnings("all")
-public final class JParameterWithGuardQuery extends BaseGeneratedEMFQuerySpecification<JParameterWithGuardQuery.Matcher> {
+public final class DomainJModelQueryForModify extends BaseGeneratedEMFQuerySpecification<DomainJModelQueryForModify.Matcher> {
   /**
-   * Pattern-specific match representation of the queries.JParameterWithGuardQuery pattern,
+   * Pattern-specific match representation of the queries.domainJModelQueryForModify pattern,
    * to be used in conjunction with {@link Matcher}.
    * 
    * <p>Class fields correspond to parameters of the pattern. Fields with value null are considered unassigned.
@@ -76,69 +67,69 @@ public final class JParameterWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
    * 
    */
   public static abstract class Match extends BasePatternMatch {
-    private EObject fJParameter;
+    private EObject fJModel;
     
-    private static List<String> parameterNames = makeImmutableList("jParameter");
+    private static List<String> parameterNames = makeImmutableList("jModel");
     
-    private Match(final EObject pJParameter) {
-      this.fJParameter = pJParameter;
+    private Match(final EObject pJModel) {
+      this.fJModel = pJModel;
     }
     
     @Override
     public Object get(final String parameterName) {
-      if ("jParameter".equals(parameterName)) return this.fJParameter;
+      if ("jModel".equals(parameterName)) return this.fJModel;
       return null;
     }
     
-    public EObject getJParameter() {
-      return this.fJParameter;
+    public EObject getJModel() {
+      return this.fJModel;
     }
     
     @Override
     public boolean set(final String parameterName, final Object newValue) {
       if (!isMutable()) throw new java.lang.UnsupportedOperationException();
-      if ("jParameter".equals(parameterName) ) {
-          this.fJParameter = (EObject) newValue;
+      if ("jModel".equals(parameterName) ) {
+          this.fJModel = (EObject) newValue;
           return true;
       }
       return false;
     }
     
-    public void setJParameter(final EObject pJParameter) {
+    public void setJModel(final EObject pJModel) {
       if (!isMutable()) throw new java.lang.UnsupportedOperationException();
-      this.fJParameter = pJParameter;
+      this.fJModel = pJModel;
     }
     
     @Override
     public String patternName() {
-      return "queries.JParameterWithGuardQuery";
+      return "queries.domainJModelQueryForModify";
     }
     
     @Override
     public List<String> parameterNames() {
-      return JParameterWithGuardQuery.Match.parameterNames;
+      return DomainJModelQueryForModify.Match.parameterNames;
     }
     
     @Override
     public Object[] toArray() {
-      return new Object[]{fJParameter};
+      return new Object[]{fJModel};
     }
     
     @Override
-    public JParameterWithGuardQuery.Match toImmutable() {
-      return isMutable() ? newMatch(fJParameter) : this;
+    public DomainJModelQueryForModify.Match toImmutable() {
+      return isMutable() ? newMatch(fJModel) : this;
     }
     
     @Override
     public String prettyPrint() {
       StringBuilder result = new StringBuilder();
-      result.append("\"jParameter\"=" + prettyPrintValue(fJParameter));
+      result.append("\"jModel\"=" + prettyPrintValue(fJModel));
       return result.toString();
     }
     
     @Override
     public int hashCode() {
-      return Objects.hash(fJParameter);
+      return Objects.hash(fJModel);
     }
     
     @Override
@@ -148,9 +139,9 @@ public final class JParameterWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
       if (obj == null) {
           return false;
       }
-      if ((obj instanceof JParameterWithGuardQuery.Match)) {
-          JParameterWithGuardQuery.Match other = (JParameterWithGuardQuery.Match) obj;
-          return Objects.equals(fJParameter, other.fJParameter);
+      if ((obj instanceof DomainJModelQueryForModify.Match)) {
+          DomainJModelQueryForModify.Match other = (DomainJModelQueryForModify.Match) obj;
+          return Objects.equals(fJModel, other.fJModel);
       } else {
           // this should be infrequent
           if (!(obj instanceof IPatternMatch)) {
@@ -162,8 +153,8 @@ public final class JParameterWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
     }
     
     @Override
-    public JParameterWithGuardQuery specification() {
-      return JParameterWithGuardQuery.instance();
+    public DomainJModelQueryForModify specification() {
+      return DomainJModelQueryForModify.instance();
     }
     
     /**
@@ -173,7 +164,7 @@ public final class JParameterWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
      * @return the empty match.
      * 
      */
-    public static JParameterWithGuardQuery.Match newEmptyMatch() {
+    public static DomainJModelQueryForModify.Match newEmptyMatch() {
       return new Mutable(null);
     }
     
@@ -181,29 +172,29 @@ public final class JParameterWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
      * Returns a mutable (partial) match.
      * Fields of the mutable match can be filled to create a partial match, usable as matcher input.
      * 
-     * @param pJParameter the fixed value of pattern parameter jParameter, or null if not bound.
+     * @param pJModel the fixed value of pattern parameter jModel, or null if not bound.
      * @return the new, mutable (partial) match object.
      * 
      */
-    public static JParameterWithGuardQuery.Match newMutableMatch(final EObject pJParameter) {
-      return new Mutable(pJParameter);
+    public static DomainJModelQueryForModify.Match newMutableMatch(final EObject pJModel) {
+      return new Mutable(pJModel);
     }
     
     /**
      * Returns a new (partial) match.
      * This can be used e.g. to call the matcher with a partial match.
      * <p>The returned match will be immutable. Use {@link #newEmptyMatch()} to obtain a mutable match object.
-     * @param pJParameter the fixed value of pattern parameter jParameter, or null if not bound.
+     * @param pJModel the fixed value of pattern parameter jModel, or null if not bound.
      * @return the (partial) match object.
      * 
      */
-    public static JParameterWithGuardQuery.Match newMatch(final EObject pJParameter) {
-      return new Immutable(pJParameter);
+    public static DomainJModelQueryForModify.Match newMatch(final EObject pJModel) {
+      return new Immutable(pJModel);
     }
     
-    private static final class Mutable extends JParameterWithGuardQuery.Match {
-      Mutable(final EObject pJParameter) {
-        super(pJParameter);
+    private static final class Mutable extends DomainJModelQueryForModify.Match {
+      Mutable(final EObject pJModel) {
+        super(pJModel);
       }
       
       @Override
@@ -212,9 +203,9 @@ public final class JParameterWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
       }
     }
     
-    private static final class Immutable extends JParameterWithGuardQuery.Match {
-      Immutable(final EObject pJParameter) {
-        super(pJParameter);
+    private static final class Immutable extends DomainJModelQueryForModify.Match {
+      Immutable(final EObject pJModel) {
+        super(pJModel);
       }
       
       @Override
@@ -225,7 +216,7 @@ public final class JParameterWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
   }
   
   /**
-   * Generated pattern matcher API of the queries.JParameterWithGuardQuery pattern,
+   * Generated pattern matcher API of the queries.domainJModelQueryForModify pattern,
    * providing pattern-specific query methods.
    * 
    * <p>Use the pattern matcher on a given model via {@link #on(ViatraQueryEngine)},
@@ -235,20 +226,16 @@ public final class JParameterWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
    * 
    * <p>Original source:
    * <code><pre>
-   * //JParameter Queries
-   * pattern JParameterWithGuardQuery(jParameter : JParameter) {
-   * 	JParameter(jParameter);
-   * 	JOperation.parameters(jOperation, jParameter);
-   * 	JOperation.visibility(jOperation, JVisibility::PUBLIC);
-   * 	neg find alreadyTransformed(jParameter, _, _);
+   * pattern domainJModelQueryForModify(jModel : JModel) {
+   * 	find alreadyTransformed(jModel, _, _);
    * }
    * </pre></code>
    * 
    * @see Match
-   * @see JParameterWithGuardQuery
+   * @see DomainJModelQueryForModify
    * 
    */
-  public static class Matcher extends BaseMatcher<JParameterWithGuardQuery.Match> {
+  public static class Matcher extends BaseMatcher<DomainJModelQueryForModify.Match> {
     /**
      * Initializes the pattern matcher within an existing VIATRA Query engine.
      * If the pattern matcher is already constructed in the engine, only a light-weight reference is returned.
@@ -257,7 +244,7 @@ public final class JParameterWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
      * @throws ViatraQueryRuntimeException if an error occurs during pattern matcher creation
      * 
      */
-    public static JParameterWithGuardQuery.Matcher on(final ViatraQueryEngine engine) {
+    public static DomainJModelQueryForModify.Matcher on(final ViatraQueryEngine engine) {
       // check if matcher already exists
       Matcher matcher = engine.getExistingMatcher(querySpecification());
       if (matcher == null) {
@@ -272,13 +259,13 @@ public final class JParameterWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
      * @noreference This method is for internal matcher initialization by the framework, do not call it manually.
      * 
      */
-    public static JParameterWithGuardQuery.Matcher create() {
+    public static DomainJModelQueryForModify.Matcher create() {
       return new Matcher();
     }
     
-    private final static int POSITION_JPARAMETER = 0;
+    private final static int POSITION_JMODEL = 0;
     
-    private final static Logger LOGGER = ViatraQueryLoggingUtil.getLogger(JParameterWithGuardQuery.Matcher.class);
+    private final static Logger LOGGER = ViatraQueryLoggingUtil.getLogger(DomainJModelQueryForModify.Matcher.class);
     
     /**
      * Initializes the pattern matcher within an existing VIATRA Query engine.
@@ -294,12 +281,12 @@ public final class JParameterWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
     
     /**
      * Returns the set of all matches of the pattern that conform to the given fixed values of some parameters.
-     * @param pJParameter the fixed value of pattern parameter jParameter, or null if not bound.
+     * @param pJModel the fixed value of pattern parameter jModel, or null if not bound.
      * @return matches represented as a Match object.
      * 
      */
-    public Collection<JParameterWithGuardQuery.Match> getAllMatches(final EObject pJParameter) {
-      return rawStreamAllMatches(new Object[]{pJParameter}).collect(Collectors.toSet());
+    public Collection<DomainJModelQueryForModify.Match> getAllMatches(final EObject pJModel) {
+      return rawStreamAllMatches(new Object[]{pJModel}).collect(Collectors.toSet());
     }
     
     /**
@@ -308,101 +295,101 @@ public final class JParameterWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
      * <strong>NOTE</strong>: It is important not to modify the source model while the stream is being processed.
      * If the match set of the pattern changes during processing, the contents of the stream is <strong>undefined</strong>.
      * In such cases, either rely on {@link #getAllMatches()} or collect the results of the stream in end-user code.
-     * @param pJParameter the fixed value of pattern parameter jParameter, or null if not bound.
+     * @param pJModel the fixed value of pattern parameter jModel, or null if not bound.
      * @return a stream of matches represented as a Match object.
      * 
      */
-    public Stream<JParameterWithGuardQuery.Match> streamAllMatches(final EObject pJParameter) {
-      return rawStreamAllMatches(new Object[]{pJParameter});
+    public Stream<DomainJModelQueryForModify.Match> streamAllMatches(final EObject pJModel) {
+      return rawStreamAllMatches(new Object[]{pJModel});
     }
     
     /**
      * Returns an arbitrarily chosen match of the pattern that conforms to the given fixed values of some parameters.
      * Neither determinism nor randomness of selection is guaranteed.
-     * @param pJParameter the fixed value of pattern parameter jParameter, or null if not bound.
+     * @param pJModel the fixed value of pattern parameter jModel, or null if not bound.
      * @return a match represented as a Match object, or null if no match is found.
      * 
      */
-    public Optional<JParameterWithGuardQuery.Match> getOneArbitraryMatch(final EObject pJParameter) {
-      return rawGetOneArbitraryMatch(new Object[]{pJParameter});
+    public Optional<DomainJModelQueryForModify.Match> getOneArbitraryMatch(final EObject pJModel) {
+      return rawGetOneArbitraryMatch(new Object[]{pJModel});
     }
     
     /**
      * Indicates whether the given combination of specified pattern parameters constitute a valid pattern match,
      * under any possible substitution of the unspecified parameters (if any).
-     * @param pJParameter the fixed value of pattern parameter jParameter, or null if not bound.
+     * @param pJModel the fixed value of pattern parameter jModel, or null if not bound.
      * @return true if the input is a valid (partial) match of the pattern.
      * 
      */
-    public boolean hasMatch(final EObject pJParameter) {
-      return rawHasMatch(new Object[]{pJParameter});
+    public boolean hasMatch(final EObject pJModel) {
+      return rawHasMatch(new Object[]{pJModel});
     }
     
     /**
      * Returns the number of all matches of the pattern that conform to the given fixed values of some parameters.
-     * @param pJParameter the fixed value of pattern parameter jParameter, or null if not bound.
+     * @param pJModel the fixed value of pattern parameter jModel, or null if not bound.
      * @return the number of pattern matches found.
      * 
      */
-    public int countMatches(final EObject pJParameter) {
-      return rawCountMatches(new Object[]{pJParameter});
+    public int countMatches(final EObject pJModel) {
+      return rawCountMatches(new Object[]{pJModel});
     }
     
     /**
      * Executes the given processor on an arbitrarily chosen match of the pattern that conforms to the given fixed values of some parameters.
      * Neither determinism nor randomness of selection is guaranteed.
-     * @param pJParameter the fixed value of pattern parameter jParameter, or null if not bound.
+     * @param pJModel the fixed value of pattern parameter jModel, or null if not bound.
      * @param processor the action that will process the selected match.
      * @return true if the pattern has at least one match with the given parameter values, false if the processor was not invoked
      * 
      */
-    public boolean forOneArbitraryMatch(final EObject pJParameter, final Consumer<? super JParameterWithGuardQuery.Match> processor) {
-      return rawForOneArbitraryMatch(new Object[]{pJParameter}, processor);
+    public boolean forOneArbitraryMatch(final EObject pJModel, final Consumer<? super DomainJModelQueryForModify.Match> processor) {
+      return rawForOneArbitraryMatch(new Object[]{pJModel}, processor);
     }
     
     /**
      * Returns a new (partial) match.
      * This can be used e.g. to call the matcher with a partial match.
      * <p>The returned match will be immutable. Use {@link #newEmptyMatch()} to obtain a mutable match object.
-     * @param pJParameter the fixed value of pattern parameter jParameter, or null if not bound.
+     * @param pJModel the fixed value of pattern parameter jModel, or null if not bound.
      * @return the (partial) match object.
      * 
      */
-    public JParameterWithGuardQuery.Match newMatch(final EObject pJParameter) {
-      return JParameterWithGuardQuery.Match.newMatch(pJParameter);
+    public DomainJModelQueryForModify.Match newMatch(final EObject pJModel) {
+      return DomainJModelQueryForModify.Match.newMatch(pJModel);
     }
     
     /**
-     * Retrieve the set of values that occur in matches for jParameter.
+     * Retrieve the set of values that occur in matches for jModel.
      * @return the Set of all values or empty set if there are no matches
      * 
      */
-    protected Stream<EObject> rawStreamAllValuesOfjParameter(final Object[] parameters) {
-      return rawStreamAllValues(POSITION_JPARAMETER, parameters).map(EObject.class::cast);
+    protected Stream<EObject> rawStreamAllValuesOfjModel(final Object[] parameters) {
+      return rawStreamAllValues(POSITION_JMODEL, parameters).map(EObject.class::cast);
     }
     
     /**
-     * Retrieve the set of values that occur in matches for jParameter.
+     * Retrieve the set of values that occur in matches for jModel.
      * @return the Set of all values or empty set if there are no matches
      * 
      */
-    public Set<EObject> getAllValuesOfjParameter() {
-      return rawStreamAllValuesOfjParameter(emptyArray()).collect(Collectors.toSet());
+    public Set<EObject> getAllValuesOfjModel() {
+      return rawStreamAllValuesOfjModel(emptyArray()).collect(Collectors.toSet());
     }
     
     /**
-     * Retrieve the set of values that occur in matches for jParameter.
+     * Retrieve the set of values that occur in matches for jModel.
      * @return the Set of all values or empty set if there are no matches
      * 
      */
-    public Stream<EObject> streamAllValuesOfjParameter() {
-      return rawStreamAllValuesOfjParameter(emptyArray());
+    public Stream<EObject> streamAllValuesOfjModel() {
+      return rawStreamAllValuesOfjModel(emptyArray());
     }
     
     @Override
-    protected JParameterWithGuardQuery.Match tupleToMatch(final Tuple t) {
+    protected DomainJModelQueryForModify.Match tupleToMatch(final Tuple t) {
       try {
-          return JParameterWithGuardQuery.Match.newMatch((EObject) t.get(POSITION_JPARAMETER));
+          return DomainJModelQueryForModify.Match.newMatch((EObject) t.get(POSITION_JMODEL));
       } catch(ClassCastException e) {
           LOGGER.error("Element(s) in tuple not properly typed!",e);
           return null;
@@ -410,9 +397,9 @@ public final class JParameterWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
     }
     
     @Override
-    protected JParameterWithGuardQuery.Match arrayToMatch(final Object[] match) {
+    protected DomainJModelQueryForModify.Match arrayToMatch(final Object[] match) {
       try {
-          return JParameterWithGuardQuery.Match.newMatch((EObject) match[POSITION_JPARAMETER]);
+          return DomainJModelQueryForModify.Match.newMatch((EObject) match[POSITION_JMODEL]);
       } catch(ClassCastException e) {
           LOGGER.error("Element(s) in array not properly typed!",e);
           return null;
@@ -420,9 +407,9 @@ public final class JParameterWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
     }
     
     @Override
-    protected JParameterWithGuardQuery.Match arrayToMatchMutable(final Object[] match) {
+    protected DomainJModelQueryForModify.Match arrayToMatchMutable(final Object[] match) {
       try {
-          return JParameterWithGuardQuery.Match.newMutableMatch((EObject) match[POSITION_JPARAMETER]);
+          return DomainJModelQueryForModify.Match.newMutableMatch((EObject) match[POSITION_JMODEL]);
       } catch(ClassCastException e) {
           LOGGER.error("Element(s) in array not properly typed!",e);
           return null;
@@ -434,12 +421,12 @@ public final class JParameterWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
      * @throws ViatraQueryRuntimeException if the pattern definition could not be loaded
      * 
      */
-    public static IQuerySpecification<JParameterWithGuardQuery.Matcher> querySpecification() {
-      return JParameterWithGuardQuery.instance();
+    public static IQuerySpecification<DomainJModelQueryForModify.Matcher> querySpecification() {
+      return DomainJModelQueryForModify.instance();
     }
   }
   
-  private JParameterWithGuardQuery() {
+  private DomainJModelQueryForModify() {
     super(GeneratedPQuery.INSTANCE);
   }
   
@@ -448,7 +435,7 @@ public final class JParameterWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
    * @throws ViatraQueryRuntimeException if the pattern definition could not be loaded
    * 
    */
-  public static JParameterWithGuardQuery instance() {
+  public static DomainJModelQueryForModify instance() {
     try{
         return LazyHolder.INSTANCE;
     } catch (ExceptionInInitializerError err) {
@@ -457,35 +444,35 @@ public final class JParameterWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
   }
   
   @Override
-  protected JParameterWithGuardQuery.Matcher instantiate(final ViatraQueryEngine engine) {
-    return JParameterWithGuardQuery.Matcher.on(engine);
+  protected DomainJModelQueryForModify.Matcher instantiate(final ViatraQueryEngine engine) {
+    return DomainJModelQueryForModify.Matcher.on(engine);
   }
   
   @Override
-  public JParameterWithGuardQuery.Matcher instantiate() {
-    return JParameterWithGuardQuery.Matcher.create();
+  public DomainJModelQueryForModify.Matcher instantiate() {
+    return DomainJModelQueryForModify.Matcher.create();
   }
   
   @Override
-  public JParameterWithGuardQuery.Match newEmptyMatch() {
-    return JParameterWithGuardQuery.Match.newEmptyMatch();
+  public DomainJModelQueryForModify.Match newEmptyMatch() {
+    return DomainJModelQueryForModify.Match.newEmptyMatch();
   }
   
   @Override
-  public JParameterWithGuardQuery.Match newMatch(final Object... parameters) {
-    return JParameterWithGuardQuery.Match.newMatch((org.eclipse.emf.ecore.EObject) parameters[0]);
+  public DomainJModelQueryForModify.Match newMatch(final Object... parameters) {
+    return DomainJModelQueryForModify.Match.newMatch((org.eclipse.emf.ecore.EObject) parameters[0]);
   }
   
   /**
-   * Inner class allowing the singleton instance of {@link JvmGenericType: queries.JParameterWithGuardQuery (visibility: PUBLIC, simpleName: JParameterWithGuardQuery, identifier: queries.JParameterWithGuardQuery, deprecated: <unset>) (abstract: false, static: false, final: true, packageName: queries) (interface: false, strictFloatingPoint: false, anonymous: false)} to be created 
+   * Inner class allowing the singleton instance of {@link JvmGenericType: queries.DomainJModelQueryForModify (visibility: PUBLIC, simpleName: DomainJModelQueryForModify, identifier: queries.DomainJModelQueryForModify, deprecated: <unset>) (abstract: false, static: false, final: true, packageName: queries) (interface: false, strictFloatingPoint: false, anonymous: false)} to be created 
    *     <b>not</b> at the class load time of the outer class, 
-   *     but rather at the first call to {@link JvmGenericType: queries.JParameterWithGuardQuery (visibility: PUBLIC, simpleName: JParameterWithGuardQuery, identifier: queries.JParameterWithGuardQuery, deprecated: <unset>) (abstract: false, static: false, final: true, packageName: queries) (interface: false, strictFloatingPoint: false, anonymous: false)#instance()}.
+   *     but rather at the first call to {@link JvmGenericType: queries.DomainJModelQueryForModify (visibility: PUBLIC, simpleName: DomainJModelQueryForModify, identifier: queries.DomainJModelQueryForModify, deprecated: <unset>) (abstract: false, static: false, final: true, packageName: queries) (interface: false, strictFloatingPoint: false, anonymous: false)#instance()}.
    * 
    * <p> This workaround is required e.g. to support recursion.
    * 
    */
   private static class LazyHolder {
-    private final static JParameterWithGuardQuery INSTANCE = new JParameterWithGuardQuery();
+    private final static DomainJModelQueryForModify INSTANCE = new DomainJModelQueryForModify();
     
     /**
      * Statically initializes the query specification <b>after</b> the field {@link #INSTANCE} is assigned.
@@ -503,11 +490,11 @@ public final class JParameterWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
   }
   
   private static class GeneratedPQuery extends BaseGeneratedEMFPQuery {
-    private final static JParameterWithGuardQuery.GeneratedPQuery INSTANCE = new GeneratedPQuery();
+    private final static DomainJModelQueryForModify.GeneratedPQuery INSTANCE = new GeneratedPQuery();
     
-    private final PParameter parameter_jParameter = new PParameter("jParameter", "org.eclipse.emf.ecore.EObject", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://blackbelt.hu/judo/meta/psm", "JParameter")), PParameterDirection.INOUT);
+    private final PParameter parameter_jModel = new PParameter("jModel", "org.eclipse.emf.ecore.EObject", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://blackbelt.hu/judo/meta/psm", "JModel")), PParameterDirection.INOUT);
     
-    private final List<PParameter> parameters = Arrays.asList(parameter_jParameter);
+    private final List<PParameter> parameters = Arrays.asList(parameter_jModel);
     
     private GeneratedPQuery() {
       super(PVisibility.PUBLIC);
@@ -515,12 +502,12 @@ public final class JParameterWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
     
     @Override
     public String getFullyQualifiedName() {
-      return "queries.JParameterWithGuardQuery";
+      return "queries.domainJModelQueryForModify";
     }
     
     @Override
     public List<String> getParameterNames() {
-      return Arrays.asList("jParameter");
+      return Arrays.asList("jModel");
     }
     
     @Override
@@ -534,32 +521,15 @@ public final class JParameterWithGuardQuery extends BaseGeneratedEMFQuerySpecifi
       Set<PBody> bodies = new LinkedHashSet<>();
       {
           PBody body = new PBody(this);
-          PVariable var_jParameter = body.getOrCreateVariableByName("jParameter");
-          PVariable var_jOperation = body.getOrCreateVariableByName("jOperation");
+          PVariable var_jModel = body.getOrCreateVariableByName("jModel");
           PVariable var___0_ = body.getOrCreateVariableByName("_<0>");
           PVariable var___1_ = body.getOrCreateVariableByName("_<1>");
-          new TypeConstraint(body, Tuples.flatTupleOf(var_jParameter), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm", "JParameter")));
+          new TypeConstraint(body, Tuples.flatTupleOf(var_jModel), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm", "JModel")));
           body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
-             new ExportedParameter(body, var_jParameter, parameter_jParameter)
+             new ExportedParameter(body, var_jModel, parameter_jModel)
           ));
-          // 	JParameter(jParameter)
-          new TypeConstraint(body, Tuples.flatTupleOf(var_jParameter), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm", "JParameter")));
-          // 	JOperation.parameters(jOperation, jParameter)
-          new TypeConstraint(body, Tuples.flatTupleOf(var_jOperation), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm", "JOperation")));
-          PVariable var__virtual_0_ = body.getOrCreateVariableByName(".virtual{0}");
-          new TypeConstraint(body, Tuples.flatTupleOf(var_jOperation, var__virtual_0_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://blackbelt.hu/judo/meta/psm", "JOperation", "parameters")));
-          new TypeConstraint(body, Tuples.flatTupleOf(var__virtual_0_), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm", "JParameter")));
-          new Equality(body, var__virtual_0_, var_jParameter);
-          // 	JOperation.visibility(jOperation, JVisibility::PUBLIC)
-          PVariable var__virtual_1_ = body.getOrCreateVariableByName(".virtual{1}");
-          new ConstantValue(body, var__virtual_1_, getEnumLiteral("http://blackbelt.hu/judo/meta/psm", "JVisibility", "PUBLIC").getInstance());
-          new TypeConstraint(body, Tuples.flatTupleOf(var_jOperation), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm", "JOperation")));
-          PVariable var__virtual_2_ = body.getOrCreateVariableByName(".virtual{2}");
-          new TypeConstraint(body, Tuples.flatTupleOf(var_jOperation, var__virtual_2_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://blackbelt.hu/judo/meta/psm", "JElement", "visibility")));
-          new TypeConstraint(body, Tuples.flatTupleOf(var__virtual_2_), new EDataTypeInSlotsKey((EDataType)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm", "JVisibility")));
-          new Equality(body, var__virtual_2_, var__virtual_1_);
-          // 	neg find alreadyTransformed(jParameter, _, _)
-          new NegativePatternCall(body, Tuples.flatTupleOf(var_jParameter, var___0_, var___1_), AlreadyTransformed.instance().getInternalQueryRepresentation());
+          // 	find alreadyTransformed(jModel, _, _)
+          new PositivePatternCall(body, Tuples.flatTupleOf(var_jModel, var___0_, var___1_), AlreadyTransformed.instance().getInternalQueryRepresentation());
           bodies.add(body);
       }
       return bodies;

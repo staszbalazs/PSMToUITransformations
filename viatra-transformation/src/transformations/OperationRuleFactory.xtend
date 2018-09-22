@@ -20,21 +20,30 @@ import ui.UIParamView
 import ui.UIResultView
 import org.eclipse.viatra.transformation.runtime.emf.modelmanipulation.SimpleModelManipulations
 import queries.JOperationWithGuardQuery
+import queries.JOperationWithGuardQueryForModify
 
 class OperationRuleFactory {
 	
 	extension IModelManipulations manipulation	
 	extension EventDrivenTransformationRuleFactory factory = new EventDrivenTransformationRuleFactory
+	extension ViatraQueryEngine engine
 	
 	extension UiPackage uiPackage = UiPackage::eINSTANCE
 	extension TraceabilityPackage trPackage = TraceabilityPackage::eINSTANCE
 	
-	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> operationRule
+	extension PSMToUI psm2ui
 	
-	public def getOperationRule(PSMToUI psm2ui, ViatraQueryEngine engine) {
-		if (operationRule === null) {
-			manipulation = new SimpleModelManipulations(engine);
-			
+	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> operationRule
+	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> modifyOperationRule
+	
+	new(PSMToUI psm2ui, ViatraQueryEngine engine) {
+		this.manipulation = new SimpleModelManipulations(engine);
+		this.engine = engine;
+		this.psm2ui = psm2ui;
+	}
+	
+	public def getOperationRule() {
+		if (operationRule === null) {			
 			operationRule = createRule.name("OperationRule").precondition(JOperationWithGuardQuery.Matcher.querySpecification())
 				.action(CRUDActivationStateEnum.CREATED) [
 					
@@ -43,10 +52,7 @@ class OperationRuleFactory {
 					System.out.println("Transforming operation: " + jOperation.uuid)
 					
 					//get owner class
-					val match = PatternProvider.instance().getPsmToUiTrace(engine)
-												.getOneArbitraryMatch(jOperation.ownerClass, null)
-												.get()
-					val UIClass uiClass = match.getIdentifiable as UIClass
+					val UIClass uiClass = it.getUiClass as UIClass
 					
 					//create UIAction and trace
 					val UIAction uiAction = uiClass.createChild(getUIClass_Actions, UIAction) as UIAction
@@ -69,17 +75,30 @@ class OperationRuleFactory {
 					paramView.uuid = uiAction.uuid.replace("\\.", "_") + "_paramView"
 					
 					//create resultView if necessary
-					if (PatternProvider.instance().getResultJParameter(engine).hasMatch(jOperation, null)) {
+					val result = jOperation.parameters.stream()
+											.filter[param | param.input == false]
+											.findFirst()
+					if (result.isPresent) {
 						val UIResultView resultView = uiAction.createChild(getUIAction_ResultView, UIResultView) as UIResultView
 						resultView.name = uiAction.name;
 						resultView.uuid = uiAction.uuid.replace("\\.", "_") + "_resultView"
 						resultView.pageSize = 1000
 					}
 								
-				].action(CRUDActivationStateEnum.UPDATED) [
-				].action(CRUDActivationStateEnum.DELETED) [
-				].addLifeCycle(Lifecycles.getDefault(true, true)).build
+				].addLifeCycle(Lifecycles.getDefault(false, false)).build
 		}
 		return operationRule
 	}
+	
+	
+	public def getModifyOperationRule() {
+		if (modifyOperationRule === null) {			
+			modifyOperationRule = createRule.name("ModifyOperationRule").precondition(JOperationWithGuardQueryForModify.Matcher.querySpecification())
+				.action(CRUDActivationStateEnum.UPDATED) [
+				].action(CRUDActivationStateEnum.DELETED) [
+				].addLifeCycle(Lifecycles.getDefault(true, true)).build
+		}
+		return modifyOperationRule
+	}
+	
 }

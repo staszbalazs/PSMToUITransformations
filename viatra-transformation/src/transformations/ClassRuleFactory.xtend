@@ -20,20 +20,31 @@ import ui.UIListView
 import ui.UIClassView
 import org.eclipse.viatra.transformation.runtime.emf.modelmanipulation.SimpleModelManipulations
 import queries.JClassWithGuardConditionQuery
+import queries.JClassWithGuardConditionQueryForModify
 
 class ClassRuleFactory {
 	
 	extension IModelManipulations manipulation	
+	extension EventDrivenTransformationRuleFactory factory = new EventDrivenTransformationRuleFactory
+	extension ViatraQueryEngine engine
+	
 	extension UiPackage uiPackage = UiPackage::eINSTANCE
 	extension TraceabilityPackage trPackage = TraceabilityPackage::eINSTANCE
-	extension EventDrivenTransformationRuleFactory factory = new EventDrivenTransformationRuleFactory
+	
+	extension PSMToUI psm2ui
 	
 	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> classRule
+	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> modifyClassRule
 	
-	public def getClassRule(PSMToUI psm2ui, ViatraQueryEngine engine) {
-		if (classRule === null) {
-			manipulation = new SimpleModelManipulations(engine);
-			
+	
+	new(PSMToUI psm2ui, ViatraQueryEngine engine) {
+		this.manipulation = new SimpleModelManipulations(engine);
+		this.engine = engine;
+		this.psm2ui = psm2ui;
+	}
+	
+	public def getClassRule() {
+		if (classRule === null) {			
 			classRule = createRule.name("ClassRule").precondition(JClassWithGuardConditionQuery.Matcher.querySpecification())
 				.action(CRUDActivationStateEnum.CREATED) [	
 					
@@ -42,17 +53,12 @@ class ClassRuleFactory {
 					System.out.println("Transforming class: " + jClass.uuid)
 					
 					//Get the UIModule for the class
-					val match = PatternProvider.instance().getPsmToUiTrace(engine)
-												.getOneArbitraryMatch(jClass.package, null)
-												.get()
-					
-					var UIModule module = match.getIdentifiable as UIModule
+					var UIModule module = it.getUiModule as UIModule
 					
 					//Get or create the UIClass
 					val possibleMatch =  PatternProvider.instance().getPsmToUiTrace(engine)
 												.getOneArbitraryMatch(jClass, null)
-												
-					
+																
 					var UIClass uiClass
 					if (possibleMatch.isPresent) {
 						uiClass = possibleMatch.get().getIdentifiable as UIClass
@@ -107,11 +113,55 @@ class ClassRuleFactory {
 					listView.pageSize = 20;
 					listView.detailView = classView;
 					
-				].action(CRUDActivationStateEnum.UPDATED) [
-				].action(CRUDActivationStateEnum.DELETED) [
-				].addLifeCycle(Lifecycles.getDefault(true, true)).build
+				].addLifeCycle(Lifecycles.getDefault(false, false)).build
 		}
 		return classRule
+	}
+	
+	public def getModifyClassRule() {
+		if (modifyClassRule === null) {			
+			modifyClassRule = createRule.name("ModifyClassRule").precondition(JClassWithGuardConditionQueryForModify.Matcher.querySpecification())
+				.action(CRUDActivationStateEnum.UPDATED) [
+					
+					val JClass jClass = it.getJClass() as JClass
+					
+					System.out.println("Updating class: " + jClass.uuid)
+					
+					val UIClass uiClass = it.getUiClass as UIClass
+					uiClass.name = jClass.name
+					uiClass.uuid = jClass.uuid
+					uiClass.abstract = jClass.isAbstract
+					uiClass.enumClass = jClass.isRepresentsEnum
+					uiClass.singleton = jClass.isBusinessSingleton
+					
+					if (jClass.visibility == JVisibility::PUBLIC) {
+						uiClass.readonly = false	
+					} else {
+						uiClass.readonly = true
+					}
+					
+					val UIClassView classView = uiClass.classView
+					classView.uuid = uiClass.uuid.replace("\\.", "_") + "_oview_default"
+					classView.name = uiClass.name
+					
+					val UIListView listView = uiClass.listView
+					listView.uuid = uiClass.uuid.replace("\\.", "_") + "_lview_default"
+					listView.name = uiClass.name;
+					
+				].action(CRUDActivationStateEnum.DELETED) [
+					
+					val JClass jClass = it.getJClass() as JClass
+					
+					System.out.println("Deleting class: " + jClass.uuid)
+					
+					val uiModule = it.getUiModule as UIModule
+					
+					uiModule.remove(UIModule_Classes, it.getUiClass)
+					psm2ui.remove(PSMToUI_Traces, it.getTrace)
+					
+				].addLifeCycle(Lifecycles.getDefault(true, true)).build
+		}
+		return modifyClassRule
 	}
 	
 }

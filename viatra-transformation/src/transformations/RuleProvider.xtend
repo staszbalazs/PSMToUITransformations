@@ -1,9 +1,6 @@
 package transformations
 
-import org.eclipse.viatra.query.runtime.api.IPatternMatch
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
-import org.eclipse.viatra.query.runtime.api.ViatraQueryMatcher
-import org.eclipse.viatra.transformation.runtime.emf.rules.eventdriven.EventDrivenTransformationRule
 import traceability.PSMToUI
 
 class RuleProvider {
@@ -17,73 +14,83 @@ class RuleProvider {
 	private AttributeRuleFactory attributeRuleFactory
 	private OperationRuleFactory operationRuleFactory
 	private ParameterRuleFactory parameterRuleFactory
-	
-	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> modelRule
-	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> classRule
-	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> packageRule
-	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> filterRule
-	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> menuRule
-	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> roleRule
-	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> attributeRule
-	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> operationRule
-	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> parameterRule
+	private InfoRuleFactory infoRuleFactory
 
 	new( PSMToUI psm2ui, ViatraQueryEngine engine) {
-		this.classRuleFactory = new ClassRuleFactory
-		this.modelRuleFactory = new ModelRuleFactory
-		this.packageRuleFactory = new PackageRuleFactory
-		this.filterRuleFactory = new FilterRuleFactory
-		this.menuRuleFactory = new MenuRuleFactory
-		this.roleRuleFactory = new RoleRuleFactory
-		this.attributeRuleFactory = new AttributeRuleFactory
-		this.operationRuleFactory = new OperationRuleFactory
-		this.parameterRuleFactory = new ParameterRuleFactory
-		
-		modelRule = modelRuleFactory.getModelRule(psm2ui, engine)
-		classRule = classRuleFactory.getClassRule(psm2ui, engine)
-		packageRule = packageRuleFactory.getPackageRule(psm2ui, engine)
-		filterRule = filterRuleFactory.getFilterRule(psm2ui, engine)
-		menuRule = menuRuleFactory.getMenuRule(psm2ui, engine)
-		roleRule = roleRuleFactory.getRoleRule(psm2ui, engine)
-		attributeRule = attributeRuleFactory.getAttributeRule(psm2ui, engine)
-		operationRule = operationRuleFactory.getOperationRule(psm2ui, engine)
-		parameterRule = parameterRuleFactory.getParameterRule(psm2ui, engine)
+		this.classRuleFactory = new ClassRuleFactory(psm2ui, engine)
+		this.modelRuleFactory = new ModelRuleFactory(psm2ui, engine)
+		this.packageRuleFactory = new PackageRuleFactory(psm2ui, engine)
+		this.filterRuleFactory = new FilterRuleFactory(psm2ui, engine)
+		this.menuRuleFactory = new MenuRuleFactory(psm2ui, engine)
+		this.roleRuleFactory = new RoleRuleFactory(psm2ui, engine)
+		this.attributeRuleFactory = new AttributeRuleFactory(psm2ui, engine)
+		this.operationRuleFactory = new OperationRuleFactory(psm2ui, engine)
+		this.parameterRuleFactory = new ParameterRuleFactory(psm2ui, engine)
+		this.infoRuleFactory = new InfoRuleFactory(psm2ui, engine)
 	}
 	
 	public def getModelRule() {
-		return modelRule
+		return modelRuleFactory.getModelRule()
+	}
+	
+	public def getModifyModelRule() {
+		return modelRuleFactory.getModifyModelRule()
+	}
+	
+	public def getInfoRule() {
+		return infoRuleFactory.getInfoRule()
+	}
+	
+	public def getModifyInfoRule() {
+		return infoRuleFactory.getModifyInfoRule()
 	}
 	
 	public def getClassRule() {
-		return classRule
+		return classRuleFactory.getClassRule()
+	}
+	
+	public def getModifyClassRule() {
+		return classRuleFactory.getModifyClassRule()
 	}
 	
 	public def getPackageRule() {
-		return packageRule
+		return packageRuleFactory.getPackageRule()
+	}
+	
+	public def getModifyPackageRule() {
+		return packageRuleFactory.getModifyPackageRule()
 	}
 	
 	public def getFilterRule() {
-		return filterRule
+		return filterRuleFactory.getFilterRule()
+	}
+	
+	public def getModifyFilterRule() {
+		return filterRuleFactory.getModifyFilterRule()
 	}
 	
 	public def getMenuRule() {
-		return menuRule
+		return menuRuleFactory.getMenuRule()
 	}
 	
 	public def getRoleRule() {
-		return roleRule
+		return roleRuleFactory.getRoleRule()
 	}
 	
 	public def getAttributeRule() {
-		return attributeRule
+		return attributeRuleFactory.getAttributeRule()
 	}
 	
 	public def getOperationRule() {
-		return operationRule
+		return operationRuleFactory.getOperationRule()
+	}
+	
+	public def geModifyOperationRule() {
+		return operationRuleFactory.getModifyOperationRule()
 	}
 	
 	public def getParameterRule() {
-		return parameterRule
+		return parameterRuleFactory.getParameterRule()
 	}
 	
 }

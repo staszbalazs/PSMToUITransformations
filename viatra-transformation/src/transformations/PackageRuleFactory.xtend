@@ -11,34 +11,42 @@ import org.eclipse.viatra.transformation.runtime.emf.rules.eventdriven.EventDriv
 import org.eclipse.viatra.transformation.runtime.emf.rules.eventdriven.EventDrivenTransformationRuleFactory
 import psm.JPackage
 import queries.JPackageToUIModuleQuery
+import queries.JPackageToUIModuleQueryForModify
 import traceability.PSMToUI
+import traceability.PSMToUITrace
 import traceability.TraceabilityPackage
 import ui.UIModule
 import ui.UiPackage
 
 class PackageRuleFactory {
 	
-	extension IModelManipulations manipulation	
+	extension IModelManipulations manipulation
+	extension ViatraQueryEngine engine
 	extension EventDrivenTransformationRuleFactory factory = new EventDrivenTransformationRuleFactory
 	
 	extension UiPackage uiPackage = UiPackage::eINSTANCE
 	extension TraceabilityPackage trPackage = TraceabilityPackage::eINSTANCE
 	
-	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> packageRule
+	extension PSMToUI psm2ui
 	
-	//After Model
-	public def getPackageRule(PSMToUI psm2ui, ViatraQueryEngine engine) {
+	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> packageRule
+	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> modifyPackageRule
+	
+	new(PSMToUI psm2ui, ViatraQueryEngine engine) {
+		this.manipulation = new SimpleModelManipulations(engine);
+		this.engine = engine;
+		this.psm2ui = psm2ui;
+	}
+	
+	public def getPackageRule() {
 		if (packageRule === null) {
-			manipulation = new SimpleModelManipulations(engine);
-						
 			packageRule = createRule.name("PackageRule").precondition(JPackageToUIModuleQuery.Matcher.querySpecification())
 				.action(CRUDActivationStateEnum.CREATED) [
 					
 					val JPackage jPackage = it.getJPackage() as JPackage
 					
 					System.out.println("Transforming package: " + jPackage.uuid)
-					
-					
+									
 					val UIModule uiModule = psm2ui.uiBase.createChild(getUIBase_Modules(), UIModule) as UIModule
 					
 					uiModule.uuid = jPackage.uuid
@@ -49,11 +57,39 @@ class PackageRuleFactory {
 					trace.addTo(PSMToUITrace_PsmElements, jPackage)
 					trace.addTo(PSMToUITrace_UiElements, uiModule)
 					
-				].action(CRUDActivationStateEnum.UPDATED) [
-				].action(CRUDActivationStateEnum.DELETED) [
-				].addLifeCycle(Lifecycles.getDefault(true, true)).build
+				].addLifeCycle(Lifecycles.getDefault(false, false)).build
 		}
 		return packageRule
+	}
+	
+	public def getModifyPackageRule() {
+		if (modifyPackageRule === null) {						
+			modifyPackageRule = createRule.name("ModifyPackageRule").precondition(JPackageToUIModuleQueryForModify.Matcher.querySpecification())
+				.action(CRUDActivationStateEnum.UPDATED) [
+					
+					val JPackage jPackage = it.getJPackage() as JPackage
+					val UIModule uiModule = it.getUiModule() as UIModule
+					
+					System.out.println("Updating package: " + jPackage.uuid)
+												
+					uiModule.uuid = jPackage.uuid
+					uiModule.name = jPackage.name
+					uiModule.fullyQualifiedName = jPackage.fqName()						
+					
+				].action(CRUDActivationStateEnum.DELETED) [
+					
+					val JPackage jPackage = it.getJPackage() as JPackage
+					val UIModule uiModule = it.getUiModule() as UIModule
+					val PSMToUITrace trace = it.getTrace() as PSMToUITrace
+					
+					System.out.println("Deleting package: " + jPackage.uuid)
+												
+					psm2ui.uiBase.remove(UIBase_Modules, uiModule)
+					psm2ui.remove(PSMToUI_Traces, trace)
+					
+				].addLifeCycle(Lifecycles.getDefault(true, true)).build
+		}
+		return modifyPackageRule
 	}
 	
 	

@@ -23,17 +23,23 @@ class MenuRuleFactory {
 	
 	extension IModelManipulations manipulation
 	extension EventDrivenTransformationRuleFactory factory = new EventDrivenTransformationRuleFactory
+	extension ViatraQueryEngine engine
 	
 	extension UiPackage uiPackage = UiPackage::eINSTANCE
 	extension TraceabilityPackage trPackage = TraceabilityPackage::eINSTANCE
 	
+	extension PSMToUI psm2ui
+	
 	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> menuRule
 	
+		new(PSMToUI psm2ui, ViatraQueryEngine engine) {
+		this.manipulation = new SimpleModelManipulations(engine);
+		this.engine = engine;
+		this.psm2ui = psm2ui;
+	}
 	
-	public def getMenuRule(PSMToUI psm2ui, ViatraQueryEngine engine) {
-		if (menuRule === null) {
-			manipulation = new SimpleModelManipulations(engine);
-			
+	public def getMenuRule() {
+		if (menuRule === null) {			
 			menuRule = createRule.name("MenuRule").precondition(FindMenuItemWithParent.Matcher.querySpecification())
 				.action(CRUDActivationStateEnum.CREATED) [
 					
@@ -102,6 +108,5 @@ class MenuRuleFactory {
 		}
 		return menuRule
 	}
-	
 	
 }

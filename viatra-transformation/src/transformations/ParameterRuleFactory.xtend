@@ -30,19 +30,26 @@ class ParameterRuleFactory {
 	
 	extension IModelManipulations manipulation	
 	extension EventDrivenTransformationRuleFactory factory = new EventDrivenTransformationRuleFactory
+	extension ViatraQueryEngine engine
 	
 	extension UiPackage uiPackage = UiPackage::eINSTANCE
 	extension TraceabilityPackage trPackage = TraceabilityPackage::eINSTANCE
+	
+	extension PSMToUI psm2ui
 	
 	extension Interval interval
 		
 	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> parameterRule
 	
-	public def getParameterRule(PSMToUI psm2ui, ViatraQueryEngine engine) {
-		if (parameterRule === null) {
-			manipulation = new SimpleModelManipulations(engine)
-			interval = new Interval(engine)
-			
+	new(PSMToUI psm2ui, ViatraQueryEngine engine) {
+		this.manipulation = new SimpleModelManipulations(engine)
+		this.engine = engine
+		this.psm2ui = psm2ui
+		this.interval = interval = new Interval(engine)
+	}
+	
+	public def getParameterRule() {
+		if (parameterRule === null) {			
 			parameterRule = createRule.name("ParameterRule").precondition(JParameterWithGuardQuery.Matcher.querySpecification())
 				.action(CRUDActivationStateEnum.CREATED) [
 					

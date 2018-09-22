@@ -27,19 +27,26 @@ class AttributeRuleFactory {
 	
 	extension IModelManipulations manipulation
 	extension EventDrivenTransformationRuleFactory factory = new EventDrivenTransformationRuleFactory
+	extension ViatraQueryEngine engine
 	
 	extension UiPackage uiPackage = UiPackage::eINSTANCE
 	extension TraceabilityPackage trPackage = TraceabilityPackage::eINSTANCE
+	
+	extension PSMToUI psm2ui
 	
 	extension ComponentType componentType
 	
 	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> attributeRule
 	
-	public def getAttributeRule(PSMToUI psm2ui, ViatraQueryEngine engine) {
+	new(PSMToUI psm2ui, ViatraQueryEngine engine) {
+		this.manipulation = new SimpleModelManipulations(engine);
+		this.componentType = new ComponentType(engine)
+		this.engine = engine;
+		this.psm2ui = psm2ui;
+	}
+	
+	public def getAttributeRule() {
 		if (attributeRule === null) {
-			manipulation = new SimpleModelManipulations(engine)
-			componentType = new ComponentType(engine)
-			
 			attributeRule = createRule.name("AttributeRule").precondition(JAttributeQuery.Matcher.querySpecification())
 				.action(CRUDActivationStateEnum.CREATED) [
 					
@@ -94,10 +101,7 @@ class AttributeRuleFactory {
 						}
 											
 					}
-					
-					
-					
-							
+									
 				].action(CRUDActivationStateEnum.UPDATED) [
 				].action(CRUDActivationStateEnum.DELETED) [
 				].addLifeCycle(Lifecycles.getDefault(true, true)).build

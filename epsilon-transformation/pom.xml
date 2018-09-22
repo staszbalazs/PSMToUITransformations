@@ -95,6 +95,7 @@
 			                        <metaModelUris>
 			                            <param>http://blackbelt.hu/judo/meta/psm/ui/mapping</param>
 			                        </metaModelUris>
+			                        <platformAlias>platform:/resource/ui_meta/src/library/psmToUiTypeMapping.model</platformAlias>
 			                        <expand>true</expand>
 			                    </model>
 			                    
