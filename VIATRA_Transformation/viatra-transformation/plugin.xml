@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><plugin>
+  <extension point="org.eclipse.emf.ecore.generated_package">
+    <!-- @generated traceability -->
+    <package class="traceability.TraceabilityPackage" genModel="platform:/traceability_meta/model/traceability.genmodel" uri="http://blackbelt.hu/judo/meta/psm/ui/traceability"/>
+  </extension>
+  <extension point="org.eclipse.emf.ecore.generated_package">
+    <!-- @generated traceability -->
+    <package class="psm.PsmPackage" genModel="platform:/resource/traceability_meta/model/traceability.genmodel" uri="http://blackbelt.hu/judo/meta/psm"/>
+  </extension>
+  <extension point="org.eclipse.emf.ecore.generated_package">
+    <!-- @generated traceability -->
+    <package class="ui.UiPackage" genModel="platform:/resource/traceability_meta/model/traceability.genmodel" uri="http://blackbelt.hu/judo/meta/psm/ui"/>
+  </extension>
+  <extension point="org.eclipse.emf.ecore.generated_package">
+    <package class="psmToUiTypeMapping.PsmToUiTypeMappingPackage" genModel="platform:/resource/ui_meta/src/model/psmToUiTypeMapping.genmodel" uri="http://blackbelt.hu/judo/meta/psm/ui/mapping"/>
+  </extension>
+  <extension point="org.eclipse.ui.commands">
+    <command defaultHandler="handlers.ToggleTransformationHandler" id="viatra_transformation.command" name="Toggle Transformation"/>
+  </extension>
+  <extension point="org.eclipse.ui.menus">
+    <menuContribution allPopups="false" locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+      <command commandId="viatra_transformation.command" label="Toggle Incremental Transformation" style="push">
+        <visibleWhen checkEnabled="false">
+          <with variable="selection">
+            <count value="1"/>
+            <iterate>
+              <adapt type="traceability.PSMToUI"/>
+            </iterate>
+          </with>
+        </visibleWhen>
+      </command>
+    </menuContribution>
+  </extension>
+  <extension id="queries.PatternProvider" point="org.eclipse.viatra.query.runtime.queryspecification">
+    <group group="org.eclipse.viatra.query.runtime.extensibility.SingletonExtensionFactory:queries.PatternProvider" id="queries.PatternProvider">
+      <query-specification fqn="queries.domainJModelQuery"/>
+      <query-specification fqn="queries.domainJModelQueryForModify"/>
+      <query-specification fqn="queries.JInfoQuery"/>
+      <query-specification fqn="queries.JInfoQueryForModify"/>
+      <query-specification fqn="queries.JUIFilterQuery"/>
+      <query-specification fqn="queries.JUIFilterQueryForModify"/>
+      <query-specification fqn="queries.JPackageToUIModuleQuery"/>
+      <query-specification fqn="queries.JPackageToUIModuleQueryForModify"/>
+      <query-specification fqn="queries.findDescendantsForClass"/>
+      <query-specification fqn="queries.JClassWithGuardConditionQuery"/>
+      <query-specification fqn="queries.JClassWithGuardConditionQueryForModify"/>
+      <query-specification fqn="queries.representsUserJClassQuery"/>
+      <query-specification fqn="queries.JOperationWithGuardQuery"/>
+      <query-specification fqn="queries.JOperationWithGuardQueryForModify"/>
+      <query-specification fqn="queries.JParameterWithGuardQuery"/>
+      <query-specification fqn="queries.JParameterWithGuardQueryForModify"/>
+      <query-specification fqn="queries.JParameterViewFieldQuery"/>
+      <query-specification fqn="queries.findMenuItemWithParent"/>
+      <query-specification fqn="queries.findMenuItemWithParentForModify"/>
+      <query-specification fqn="queries.menuRootChildren"/>
+      <query-specification fqn="queries.JRoleQuery"/>
+      <query-specification fqn="queries.JRoleQueryForModify"/>
+      <query-specification fqn="queries.JAttributeQuery"/>
+      <query-specification fqn="queries.psmToUiTrace"/>
+      <query-specification fqn="queries.alreadyTransformed"/>
+      <query-specification fqn="queries.findCorrespondingType"/>
+    </group>
+  </extension>
+</plugin>
