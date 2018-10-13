@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>VIATRA_Transformation</name>
+	<name>Tests</name>
 	<comment></comment>
 	<projects>
-		<project>psm_meta</project>
-		<project>ui_meta</project>
-		<project>traceability_meta</project>
-		<project>viatra_transformation</project>
+		<project>tests</project>
 	</projects>
 	<buildSpec>
 	</buildSpec>

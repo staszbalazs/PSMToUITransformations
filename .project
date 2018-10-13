@@ -5,6 +5,7 @@
 	<projects>
 		<project>Epsilon_Transformation</project>
 		<project>VIATRA_Transformation</project>
+		<project>Tests</project>
 	</projects>
 	<buildSpec>
 	</buildSpec>

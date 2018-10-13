@@ -4,9 +4,9 @@
     nsPrefix="psmToUiTypeMapping">
   <eClassifiers xsi:type="ecore:EClass" name="Mapping">
     <eStructuralFeatures xsi:type="ecore:EReference" name="psmType" lowerBound="1"
-        eType="ecore:EClass ../../../psm_meta/src/model/psm.ecore#//JPrimitive"/>
+        eType="ecore:EClass platform:/resource/psm_meta/src/model/psm.ecore#//JPrimitive"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="componentType" lowerBound="1"
-        eType="ecore:EClass ui.ecore#//UIBaseComponentType"/>
+        eType="ecore:EClass platform:/resource/ui_meta/src/model/ui.ecore#//UIBaseComponentType"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Mappings">

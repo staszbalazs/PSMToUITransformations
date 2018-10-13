@@ -5,14 +5,14 @@
   <eClassifiers xsi:type="ecore:EClass" name="PSMToUI">
     <eStructuralFeatures xsi:type="ecore:EReference" name="traces" upperBound="-1"
         eType="#//PSMToUITrace" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="jModel" eType="ecore:EClass ../../psm_meta/src/model/psm.ecore#//JModel"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="uiBase" eType="ecore:EClass ../../ui_meta/src/model/ui.ecore#//UIBase"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="typeMappings" eType="ecore:EClass ../../ui_meta/src/model/psmToUiTypeMapping.ecore#//Mappings"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="jModel" eType="ecore:EClass platform:/resource/psm_meta/src/model/psm.ecore#//JModel"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="uiBase" eType="ecore:EClass platform:/resource/ui_meta/src/model/ui.ecore#//UIBase"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="typeMappings" eType="ecore:EClass platform:/resource/ui_meta/src/model/psmToUiTypeMapping.ecore#//Mappings"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PSMToUITrace">
     <eStructuralFeatures xsi:type="ecore:EReference" name="uiElements" upperBound="-1"
-        eType="ecore:EClass ../../ui_meta/src/model/ui.ecore#//Identifiable"/>
+        eType="ecore:EClass platform:/resource/ui_meta/src/model/ui.ecore#//Identifiable"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="psmElements" upperBound="-1"
-        eType="ecore:EClass ../../psm_meta/src/model/psm.ecore#//JElement"/>
+        eType="ecore:EClass platform:/resource/psm_meta/src/model/psm.ecore#//JElement"/>
   </eClassifiers>
 </ecore:EPackage>
