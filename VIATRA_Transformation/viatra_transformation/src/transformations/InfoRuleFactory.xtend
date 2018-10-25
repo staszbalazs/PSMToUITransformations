@@ -16,6 +16,7 @@ import traceability.PSMToUI
 import traceability.TraceabilityPackage
 import ui.UIInfo
 import ui.UiPackage
+import queries.RepresentsUserJClassQuery
 
 class InfoRuleFactory {
 	
@@ -30,6 +31,7 @@ class InfoRuleFactory {
 	
 	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> infoRule
 	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> modifyInfoRule
+	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> representUserIdForInfoRule
 	
 	new(PSMToUI psm2ui, ViatraQueryEngine engine) {
 		this.manipulation = new SimpleModelManipulations(engine);
@@ -44,9 +46,7 @@ class InfoRuleFactory {
 										
 					System.out.println("Transforming info: " + JInfo.uuid)
 					
-					val UIInfo info = psm2ui.uiBase.createChild(getUIBase_Info, UIInfo) as UIInfo
-					info.uuid = "main_info"
-					info.name = "main_info"
+					var UIInfo info = psm2ui.uiBase.info
 					
 					for (JSubmodel submodel : JInfo.submodels) {
 						if (submodel.version !== null) {
@@ -57,12 +57,38 @@ class InfoRuleFactory {
 						
 						info.submodels.add(submodel.name);
 					}								
-					
-					info.userClass = uuid
+															
+					val trace = psm2ui.createChild(PSMToUI_Traces, PSMToUITrace)
+					trace.addTo(PSMToUITrace_PsmElements, JInfo)
+					trace.addTo(PSMToUITrace_UiElements, info)
 					
 				].addLifeCycle(Lifecycles.getDefault(false, false)).build
 		}
 		return infoRule
+	}
+	
+	
+	public def getRepresentsUserIdForInfoRule() {
+		if (representUserIdForInfoRule === null) {			
+			representUserIdForInfoRule = createRule.name("RepresentUserIdForInfoRule").precondition(RepresentsUserJClassQuery.Matcher.querySpecification())
+				.action(CRUDActivationStateEnum.CREATED) [
+					
+					System.out.println("Setting userClass for  info: " + JClass.uuid)
+					psm2ui.uiBase.info.userClass = JClass.uuid 
+					
+				].action(CRUDActivationStateEnum.UPDATED) [
+					
+					System.out.println("Setting userClass for  info: " + JClass.uuid)
+					psm2ui.uiBase.info.userClass = JClass.uuid 
+																				
+				].action(CRUDActivationStateEnum.DELETED) [
+					
+					System.out.println("Setting userClass for  info: " + JClass.uuid)
+					psm2ui.uiBase.info.userClass = "" 					
+					
+				].addLifeCycle(Lifecycles.getDefault(true, true)).build
+		}
+		return representUserIdForInfoRule
 	}
 	
 	public def getModifyInfoRule() {

@@ -33,6 +33,7 @@
   </extension>
   <extension id="queries.PatternProvider" point="org.eclipse.viatra.query.runtime.queryspecification">
     <group group="org.eclipse.viatra.query.runtime.extensibility.SingletonExtensionFactory:queries.PatternProvider" id="queries.PatternProvider">
+      <query-specification fqn="queries.hasUuid"/>
       <query-specification fqn="queries.domainJModelQuery"/>
       <query-specification fqn="queries.domainJModelQueryForModify"/>
       <query-specification fqn="queries.JInfoQuery"/>
@@ -42,6 +43,7 @@
       <query-specification fqn="queries.JPackageToUIModuleQuery"/>
       <query-specification fqn="queries.JPackageToUIModuleQueryForModify"/>
       <query-specification fqn="queries.findDescendantsForClass"/>
+      <query-specification fqn="queries.findDescendantsForClassWithJClass"/>
       <query-specification fqn="queries.JClassWithGuardConditionQuery"/>
       <query-specification fqn="queries.JClassWithGuardConditionQueryForModify"/>
       <query-specification fqn="queries.representsUserJClassQuery"/>
@@ -51,13 +53,17 @@
       <query-specification fqn="queries.JParameterWithGuardQueryForModify"/>
       <query-specification fqn="queries.JParameterViewFieldQuery"/>
       <query-specification fqn="queries.findMenuItemWithParent"/>
+      <query-specification fqn="queries.findMenuItemToSetParent"/>
       <query-specification fqn="queries.findMenuItemWithParentForModify"/>
-      <query-specification fqn="queries.menuRootChildren"/>
       <query-specification fqn="queries.JRoleQuery"/>
       <query-specification fqn="queries.JRoleQueryForModify"/>
       <query-specification fqn="queries.JRoleViewFieldQuery"/>
       <query-specification fqn="queries.JAttributeQuery"/>
       <query-specification fqn="queries.JAttributeQueryForModify"/>
+      <query-specification fqn="queries.JAttributeInJGroupViewFieldQuery"/>
+      <query-specification fqn="queries.JAttributeViewFieldQueryForModify"/>
+      <query-specification fqn="queries.JAttributeGroupQuery"/>
+      <query-specification fqn="queries.JAttributeGroupQueryForModify"/>
       <query-specification fqn="queries.psmToUiTrace"/>
       <query-specification fqn="queries.alreadyTransformed"/>
       <query-specification fqn="queries.findCorrespondingType"/>

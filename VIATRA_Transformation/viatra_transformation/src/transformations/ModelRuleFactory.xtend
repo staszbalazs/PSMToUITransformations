@@ -13,6 +13,7 @@ import queries.DomainJModelQuery
 import queries.DomainJModelQueryForModify
 import traceability.PSMToUI
 import traceability.TraceabilityPackage
+import ui.UIInfo
 import ui.UIMenuItem
 import ui.UiPackage
 
@@ -54,6 +55,12 @@ class ModelRuleFactory {
 					val trace = psm2ui.createChild(getPSMToUI_Traces(), PSMToUITrace)
 						trace.addTo(getPSMToUITrace_PsmElements, JModel)
 						trace.addTo(getPSMToUITrace_UiElements, uiBase)
+						
+					val UIInfo info = psm2ui.uiBase.createChild(getUIBase_Info, UIInfo) as UIInfo
+					info.uuid = "main_info"
+					info.name = "main_info"
+					
+					info.userClass = "Model.judo.example.car.domain.Person"
 					
 				].addLifeCycle(Lifecycles.getDefault(false, false)).build
 		}

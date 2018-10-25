@@ -19,6 +19,9 @@ import ui.UIParamView
 import ui.UIResultView
 import ui.UIViewFieldSet
 import ui.UiPackage
+import queries.PatternProvider
+import ui.UIClass
+import java.util.stream.Collectors
 
 class OperationRuleFactory {
 	
@@ -53,7 +56,6 @@ class OperationRuleFactory {
 					trace.addTo(PSMToUITrace_PsmElements, JOperation)
 					trace.addTo(PSMToUITrace_UiElements, uiAction)
 					
-					
 					//Attributes
 					uiAction.uuid = uiClass.uuid + "." + JOperation.name
 					uiAction.name = JOperation.name;
@@ -62,10 +64,26 @@ class OperationRuleFactory {
 					uiAction.notBulk = !JOperation.bulk;
 					uiAction.isQuery = (JOperation.kind == JOperationKind::QUERY);
 					
+					//Get descendant UIClasses
+					val ownersByInheritance = PatternProvider.instance().getFindDescendantsForClass(engine)
+											  .getAllMatches(uiClass, null)
+											  .stream()
+											  .map[getDescendant as UIClass]
+											  .collect(Collectors.toList)
+					
+					//Add attribute to each of them
+					for (UIClass class : ownersByInheritance) {
+						class.inheritedActions.add(uiAction)
+					}
+					
 					//create paramView
 					val UIParamView paramView = uiAction.createChild(getUIAction_ParamView, UIParamView) as UIParamView
 					paramView.name = uiAction.name
-					paramView.uuid = uiAction.uuid.replace("\\.", "_") + "_paramView"
+					paramView.uuid = uiAction.uuid.replace(".", "_") + "_paramView"
+					
+					var viewFieldSet = paramView.createChild(getUIView_ViewFieldSets, UIViewFieldSet) as UIViewFieldSet
+					viewFieldSet.name = uiAction.name
+					viewFieldSet.uuid = paramView.uuid +  "_viewFieldSet_" + uiAction.name
 					
 					//create resultView if necessary
 					val result = JOperation.parameters.stream()
@@ -74,8 +92,12 @@ class OperationRuleFactory {
 					if (result.isPresent) {
 						val UIResultView resultView = uiAction.createChild(getUIAction_ResultView, UIResultView) as UIResultView
 						resultView.name = uiAction.name;
-						resultView.uuid = uiAction.uuid.replace("\\.", "_") + "_resultView"
+						resultView.uuid = uiAction.uuid.replace(".", "_") + "_resultView"
 						resultView.pageSize = 1000
+						
+						val resultViewFieldSet = resultView.createChild(getUIView_ViewFieldSets, UIViewFieldSet) as UIViewFieldSet
+						resultViewFieldSet.name = uiAction.name
+						resultViewFieldSet.uuid = resultView.uuid +  "_viewFieldSet_" + uiAction.name
 					}
 								
 				].addLifeCycle(Lifecycles.getDefault(false, false)).build
@@ -99,7 +121,7 @@ class OperationRuleFactory {
 					uiAction.isQuery = (JOperation.kind == JOperationKind::QUERY);
 					
 					uiAction.paramView.name = uiAction.name
-					uiAction.paramView.uuid = uiAction.uuid.replace("\\.", "_") + "_paramView"
+					uiAction.paramView.uuid = uiAction.uuid.replace(".", "_") + "_paramView"
 					
 					for (UIViewFieldSet viewFieldSet : uiAction.paramView.viewFieldSets) {
 						viewFieldSet.name = uiAction.name
@@ -108,7 +130,7 @@ class OperationRuleFactory {
 									
 					if (uiAction.resultView !== null) {
 						uiAction.resultView.name = uiAction.name;
-						uiAction.resultView.uuid = uiAction.uuid.replace("\\.", "_") + "_resultView"
+						uiAction.resultView.uuid = uiAction.uuid.replace(".", "_") + "_resultView"
 						
 						for (UIViewFieldSet viewFieldSet : uiAction.resultView.viewFieldSets) {
 							viewFieldSet.name = uiAction.name

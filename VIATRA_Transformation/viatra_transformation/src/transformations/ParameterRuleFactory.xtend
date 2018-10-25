@@ -60,14 +60,7 @@ class ParameterRuleFactory {
 						
 						val paramView = uiAction.paramView
 						
-						var UIViewFieldSet viewFieldSet			
-						if (paramView.viewFieldSets.isEmpty()) {
-							viewFieldSet = paramView.createChild(getUIView_ViewFieldSets, UIViewFieldSet) as UIViewFieldSet
-							viewFieldSet.name = uiAction.name
-							viewFieldSet.uuid = paramView.uuid +  "_viewFieldSet_" + uiAction.name
-						} else {
-							viewFieldSet = paramView.viewFieldSets.get(0)
-						}												
+						var UIViewFieldSet viewFieldSet = paramView.viewFieldSets.get(0)											
 												
 						val viewField = viewFieldSet.createChild(getUIViewFieldSet_ViewFields, UIViewField) as UIViewField
 						viewField.name = JParameter.name;
@@ -81,9 +74,7 @@ class ParameterRuleFactory {
 						//create viewField for resultView
 						val resultView = uiAction.resultView
 						
-						val viewFieldSet = resultView.createChild(getUIView_ViewFieldSets, UIViewFieldSet) as UIViewFieldSet
-						viewFieldSet.name = uiAction.name
-						viewFieldSet.uuid = resultView.uuid +  "_viewFieldSet_" + uiAction.name
+						val viewFieldSet = resultView.getViewFieldSets.get(0)
 						
 						val viewField = viewFieldSet.createChild(getUIViewFieldSet_ViewFields, UIViewField) as UIViewField
 						viewField.name = JParameter.name;

@@ -7,57 +7,44 @@ import "modules/uifilter.etl";
 import "modules/uimenuitem.etl";
 import "modules/uiaction.etl";
 
-post {
+post {		
 
-	if (UI!UIMenuItem.all.size = 0) {
-		var mainMenu = UI!UIBase.all.first().mainMenu;
-		for (package in PSM!JPackage.all) {
-			if (package.participates(PSM!JLayer#OPERATION)) {
-				var menuItem = new UI!UIMenuItem();
-				menuItem.uuid = package.uuid + "_menuitem";
-				menuItem.name = package.name;
-				
-				for (class in package.classes) {
-					var classMenuItem = new UI!UIMenuItem();
-					classMenuItem.uuid = class.uuid + "_menuitem";
-					classMenuItem.name = class.name;
-					classMenuItem.menuView = class.equivalent("UIClass").listView;
-					
-					menuItem.menuItems.add(classMenuItem); 
-				}
-				
-				mainMenu.menuItems.add(menuItem);
-			}
+	for (jclass in PSM!JClass.all) {
+		var uiclass = jclass.equivalent("UIClass");	
+		for (supertype : PSM!JClass in jclass.getSuperTypes()) {
+			var currentSuperType = supertype.equivalent("UIClass");
+			var inheritedAttributes = currentSuperType.attributes + currentSuperType.inheritedAttributes;
+			var inheritedActions = currentSuperType.actions + currentSuperType.inheritedActions;
+			
+			uiclass.inheritedAttributes.addAll(inheritedAttributes);
+			uiclass.inheritedActions.addAll(inheritedActions);
 		}
-	} else {
-	
-		var loneMenuItems = UI!UIMenuItem.all.select(item | not item.ownerMenuItem.isDefined() and item.uuid <> "main_menu");
-		var mainMenu = UI!UIMenuItem.all.select(item | item.uuid = "main_menu").first();
 		
-		mainMenu.menuItems.addAll(loneMenuItems);
+		//create Views
+		uiclass.classView = createClassView(uiclass, jclass, uiclass.name, uiclass.uuid + '_oview_default');
+		uiclass.listView = createListView(uiclass, uiclass.name, uiclass.uuid + '_lview_default', uiclass.classView);
 	}
 	
-	for (class in UI!UIClass.all) {
-		var childClassViews : Sequence(UI!UIView) = new Sequence(UI!UIView);
+	var jMenuItems = PSM!JUIMenuItem.all.select(menuItem | menuItem.parent.isDefined());
+	for (jUIMenuItem in jMenuItems) {
+		var uiMenuItem = jUIMenuItem.equivalent("UIMenuItem");
+	
+		var menuView;
 		
-		while (true) {
-			if (class.super.isDefined()) {
-				if (not class.`abstract`) {
-					childClassViews.add(class.classView);
-				}
-				
-				class.super.childClassViews.addAll(childClassViews);
-				class = class.super;
-			} else {
-				break;
+		if (jUIMenuItem.type = PSM!JMenuItemType#LIST) {
+			menuView = jUIMenuItem.represent.equivalent("UIClass").listView;
+			
+			for (filter in jUIMenuItem.uifilters) {
+				uiMenuItem.filters.add(filter.equivalent("UIFilter"));
 			}
+		} else if (jUIMenuItem.type = PSM!JMenuItemType#OBJECT) {
+			menuView = jUIMenuItem.represent.equivalent("UIClass").selector.detailView;
+			menuView.uuid = generateUuid(generateUuid(jUIMenuItem.uuid, "_oview_default", ""), "menuView", "_");			
 		}
-	}	
+		
+		uiMenuItem.menuView = menuView;
+	}
 	
-	//Use it to check if all Uuids are unique
-	//Impacts performance
-	
-	checkAllUuidsForDuplicateOrMissing();
 }
 
 

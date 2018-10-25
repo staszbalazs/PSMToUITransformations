@@ -89,3 +89,16 @@
 /JRoleQueryForModify.java
 /JRoleViewFieldQuery.java
 /JClassWithGuardConditionQueryForModify.java
+/.JAttributeGroupQuery.java._trace
+/.JAttributeViewFieldQuery.java._trace
+/.FindDescendantsForClassWithJClass.java._trace
+/.JAttributeGroupQueryForModify.java._trace
+/.JAttributeInJGroupViewFieldQuery.java._trace
+/.JAttributeViewFieldQueryForModify.java._trace
+/FindDescendantsForClassWithJClass.java
+/JAttributeGroupQuery.java
+/JAttributeGroupQueryForModify.java
+/JAttributeInJGroupViewFieldQuery.java
+/JAttributeViewFieldQueryForModify.java
+/.FindMenuItemToSetParent.java._trace
+/.HasUuid.java._trace

@@ -67,7 +67,7 @@ class RoleRuleFactory {
 					
 					//Get descendant UIClasses
 					val ownersByInheritance = PatternProvider.instance().getFindDescendantsForClass(engine)
-											  .getAllMatches(null, uiClass)
+											  .getAllMatches(uiClass, null)
 											  .stream()
 											  .map[getDescendant as UIClass]
 											  .collect(Collectors.toList)
@@ -112,7 +112,7 @@ class RoleRuleFactory {
 					System.out.println("Updating viewField for role: " + JRole.uuid)
 							
 					if (uiView instanceof UIListView) {
-						viewField.uuid = referenceComponentType.uuid + "_viewField_listView"
+						viewField.uuid = uiClass.uuid + "." + referenceComponentType.name + "_viewField_listView"
 						viewField.name = referenceComponentType.name
 						if (JRole.ownerClass.attributesForListing.size() > 0) {
 							viewField.show = false;
@@ -122,7 +122,7 @@ class RoleRuleFactory {
 						viewFieldSet.uuid = uiView.uuid + "_viewfieldset_" + referenceComponentType.name
 						
 						viewField.name = referenceComponentType.name;
-						viewField.uuid = referenceComponentType.uuid + "_viewField_classView"
+						viewField.uuid = uiClass.uuid + "." +  referenceComponentType.name + "_viewField_classView"
 					}
 									
 				].action(CRUDActivationStateEnum.DELETED) [
@@ -147,7 +147,7 @@ class RoleRuleFactory {
 			val UIViewFieldSet viewFieldSet = uiClass.listView.viewFieldSets.get(0)
 						
 			val UIViewField viewField = viewFieldSet.createChild(UIViewFieldSet_ViewFields, UIViewField) as UIViewField
-			viewField.uuid = uiReferenceType.uuid + "_viewField_listView"
+			viewField.uuid = uiClass.uuid + "." + uiReferenceType.name + "_viewField_listView"
 			viewField.name = uiReferenceType.name
 			viewField.componentType = uiReferenceType;
 			viewField.searchable = false
@@ -167,7 +167,7 @@ class RoleRuleFactory {
 						
 			val UIViewField viewField = viewFieldSet.createChild(UIViewFieldSet_ViewFields, UIViewField) as UIViewField
 			viewField.name = uiReferenceType.name;
-			viewField.uuid = uiReferenceType.uuid + "_viewField_classView"
+			viewField.uuid = uiClass.uuid + "." + uiReferenceType.name + "_viewField_classView"
 			viewField.componentType = uiReferenceType;
 			viewField.searchable = false
 		}

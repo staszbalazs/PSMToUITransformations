@@ -4,7 +4,10 @@ operation createClassView(ownerClass: UI!UIClass, originClass: PSM!JClass, name:
 	classView.name = name;
 	
 	var position = 1;
-	var remaining : OrderedSet(UI!UIAttributeComponentType) = ownerClass.attributes + ownerClass.inheritedAttributes;
+	var remaining : OrderedSet(UI!UIAttributeComponentType) = new OrderedSet(UI!UIAttributeComponentType);
+	remaining.addAll(ownerClass.attributes);
+	remaining.addAll(ownerClass.inheritedAttributes);
+	
 	var vfsName : String;
 	
 	for (attrGroup in originClass.attributeOrder) {
@@ -77,7 +80,10 @@ operation createListView(ownerClass: UI!UIClass, name: String, uuid: String, cla
 	
 	var position = ownerClass.~attributesForListing.size();
 	
-	var allAttributes = ownerClass.attributes + ownerClass.inheritedAttributes;
+	var allAttributes : OrderedSet(UI!UIAttributeComponentType) = new OrderedSet(UI!UIAttributeComponentType);
+	allAttributes.addAll(ownerClass.attributes);
+	allAttributes.addAll(ownerClass.inheritedAttributes);
+	
 	for (attribute in allAttributes) {
 		if ((attribute.isTypeOf(UI!UIReferenceComponentType) and attribute.upper = 1 and attribute.navigable and not attribute.private) or 
 				(attribute.isTypeOf(UI!UIBaseComponentType) and not attribute.private)) {

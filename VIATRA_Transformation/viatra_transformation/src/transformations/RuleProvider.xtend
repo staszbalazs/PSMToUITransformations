@@ -15,6 +15,7 @@ class RuleProvider {
 	private OperationRuleFactory operationRuleFactory
 	private ParameterRuleFactory parameterRuleFactory
 	private InfoRuleFactory infoRuleFactory
+	private AttributeGroupRuleFactory attributeGroupRuleFactory
 
 	new( PSMToUI psm2ui, ViatraQueryEngine engine) {
 		this.classRuleFactory = new ClassRuleFactory(psm2ui, engine)
@@ -27,6 +28,7 @@ class RuleProvider {
 		this.operationRuleFactory = new OperationRuleFactory(psm2ui, engine)
 		this.parameterRuleFactory = new ParameterRuleFactory(psm2ui, engine)
 		this.infoRuleFactory = new InfoRuleFactory(psm2ui, engine)
+		this.attributeGroupRuleFactory = new AttributeGroupRuleFactory(psm2ui, engine)
 	}
 	
 	public def getModelRule() {
@@ -43,6 +45,10 @@ class RuleProvider {
 	
 	public def getModifyInfoRule() {
 		return infoRuleFactory.getModifyInfoRule()
+	}
+	
+	public def getRepresentsUserIdForInfoRule() {
+		return infoRuleFactory.getRepresentsUserIdForInfoRule()
 	}
 	
 	public def getClassRule() {
@@ -73,6 +79,10 @@ class RuleProvider {
 		return menuRuleFactory.getMenuRule()
 	}
 	
+	public def getMenuParentSetterRule() {
+		return menuRuleFactory.getMenuParentSetterRule()
+	}
+	
 	public def getModifyMenuRule() {
 		return menuRuleFactory.getModifyMenuRule()
 	}
@@ -85,6 +95,18 @@ class RuleProvider {
 		return roleRuleFactory.getModifyRoleRule()
 	}
 	
+	public def getRoleViewFieldRule() {
+		return roleRuleFactory.getRoleViewFieldRule()
+	}
+	
+	public def getAttributeGroupRule() {
+		return attributeGroupRuleFactory.getAttributeGroupRule()
+	}
+	
+	public def getModifyAttributeGroupRule() {
+		return attributeGroupRuleFactory.getModifyAttributeGroupRule()
+	}
+	
 	public def getPrimitiveRule() {
 		return attributeRuleFactory.getPrimitiveRule()
 	}
@@ -93,11 +115,23 @@ class RuleProvider {
 		return attributeRuleFactory.getAttributeRule()
 	}
 	
+	public def getModifyAttributeRule() {
+		return attributeRuleFactory.getModifyAttributeRule()
+	}
+	
+	public def getAttributeInGroupViewFieldRule() {
+		return attributeRuleFactory.getAttributeInGroupViewFieldRule()
+	}
+	
+	public def getModifyAttributeViewFieldRule() {
+		return attributeRuleFactory.getModifyAttributeViewFieldRule()
+	}
+	
 	public def getOperationRule() {
 		return operationRuleFactory.getOperationRule()
 	}
 	
-	public def geModifyOperationRule() {
+	public def getModifyOperationRule() {
 		return operationRuleFactory.getModifyOperationRule()
 	}
 	

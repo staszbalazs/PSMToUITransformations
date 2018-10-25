@@ -97,12 +97,12 @@ class ClassRuleFactory {
 					
 					//create classView
 					val classView = uiClass.createChild(getUIClass_ClassView, UIClassView) as UIClassView
-					classView.uuid = uiClass.uuid.replace("\\.", "_") + "_oview_default"
+					classView.uuid = uiClass.uuid.replace(".", "_") + "_oview_default"
 					classView.name = uiClass.name
 					
 					//create listView
 					val listView = uiClass.createChild(getUIClass_ListView, UIListView) as UIListView
-					listView.uuid = uiClass.uuid.replace("\\.", "_") + "_lview_default"
+					listView.uuid = uiClass.uuid.replace(".", "_") + "_lview_default"
 					listView.name = uiClass.name;
 					listView.pageSize = 20;
 					listView.detailView = classView;

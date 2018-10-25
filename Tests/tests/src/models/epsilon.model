@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:UIBase xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="http://blackbelt.hu/judo/meta/psm/ui" uuid="Model" name="Model">
   <modules uuid="FW_Model.judo.framework" name="framework" fullyQualifiedName="judo.framework">
-    <classes uuid="FW_Model.judo.framework.User" name="User" childClassViews="Model_judo_example_car_domain_Person_oview_default">
+    <classes uuid="FW_Model.judo.framework.User" name="User">
       <actions uuid="FW_Model.judo.framework.User.changePassword" name="changePassword" classBased="true" toBeConfirmed="true" notBulk="true">
         <paramView uuid="FW_Model_judo_framework_User_changePassword_paramView" name="changePassword">
           <viewFieldSets uuid="FW_Model_judo_framework_User_changePassword_paramView_viewFieldSet_changePassword" name="changePassword">
@@ -173,7 +173,7 @@
       <attributes xsi:type="ui:UIReferenceComponentType" uuid="FW_Model.judo.framework.User.candidates" name="candidates" upper="-1" type="UserCandidate" referenced="FW_Model.judo.framework.UserCandidate" opposite="FW_Model.judo.framework.UserCandidate.user" navigable="true" kind="composition"/>
       <attributes xsi:type="ui:UIReferenceComponentType" uuid="FW_Model.judo.framework.User.processComments" name="processComments" upper="-1" type="ProcessComment" referenced="FW_Model.judo.framework.ProcessComment" opposite="FW_Model.judo.framework.ProcessComment.commenter" navigable="true" kind="association"/>
     </classes>
-    <classes uuid="FW_Model.judo.framework.Tenant" name="Tenant" childClassViews="Model_judo_example_car_domain_Company_oview_default" representation="FW_Model.judo.framework.Tenant.name">
+    <classes uuid="FW_Model.judo.framework.Tenant" name="Tenant" representation="FW_Model.judo.framework.Tenant.name">
       <classView uuid="FW_Model_judo_framework_Tenant_oview_default" name="Tenant">
         <viewFieldSets uuid="FW_Model_judo_framework_Tenant_oview_default_viewfieldset_name" name="name">
           <viewFields uuid="FW_Model.judo.framework.Tenant.name_viewField_classView" name="name" searchable="true" componentType="FW_Model.judo.framework.Tenant.name"/>
@@ -949,7 +949,7 @@
       <attributes xsi:type="ui:UIBaseComponentType" uuid="FW_Model.judo.framework.ProfileEntry.id" name="id" value="" upper="1" type="string" interval="" private="true" placeholder=""/>
       <attributes xsi:type="ui:UIReferenceComponentType" uuid="FW_Model.judo.framework.ProfileEntry.profile" name="profile" lower="1" upper="1" type="Profile" referenced="FW_Model.judo.framework.Profile" opposite="FW_Model.judo.framework.Profile.entries" navigable="true" kind="association"/>
     </classes>
-    <classes uuid="FW_Model.judo.framework.TenantUser" name="TenantUser" childClassViews="Model_judo_example_car_domain_TenantPerson_oview_default">
+    <classes uuid="FW_Model.judo.framework.TenantUser" name="TenantUser">
       <actions uuid="FW_Model.judo.framework.TenantUser.createTenantUser" name="createTenantUser" classBased="true" toBeConfirmed="true" notBulk="true">
         <paramView uuid="FW_Model_judo_framework_TenantUser_createTenantUser_paramView" name="createTenantUser">
           <viewFieldSets uuid="FW_Model_judo_framework_TenantUser_createTenantUser_paramView_viewFieldSet_createTenantUser" name="createTenantUser">
@@ -1030,7 +1030,7 @@
       </listView>
       <attributes xsi:type="ui:UIReferenceComponentType" uuid="FW_Model.judo.framework.TenantRole.tenantUsers" name="tenantUsers" upper="-1" type="TenantUser" referenced="FW_Model.judo.framework.TenantUser" opposite="FW_Model.judo.framework.TenantUser.tenantRoles" kind="association"/>
     </classes>
-    <classes uuid="FW_Model.judo.framework.Role" name="Role" childClassViews="FW_Model_judo_framework_TenantRole_oview_default">
+    <classes uuid="FW_Model.judo.framework.Role" name="Role">
       <classView uuid="FW_Model_judo_framework_Role_oview_default" name="Role">
         <viewFieldSets uuid="FW_Model_judo_framework_Role_oview_default_viewfieldset_name" name="name">
           <viewFields uuid="FW_Model.judo.framework.Role.name_viewField_classView" name="name" searchable="true" componentType="FW_Model.judo.framework.Role.name"/>
@@ -1286,7 +1286,7 @@
       <attributes xsi:type="ui:UIBaseComponentType" uuid="FW_Model.judo.framework.UserInfo.id" name="id" value="" upper="1" type="string" interval="" private="true" placeholder=""/>
       <attributes xsi:type="ui:UIReferenceComponentType" uuid="FW_Model.judo.framework.UserInfo.user" name="user" upper="1" type="User" referenced="FW_Model.judo.framework.User" opposite="FW_Model.judo.framework.User.userInfo" navigable="true" kind="composition"/>
     </classes>
-    <classes uuid="FW_Model.judo.framework.Config" name="Config" childClassViews="FW_Model_judo_framework_UserConfig_oview_default">
+    <classes uuid="FW_Model.judo.framework.Config" name="Config">
       <actions uuid="FW_Model.judo.framework.Config.exportConfig" name="exportConfig" classBased="true" toBeConfirmed="true" notBulk="true">
         <paramView uuid="FW_Model_judo_framework_Config_exportConfig_paramView" name="exportConfig">
           <viewFieldSets uuid="FW_Model_judo_framework_Config_exportConfig_paramView_viewFieldSet_exportConfig" name="exportConfig">
@@ -1822,7 +1822,7 @@
       <attributes xsi:type="ui:UIReferenceComponentType" uuid="FW_Model.judo.framework.Comment.task" name="task" lower="1" upper="1" type="Task" referenced="FW_Model.judo.framework.Task" opposite="FW_Model.judo.framework.Task.comments" navigable="true" kind="association"/>
       <attributes xsi:type="ui:UIReferenceComponentType" uuid="FW_Model.judo.framework.Comment.completedTask" name="completedTask" upper="1" type="Task" referenced="FW_Model.judo.framework.Task" opposite="FW_Model.judo.framework.Task.completeComment" navigable="true" kind="association"/>
     </classes>
-    <classes uuid="FW_Model.judo.framework.Candidate" name="Candidate" childClassViews="FW_Model_judo_framework_UserCandidate_oview_default FW_Model_judo_framework_GroupCandidate_oview_default">
+    <classes uuid="FW_Model.judo.framework.Candidate" name="Candidate">
       <classView uuid="FW_Model_judo_framework_Candidate_oview_default" name="Candidate">
         <viewFieldSets uuid="FW_Model_judo_framework_Candidate_oview_default_viewfieldset_task" name="task">
           <viewFields uuid="FW_Model.judo.framework.Candidate.task_viewField_classView" name="task" componentType="FW_Model.judo.framework.Candidate.task"/>
@@ -2672,7 +2672,7 @@
       <attributes xsi:type="ui:UIReferenceComponentType" uuid="Model.judo.example.car.domain.Car.machine1" name="machine1" upper="1" type="CarMachine1" referenced="Model.judo.example.car.domain.CarMachine1" opposite="Model.judo.example.car.domain.CarMachine1.carMachine1Inverse" navigable="true" kind="association"/>
       <attributes xsi:type="ui:UIReferenceComponentType" uuid="Model.judo.example.car.domain.Car.mysm" name="mysm" upper="1" type="CarMysm" referenced="Model.judo.example.car.domain.CarMysm" opposite="Model.judo.example.car.domain.CarMysm.carMysmInverse" navigable="true" kind="association"/>
     </classes>
-    <classes uuid="Model.judo.example.car.domain.Vehicle" name="Vehicle" childClassViews="Model_judo_example_car_domain_Car_oview_default" abstract="true">
+    <classes uuid="Model.judo.example.car.domain.Vehicle" name="Vehicle" abstract="true">
       <classView uuid="Model_judo_example_car_domain_Vehicle_oview_default" name="Vehicle">
         <viewFieldSets uuid="Model_judo_example_car_domain_Vehicle_oview_default_viewfieldset_maxSpeed" name="maxSpeed">
           <viewFields uuid="Model.judo.example.car.domain.Vehicle.maxSpeed_viewField_classView" name="maxSpeed" searchable="true" componentType="Model.judo.example.car.domain.Vehicle.maxSpeed"/>
@@ -2825,7 +2825,7 @@
       <attributes xsi:type="ui:UIReferenceComponentType" uuid="Model.judo.example.car.domain.Engine.car" name="car" lower="1" upper="1" type="Car" referenced="Model.judo.example.car.domain.Car" opposite="Model.judo.example.car.domain.Car.engine" navigable="true" kind="association"/>
       <attributes xsi:type="ui:UIReferenceComponentType" uuid="Model.judo.example.car.domain.Engine.enginetType" name="enginetType" lower="1" upper="1" type="EngineType" referenced="Model.judo.example.car.domain.EngineTypeEnumClass" opposite="Model.judo.example.car.domain.EngineTypeEnumClass.engineEnginetTypeInverse" navigable="true" kind="association"/>
     </classes>
-    <classes uuid="Model.judo.example.car.domain.AllAttributes" name="AllAttributes" childClassViews="Model_judo_example_car_domain_AllAttributes2_oview_default">
+    <classes uuid="Model.judo.example.car.domain.AllAttributes" name="AllAttributes">
       <classView uuid="Model_judo_example_car_domain_AllAttributes_oview_default" name="AllAttributes">
         <viewFieldSets uuid="Model_judo_example_car_domain_AllAttributes_oview_default_viewfieldset_attrBoolean_Group" name="attrBoolean">
           <viewFields uuid="Model_judo_example_car_domain_AllAttributes_oview_default.attrBoolean_viewField_classView" name="attrBoolean" searchable="true" componentType="Model.judo.example.car.domain.AllAttributes.attrBoolean"/>
@@ -3034,7 +3034,7 @@
       <attributes xsi:type="ui:UIBaseComponentType" uuid="Model.judo.example.car.domain.AllAttributes2.validation_test1" name="validation_test1" upper="1" type="integer"/>
       <attributes xsi:type="ui:UIBaseComponentType" uuid="Model.judo.example.car.domain.AllAttributes2.validation_test2" name="validation_test2" upper="1" type="integer"/>
     </classes>
-    <classes uuid="Model.judo.example.car.domain.Person" name="Person" super="FW_Model.judo.framework.User" inheritedAttributes="FW_Model.judo.framework.User.loginName FW_Model.judo.framework.User.credential FW_Model.judo.framework.User.active FW_Model.judo.framework.User.firstName FW_Model.judo.framework.User.lastName FW_Model.judo.framework.User.lastLoginTime FW_Model.judo.framework.User.email FW_Model.judo.framework.User.sms FW_Model.judo.framework.User.notificationEmail FW_Model.judo.framework.User.notificationSms FW_Model.judo.framework.User.auditCreateUser FW_Model.judo.framework.User.auditCreateTime FW_Model.judo.framework.User.auditUpdateUser FW_Model.judo.framework.User.auditUpdateTime FW_Model.judo.framework.User.guid FW_Model.judo.framework.User.xmiid FW_Model.judo.framework.User.id FW_Model.judo.framework.User.profile FW_Model.judo.framework.User.tenantUsers FW_Model.judo.framework.User.userInfo FW_Model.judo.framework.User.configs FW_Model.judo.framework.User.roles">
+    <classes uuid="Model.judo.example.car.domain.Person" name="Person" super="FW_Model.judo.framework.User" inheritedAttributes="FW_Model.judo.framework.User.loginName FW_Model.judo.framework.User.credential FW_Model.judo.framework.User.active FW_Model.judo.framework.User.firstName FW_Model.judo.framework.User.lastName FW_Model.judo.framework.User.lastLoginTime FW_Model.judo.framework.User.email FW_Model.judo.framework.User.sms FW_Model.judo.framework.User.notificationEmail FW_Model.judo.framework.User.notificationSms FW_Model.judo.framework.User.auditCreateUser FW_Model.judo.framework.User.auditCreateTime FW_Model.judo.framework.User.auditUpdateUser FW_Model.judo.framework.User.auditUpdateTime FW_Model.judo.framework.User.guid FW_Model.judo.framework.User.xmiid FW_Model.judo.framework.User.id FW_Model.judo.framework.User.profile FW_Model.judo.framework.User.tenantUsers FW_Model.judo.framework.User.userInfo FW_Model.judo.framework.User.configs FW_Model.judo.framework.User.roles FW_Model.judo.framework.User.comments FW_Model.judo.framework.User.workflowTasks FW_Model.judo.framework.User.focused FW_Model.judo.framework.User.candidates FW_Model.judo.framework.User.processComments" inheritedActions="FW_Model.judo.framework.User.changePassword FW_Model.judo.framework.User.newPassword FW_Model.judo.framework.User.forceLogout FW_Model.judo.framework.User.kickOut FW_Model.judo.framework.User.getSessions FW_Model.judo.framework.User.forgottenPassword FW_Model.judo.framework.User.createAuthenticationToken">
       <classView uuid="Model_judo_example_car_domain_Person_oview_default" name="Person">
         <viewFieldSets uuid="Model_judo_example_car_domain_Person_oview_default_viewfieldset_name" name="name">
           <viewFields uuid="Model.judo.example.car.domain.Person.name_viewField_classView" name="name" searchable="true" componentType="Model.judo.example.car.domain.Person.name"/>
@@ -3099,6 +3099,21 @@
         <viewFieldSets uuid="Model_judo_example_car_domain_Person_oview_default_viewfieldset_roles" name="roles" position="21">
           <viewFields uuid="Model.judo.example.car.domain.Person.roles_viewField_classView" name="roles" componentType="FW_Model.judo.framework.User.roles"/>
         </viewFieldSets>
+        <viewFieldSets uuid="Model_judo_example_car_domain_Person_oview_default_viewfieldset_comments" name="comments" position="22">
+          <viewFields uuid="Model.judo.example.car.domain.Person.comments_viewField_classView" name="comments" componentType="FW_Model.judo.framework.User.comments"/>
+        </viewFieldSets>
+        <viewFieldSets uuid="Model_judo_example_car_domain_Person_oview_default_viewfieldset_workflowTasks" name="workflowTasks" position="23">
+          <viewFields uuid="Model.judo.example.car.domain.Person.workflowTasks_viewField_classView" name="workflowTasks" componentType="FW_Model.judo.framework.User.workflowTasks"/>
+        </viewFieldSets>
+        <viewFieldSets uuid="Model_judo_example_car_domain_Person_oview_default_viewfieldset_focused" name="focused" position="24">
+          <viewFields uuid="Model.judo.example.car.domain.Person.focused_viewField_classView" name="focused" componentType="FW_Model.judo.framework.User.focused"/>
+        </viewFieldSets>
+        <viewFieldSets uuid="Model_judo_example_car_domain_Person_oview_default_viewfieldset_candidates" name="candidates" position="25">
+          <viewFields uuid="Model.judo.example.car.domain.Person.candidates_viewField_classView" name="candidates" componentType="FW_Model.judo.framework.User.candidates"/>
+        </viewFieldSets>
+        <viewFieldSets uuid="Model_judo_example_car_domain_Person_oview_default_viewfieldset_processComments" name="processComments" position="26">
+          <viewFields uuid="Model.judo.example.car.domain.Person.processComments_viewField_classView" name="processComments" componentType="FW_Model.judo.framework.User.processComments"/>
+        </viewFieldSets>
       </classView>
       <listView uuid="Model_judo_example_car_domain_Person_lview_default" name="Person" pageSize="20" detailView="Model_judo_example_car_domain_Person_oview_default">
         <viewFieldSets uuid="Model_judo_example_car_domain_Person_lview_default_viewfieldset_Person" name="Person">
@@ -3118,6 +3133,7 @@
           <viewFields uuid="Model.judo.example.car.domain.Person.notificationSms_viewField_listView" name="notificationSms" position="14" searchable="true" componentType="FW_Model.judo.framework.User.notificationSms"/>
           <viewFields uuid="Model.judo.example.car.domain.Person.profile_viewField_listView" name="profile" position="15" componentType="FW_Model.judo.framework.User.profile"/>
           <viewFields uuid="Model.judo.example.car.domain.Person.userInfo_viewField_listView" name="userInfo" position="16" componentType="FW_Model.judo.framework.User.userInfo"/>
+          <viewFields uuid="Model.judo.example.car.domain.Person.focused_viewField_listView" name="focused" position="17" componentType="FW_Model.judo.framework.User.focused"/>
         </viewFieldSets>
       </listView>
       <attributes xsi:type="ui:UIBaseComponentType" uuid="Model.judo.example.car.domain.Person.name" name="name" lower="1" upper="1" type="string"/>
@@ -3236,7 +3252,7 @@
       <attributes xsi:type="ui:UIReferenceComponentType" uuid="Model.judo.example.car.domain.Company.level2Sub2" name="level2Sub2" upper="-1" type="Level2Sub2" referenced="Model.judo.example.car.domain.Level2Sub2" opposite="Model.judo.example.car.domain.Level2Sub2.company" navigable="true" kind="composition"/>
       <attributes xsi:type="ui:UIReferenceComponentType" uuid="Model.judo.example.car.domain.Company.level1Sub2" name="level1Sub2" upper="-1" type="Level1Sub2" referenced="Model.judo.example.car.domain.Level1Sub2" opposite="Model.judo.example.car.domain.Level1Sub2.company" navigable="true" kind="composition"/>
     </classes>
-    <classes uuid="Model.judo.example.car.domain.Master" name="Master" childClassViews="Model_judo_example_car_domain_Level1Sub2_oview_default Model_judo_example_car_domain_Level1Sub1_oview_default Model_judo_example_car_domain_Level2Sub1_oview_default Model_judo_example_car_domain_Level2Sub2_oview_default Model_judo_example_car_domain_Level2Sub3_oview_default Model_judo_example_car_domain_Level2Sub4_oview_default Model_judo_example_car_domain_Level3Sub1_oview_default Model_judo_example_car_domain_Level3Sub2_oview_default" singleton="true">
+    <classes uuid="Model.judo.example.car.domain.Master" name="Master" singleton="true">
       <classView uuid="Model_judo_example_car_domain_Master_oview_default" name="Master">
         <viewFieldSets uuid="Model_judo_example_car_domain_Master_oview_default_viewfieldset_valid" name="valid">
           <viewFields uuid="Model.judo.example.car.domain.Master.valid_viewField_classView" name="valid" searchable="true" componentType="Model.judo.example.car.domain.Master.valid"/>
@@ -3271,7 +3287,7 @@
       <attributes xsi:type="ui:UIBaseComponentType" uuid="Model.judo.example.car.domain.Master.xmiid" name="xmiid" value="" upper="1" type="string" interval="" private="true" placeholder=""/>
       <attributes xsi:type="ui:UIBaseComponentType" uuid="Model.judo.example.car.domain.Master.id" name="id" value="" upper="1" type="string" interval="" private="true" placeholder=""/>
     </classes>
-    <classes uuid="Model.judo.example.car.domain.Level1Sub2" name="Level1Sub2" childClassViews="Model_judo_example_car_domain_Level2Sub3_oview_default Model_judo_example_car_domain_Level2Sub4_oview_default Model_judo_example_car_domain_Level3Sub1_oview_default Model_judo_example_car_domain_Level3Sub2_oview_default" super="Model.judo.example.car.domain.Master" inheritedAttributes="Model.judo.example.car.domain.Master.valid Model.judo.example.car.domain.Master.price Model.judo.example.car.domain.Master.age Model.judo.example.car.domain.Master.name Model.judo.example.car.domain.Master.auditCreateUser Model.judo.example.car.domain.Master.auditCreateTime Model.judo.example.car.domain.Master.auditUpdateUser Model.judo.example.car.domain.Master.auditUpdateTime Model.judo.example.car.domain.Master.guid Model.judo.example.car.domain.Master.xmiid Model.judo.example.car.domain.Master.id">
+    <classes uuid="Model.judo.example.car.domain.Level1Sub2" name="Level1Sub2" super="Model.judo.example.car.domain.Master" inheritedAttributes="Model.judo.example.car.domain.Master.valid Model.judo.example.car.domain.Master.price Model.judo.example.car.domain.Master.age Model.judo.example.car.domain.Master.name Model.judo.example.car.domain.Master.auditCreateUser Model.judo.example.car.domain.Master.auditCreateTime Model.judo.example.car.domain.Master.auditUpdateUser Model.judo.example.car.domain.Master.auditUpdateTime Model.judo.example.car.domain.Master.guid Model.judo.example.car.domain.Master.xmiid Model.judo.example.car.domain.Master.id">
       <classView uuid="Model_judo_example_car_domain_Level1Sub2_oview_default" name="Level1Sub2">
         <viewFieldSets uuid="Model_judo_example_car_domain_Level1Sub2_oview_default_viewfieldset_company" name="company">
           <viewFields uuid="Model.judo.example.car.domain.Level1Sub2.company_viewField_classView" name="company" componentType="Model.judo.example.car.domain.Level1Sub2.company"/>
@@ -3300,7 +3316,7 @@
       </listView>
       <attributes xsi:type="ui:UIReferenceComponentType" uuid="Model.judo.example.car.domain.Level1Sub2.company" name="company" lower="1" upper="1" type="Company" referenced="Model.judo.example.car.domain.Company" opposite="Model.judo.example.car.domain.Company.level1Sub2" navigable="true" kind="association"/>
     </classes>
-    <classes uuid="Model.judo.example.car.domain.Level1Sub1" name="Level1Sub1" childClassViews="Model_judo_example_car_domain_Level2Sub1_oview_default Model_judo_example_car_domain_Level2Sub2_oview_default" super="Model.judo.example.car.domain.Master" inheritedAttributes="Model.judo.example.car.domain.Master.valid Model.judo.example.car.domain.Master.price Model.judo.example.car.domain.Master.age Model.judo.example.car.domain.Master.name Model.judo.example.car.domain.Master.auditCreateUser Model.judo.example.car.domain.Master.auditCreateTime Model.judo.example.car.domain.Master.auditUpdateUser Model.judo.example.car.domain.Master.auditUpdateTime Model.judo.example.car.domain.Master.guid Model.judo.example.car.domain.Master.xmiid Model.judo.example.car.domain.Master.id">
+    <classes uuid="Model.judo.example.car.domain.Level1Sub1" name="Level1Sub1" super="Model.judo.example.car.domain.Master" inheritedAttributes="Model.judo.example.car.domain.Master.valid Model.judo.example.car.domain.Master.price Model.judo.example.car.domain.Master.age Model.judo.example.car.domain.Master.name Model.judo.example.car.domain.Master.auditCreateUser Model.judo.example.car.domain.Master.auditCreateTime Model.judo.example.car.domain.Master.auditUpdateUser Model.judo.example.car.domain.Master.auditUpdateTime Model.judo.example.car.domain.Master.guid Model.judo.example.car.domain.Master.xmiid Model.judo.example.car.domain.Master.id">
       <classView uuid="Model_judo_example_car_domain_Level1Sub1_oview_default" name="Level1Sub1">
         <viewFieldSets uuid="Model_judo_example_car_domain_Level1Sub1_oview_default_viewfieldset_valid" name="valid">
           <viewFields uuid="Model.judo.example.car.domain.Level1Sub1.valid_viewField_classView" name="valid" searchable="true" componentType="Model.judo.example.car.domain.Master.valid"/>
@@ -3405,7 +3421,7 @@
         </viewFieldSets>
       </listView>
     </classes>
-    <classes uuid="Model.judo.example.car.domain.Level2Sub4" name="Level2Sub4" childClassViews="Model_judo_example_car_domain_Level3Sub1_oview_default Model_judo_example_car_domain_Level3Sub2_oview_default" singleton="true" super="Model.judo.example.car.domain.Level1Sub2" inheritedAttributes="Model.judo.example.car.domain.Level1Sub2.company Model.judo.example.car.domain.Master.valid Model.judo.example.car.domain.Master.price Model.judo.example.car.domain.Master.age Model.judo.example.car.domain.Master.name Model.judo.example.car.domain.Master.auditCreateUser Model.judo.example.car.domain.Master.auditCreateTime Model.judo.example.car.domain.Master.auditUpdateUser Model.judo.example.car.domain.Master.auditUpdateTime Model.judo.example.car.domain.Master.guid Model.judo.example.car.domain.Master.xmiid Model.judo.example.car.domain.Master.id">
+    <classes uuid="Model.judo.example.car.domain.Level2Sub4" name="Level2Sub4" singleton="true" super="Model.judo.example.car.domain.Level1Sub2" inheritedAttributes="Model.judo.example.car.domain.Level1Sub2.company Model.judo.example.car.domain.Master.valid Model.judo.example.car.domain.Master.price Model.judo.example.car.domain.Master.age Model.judo.example.car.domain.Master.name Model.judo.example.car.domain.Master.auditCreateUser Model.judo.example.car.domain.Master.auditCreateTime Model.judo.example.car.domain.Master.auditUpdateUser Model.judo.example.car.domain.Master.auditUpdateTime Model.judo.example.car.domain.Master.guid Model.judo.example.car.domain.Master.xmiid Model.judo.example.car.domain.Master.id">
       <classView uuid="Model_judo_example_car_domain_Level2Sub4_oview_default" name="Level2Sub4">
         <viewFieldSets uuid="Model_judo_example_car_domain_Level2Sub4_oview_default_viewfieldset_company" name="company">
           <viewFields uuid="Model.judo.example.car.domain.Level2Sub4.company_viewField_classView" name="company" componentType="Model.judo.example.car.domain.Level1Sub2.company"/>
@@ -3656,7 +3672,7 @@
         </viewFieldSets>
       </listView>
     </classes>
-    <classes uuid="Model.judo.example.car.domain.ClassA" name="ClassA" childClassViews="Model_judo_example_car_domain_ClassB_oview_default Model_judo_example_car_domain_ClassC_oview_default">
+    <classes uuid="Model.judo.example.car.domain.ClassA" name="ClassA">
       <classView uuid="Model_judo_example_car_domain_ClassA_oview_default" name="ClassA">
         <viewFieldSets uuid="Model_judo_example_car_domain_ClassA_oview_default_viewfieldset_name" name="name">
           <viewFields uuid="Model.judo.example.car.domain.ClassA.name_viewField_classView" name="name" searchable="true" componentType="Model.judo.example.car.domain.ClassA.name"/>
@@ -3681,7 +3697,7 @@
       <attributes xsi:type="ui:UIBaseComponentType" uuid="Model.judo.example.car.domain.ClassA.id" name="id" value="" upper="1" type="string" interval="" private="true" placeholder=""/>
       <attributes xsi:type="ui:UIReferenceComponentType" uuid="Model.judo.example.car.domain.ClassA.x" name="x" lower="1" upper="1" type="ClassX" referenced="Model.judo.example.car.domain.ClassX" opposite="Model.judo.example.car.domain.ClassX.classA" navigable="true" kind="association"/>
     </classes>
-    <classes uuid="Model.judo.example.car.domain.ClassB" name="ClassB" childClassViews="Model_judo_example_car_domain_ClassC_oview_default" super="Model.judo.example.car.domain.ClassA" inheritedAttributes="Model.judo.example.car.domain.ClassA.name Model.judo.example.car.domain.ClassA.auditCreateUser Model.judo.example.car.domain.ClassA.auditCreateTime Model.judo.example.car.domain.ClassA.auditUpdateUser Model.judo.example.car.domain.ClassA.auditUpdateTime Model.judo.example.car.domain.ClassA.guid Model.judo.example.car.domain.ClassA.xmiid Model.judo.example.car.domain.ClassA.id Model.judo.example.car.domain.ClassA.x">
+    <classes uuid="Model.judo.example.car.domain.ClassB" name="ClassB" super="Model.judo.example.car.domain.ClassA" inheritedAttributes="Model.judo.example.car.domain.ClassA.name Model.judo.example.car.domain.ClassA.auditCreateUser Model.judo.example.car.domain.ClassA.auditCreateTime Model.judo.example.car.domain.ClassA.auditUpdateUser Model.judo.example.car.domain.ClassA.auditUpdateTime Model.judo.example.car.domain.ClassA.guid Model.judo.example.car.domain.ClassA.xmiid Model.judo.example.car.domain.ClassA.id Model.judo.example.car.domain.ClassA.x">
       <classView uuid="Model_judo_example_car_domain_ClassB_oview_default" name="ClassB">
         <viewFieldSets uuid="Model_judo_example_car_domain_ClassB_oview_default_viewfieldset_y" name="y">
           <viewFields uuid="Model.judo.example.car.domain.ClassB.y_viewField_classView" name="y" componentType="Model.judo.example.car.domain.ClassB.y"/>

@@ -4,20 +4,6 @@ rule UIMenuItem
 	guard : jUIMenuItem.parent.isDefined()
 		uiMenuItem.uuid = generateUuid(jUIMenuItem.uuid, "", "");
 		uiMenuItem.name = jUIMenuItem.name;
-		var menuView;
-		
-		if (jUIMenuItem.type = PSM!JMenuItemType#LIST) {
-			menuView = jUIMenuItem.represent.equivalent("UIClass").listView;
-			
-			for (filter in jUIMenuItem.uifilters) {
-				uiMenuItem.filters.add(filter.equivalent("UIFilter"));
-			}
-		} else if (jUIMenuItem.type = PSM!JMenuItemType#OBJECT) {
-			menuView = jUIMenuItem.represent.equivalent("UIClass").selector.detailView;
-			menuView.uuid = generateUuid(generateUuid(jUIMenuItem.uuid, "_oview_default", ""), "menuView", "_");			
-		}
-		
-		uiMenuItem.menuView = menuView;
 		
 		for (menuItem in jUIMenuItem.children) {
 			uiMenuItem.menuItems.add(menuItem.equivalent("UIMenuItem"));

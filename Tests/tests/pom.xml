@@ -60,7 +60,7 @@
 			                <models>			            
 			                		                  			                    
 			                   <model>
-									<artifact>mvn:${project.groupId}:ui_meta:model:epsilon:${project.version}</artifact>
+									<artifact>mvn:${project.groupId}:tests:model:epsilon:${project.version}</artifact>
 									<name>EPSILON</name>
 									<metaModelUris>
 										<param>http://blackbelt.hu/judo/meta/psm/ui</param>
@@ -68,7 +68,7 @@
 								</model> 
 			
 			                    <model>
-			                        <artifact>mvn:${project.groupId}:ui_meta:model:viatra:${project.version}</artifact>
+			                        <artifact>mvn:${project.groupId}:tests:model:viatra:${project.version}</artifact>
 			                        <name>VIATRA</name>
 			                        <metaModelUris>
 			                            <param>http://blackbelt.hu/judo/meta/psm/ui</param>
@@ -85,38 +85,43 @@
 			          </execution>
 			        </executions>
 			      </plugin>
-			      
-			      <plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>build-helper-maven-plugin</artifactId>
-					<version>3.0.0</version>
-					<executions>
-						<execution>
-							<id>attach-artifacts</id>
-							<phase>package</phase>
-							<goals>
-								<goal>attach-artifact</goal>
-							</goals>
-							<configuration>
-								<artifacts>
-									<artifact>
-										<file>src/models/epsilon.model</file>
-										<type>model</type>
-										<classifier>epsilon</classifier>
-									</artifact>
-									<artifact>
-										<file>src/models/viatra.model</file>
-										<type>model</type>
-										<classifier>viatra</classifier>
-									</artifact>
-								</artifacts>
-							</configuration>
-						</execution>
-					</executions>
-				  </plugin>
 			    </plugins>
 			  </build>
    		</profile>
-   		
+   		<profile>
+    		<id>attach-tests</id>
+			  <build>
+			    <plugins>
+   					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>build-helper-maven-plugin</artifactId>
+						<version>3.0.0</version>
+						<executions>
+							<execution>
+								<id>attach-artifacts</id>
+								<phase>package</phase>
+								<goals>
+									<goal>attach-artifact</goal>
+								</goals>
+								<configuration>
+									<artifacts>
+										<artifact>
+											<file>src/models/epsilon.model</file>
+											<type>model</type>
+											<classifier>epsilon</classifier>
+										</artifact>
+										<artifact>
+											<file>src/models/viatra.model</file>
+											<type>model</type>
+											<classifier>viatra</classifier>
+										</artifact>
+									</artifacts>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+			    </plugins>
+			  </build>
+   		</profile>
     </profiles>
 </project>

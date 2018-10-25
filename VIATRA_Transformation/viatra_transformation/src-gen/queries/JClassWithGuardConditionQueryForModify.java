@@ -40,7 +40,6 @@ import org.eclipse.viatra.query.runtime.matchers.tuple.Tuples;
 import org.eclipse.viatra.query.runtime.util.ViatraQueryLoggingUtil;
 import psm.JClass;
 import queries.AlreadyTransformed;
-import queries.internal.FindUIRelevantPackages;
 import ui.UIClass;
 import ui.UIModule;
 
@@ -51,10 +50,8 @@ import ui.UIModule;
  *         <code><pre>
  *         pattern JClassWithGuardConditionQueryForModify(jClass : JClass, uiClass : UIClass, uiModule : UIModule, trace : PSMToUITrace) {
  *         	JClass.^package(jClass, jPackage);
- *         	find findUIRelevantPackages(jPackage);
  *         	find alreadyTransformed(jClass, uiClass, trace);
- *         	PSMToUITrace.psmElements(trace, jPackage);
- *         	PSMToUITrace.uiElements(trace, uiModule);
+ *         	find alreadyTransformed(jPackage, uiModule, _);
  *         }
  * </pre></code>
  * 
@@ -298,10 +295,8 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
    * <code><pre>
    * pattern JClassWithGuardConditionQueryForModify(jClass : JClass, uiClass : UIClass, uiModule : UIModule, trace : PSMToUITrace) {
    * 	JClass.^package(jClass, jPackage);
-   * 	find findUIRelevantPackages(jPackage);
    * 	find alreadyTransformed(jClass, uiClass, trace);
-   * 	PSMToUITrace.psmElements(trace, jPackage);
-   * 	PSMToUITrace.uiElements(trace, uiModule);
+   * 	find alreadyTransformed(jPackage, uiModule, _);
    * }
    * </pre></code>
    * 
@@ -898,6 +893,7 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
           PVariable var_uiModule = body.getOrCreateVariableByName("uiModule");
           PVariable var_trace = body.getOrCreateVariableByName("trace");
           PVariable var_jPackage = body.getOrCreateVariableByName("jPackage");
+          PVariable var___0_ = body.getOrCreateVariableByName("_<0>");
           new TypeConstraint(body, Tuples.flatTupleOf(var_jClass), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm", "JClass")));
           new TypeConstraint(body, Tuples.flatTupleOf(var_uiClass), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm/ui", "UIClass")));
           new TypeConstraint(body, Tuples.flatTupleOf(var_uiModule), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm/ui", "UIModule")));
@@ -914,22 +910,10 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
           new TypeConstraint(body, Tuples.flatTupleOf(var_jClass, var__virtual_0_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://blackbelt.hu/judo/meta/psm", "JClass", "package")));
           new TypeConstraint(body, Tuples.flatTupleOf(var__virtual_0_), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm", "JPackage")));
           new Equality(body, var__virtual_0_, var_jPackage);
-          // 	find findUIRelevantPackages(jPackage)
-          new PositivePatternCall(body, Tuples.flatTupleOf(var_jPackage), FindUIRelevantPackages.instance().getInternalQueryRepresentation());
           // 	find alreadyTransformed(jClass, uiClass, trace)
           new PositivePatternCall(body, Tuples.flatTupleOf(var_jClass, var_uiClass, var_trace), AlreadyTransformed.instance().getInternalQueryRepresentation());
-          // 	PSMToUITrace.psmElements(trace, jPackage)
-          new TypeConstraint(body, Tuples.flatTupleOf(var_trace), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm/ui/traceability", "PSMToUITrace")));
-          PVariable var__virtual_1_ = body.getOrCreateVariableByName(".virtual{1}");
-          new TypeConstraint(body, Tuples.flatTupleOf(var_trace, var__virtual_1_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://blackbelt.hu/judo/meta/psm/ui/traceability", "PSMToUITrace", "psmElements")));
-          new TypeConstraint(body, Tuples.flatTupleOf(var__virtual_1_), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm", "JElement")));
-          new Equality(body, var__virtual_1_, var_jPackage);
-          // 	PSMToUITrace.uiElements(trace, uiModule)
-          new TypeConstraint(body, Tuples.flatTupleOf(var_trace), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm/ui/traceability", "PSMToUITrace")));
-          PVariable var__virtual_2_ = body.getOrCreateVariableByName(".virtual{2}");
-          new TypeConstraint(body, Tuples.flatTupleOf(var_trace, var__virtual_2_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://blackbelt.hu/judo/meta/psm/ui/traceability", "PSMToUITrace", "uiElements")));
-          new TypeConstraint(body, Tuples.flatTupleOf(var__virtual_2_), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm/ui", "Identifiable")));
-          new Equality(body, var__virtual_2_, var_uiModule);
+          // 	find alreadyTransformed(jPackage, uiModule, _)
+          new PositivePatternCall(body, Tuples.flatTupleOf(var_jPackage, var_uiModule, var___0_), AlreadyTransformed.instance().getInternalQueryRepresentation());
           bodies.add(body);
       }
       return bodies;

@@ -2,18 +2,17 @@ package operations
 
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
 import org.eclipse.viatra.transformation.runtime.emf.modelmanipulation.IModelManipulations
+import org.eclipse.viatra.transformation.runtime.emf.modelmanipulation.SimpleModelManipulations
 import psm.JAttribute
-import psm.JPrimitive
 import psm.JRole
 import psm.JVisibility
 import queries.PatternProvider
+import traceability.PSMToUI
+import traceability.TraceabilityPackage
 import ui.UIBaseComponentType
 import ui.UIClass
 import ui.UIReferenceComponentType
 import ui.UiPackage
-import traceability.PSMToUI
-import traceability.TraceabilityPackage
-import org.eclipse.viatra.transformation.runtime.emf.modelmanipulation.SimpleModelManipulations
 
 class ComponentType {
 
@@ -40,7 +39,7 @@ class ComponentType {
 		
 		//set attributes
 		uiBaseType.name = jAttr.name
-		uiBaseType.uuid = owner.uuid + "." + jAttr.uuid
+		uiBaseType.uuid = owner.uuid + "." + jAttr.name
 		if (jAttr.visibility == JVisibility::PROTECTED) {
 			uiBaseType.readonly = true
 		} else if (jAttr.visibility == JVisibility::PRIVATE) {
@@ -59,6 +58,11 @@ class ComponentType {
 		uiBaseType.decimals = jAttr.decimals
 		uiBaseType.placeholder = jAttr.placeholder
 		uiBaseType.interval = jAttr.interval
+		
+		if (jAttr.ownerClass.representation !== null && jAttr.ownerClass.representation == jAttr) {
+			uiBaseType.representation = true;
+			owner.representation = uiBaseType;	
+		}
 		
 		//set type							
 		uiBaseType.type = uiType.name
@@ -92,6 +96,11 @@ class ComponentType {
 		uiBaseType.placeholder = jAttr.placeholder
 		uiBaseType.interval = jAttr.interval
 		
+		if (jAttr.ownerClass.representation !== null && jAttr.ownerClass.representation == jAttr) {
+			uiBaseType.representation = true;
+			owner.representation = uiBaseType;	
+		}
+		
 		//set type							
 		uiBaseType.type = uiType.name
 		
@@ -118,7 +127,7 @@ class ComponentType {
 			
 		//set attributes
 		uiReferenceType.name = jRole.name
-		uiReferenceType.uuid = owner.uuid + "." + jRole.uuid
+		uiReferenceType.uuid = owner.uuid + "." + jRole.name
 		if (jRole.visibility == JVisibility::PROTECTED) {
 			uiReferenceType.readonly = true
 		} else if (jRole.visibility == JVisibility::PRIVATE) {
@@ -174,7 +183,7 @@ class ComponentType {
 	
 	public def updateUIReferenceComponentType(JRole jRole, UIReferenceComponentType uiReferenceType, UIReferenceComponentType opposite) {
 		uiReferenceType.name = jRole.name
-		uiReferenceType.uuid = uiReferenceType.ownerClass.uuid + "." + jRole.uuid
+		uiReferenceType.uuid = uiReferenceType.ownerClass.uuid + "." + jRole.name
 		if (jRole.visibility == JVisibility::PROTECTED) {
 			uiReferenceType.readonly = true
 		} else if (jRole.visibility == JVisibility::PRIVATE) {

@@ -18,6 +18,7 @@ import traceability.TraceabilityPackage
 import ui.UIClass
 import ui.UIMenuItem
 import ui.UiPackage
+import queries.FindMenuItemToSetParent
 
 class MenuRuleFactory {
 	
@@ -31,6 +32,7 @@ class MenuRuleFactory {
 	extension PSMToUI psm2ui
 	
 	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> menuRule
+	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> menuParentSetterRule
 	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> modifyMenuRule
 	
 	new(PSMToUI psm2ui, ViatraQueryEngine engine) {
@@ -46,40 +48,15 @@ class MenuRuleFactory {
 										
 					System.out.println("Transforming menuItem: " + JMenuItem.uuid)
 					
-					//Get or create parent MenuItem
-					var UIMenuItem parent
-					if (PatternProvider.instance().getMenuRootChildren(engine).hasMatch(JMenuItem)) {
-						parent = psm2ui.uiBase.mainMenu
+					var UIMenuItem uiMenuItem;
+					if (JMenuItem.parent.parent === null) {
+						uiMenuItem = psm2ui.uiBase.mainMenu.createChild(UIMenuItem_MenuItems, UIMenuItem) as UIMenuItem
 					} else {
-						val potentialParent = PatternProvider.instance().getPsmToUiTrace(engine)
-												.getOneArbitraryMatch(JMenuItem.parent, null)
-											
-						if (potentialParent.isPresent()) {
-							parent = potentialParent.get().getIdentifiable as UIMenuItem
-						} else {
-							parent = psm2ui.uiBase.eResource.create(UIMenuItem) as UIMenuItem
-							
-							val trace = psm2ui.createChild(getPSMToUI_Traces(), PSMToUITrace)
-							trace.addTo(getPSMToUITrace_PsmElements, JMenuItem.getParent)
-							trace.addTo(getPSMToUITrace_UiElements, parent)
-						}
+						uiMenuItem = psm2ui.uiBase.eResource.create(UIMenuItem) as UIMenuItem
 					}
-					
-										
-					//Get or create current MenuItem
-					val potentialMenuItem = PatternProvider.instance().getPsmToUiTrace(engine)
-												.getOneArbitraryMatch(JMenuItem, null)
-					
-					var UIMenuItem uiMenuItem
-					if (potentialMenuItem.isPresent()) {
-						uiMenuItem = potentialMenuItem.get().getIdentifiable as UIMenuItem
-						uiMenuItem.moveTo(parent, getUIMenuItem_MenuItems)
-					} else {
-						uiMenuItem = parent.createChild(getUIMenuItem_MenuItems, UIMenuItem) as UIMenuItem
-						uiMenuItem.name = JMenuItem.name
-						uiMenuItem.uuid = JMenuItem.uuid
-					}
-					
+					uiMenuItem.name = JMenuItem.name
+					uiMenuItem.uuid = JMenuItem.uuid
+						
 					val trace = psm2ui.createChild(getPSMToUI_Traces(), PSMToUITrace)
 					trace.addTo(getPSMToUITrace_PsmElements, JMenuItem)
 					trace.addTo(getPSMToUITrace_UiElements, uiMenuItem)
@@ -101,6 +78,20 @@ class MenuRuleFactory {
 			].addLifeCycle(Lifecycles.getDefault(false, false)).build
 		}
 		return menuRule
+	}
+	
+	public def getMenuParentSetterRule() {
+		if (menuParentSetterRule === null) {			
+			menuParentSetterRule = createRule.name("MenuParentSetterRule").precondition(FindMenuItemToSetParent.Matcher.querySpecification())
+				.action(CRUDActivationStateEnum.CREATED) [
+										
+					System.out.println("Setting parent to menuItem: " + JMenuItem.uuid)
+					
+					uiMenuItem.moveTo(parentMenuItem, UIMenuItem_MenuItems)
+						
+			].addLifeCycle(Lifecycles.getDefault(false, false)).build
+		}
+		return menuParentSetterRule
 	}
 	
 	

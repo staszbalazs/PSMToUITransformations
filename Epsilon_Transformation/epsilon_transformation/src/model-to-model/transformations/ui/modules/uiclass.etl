@@ -40,24 +40,11 @@ rule UIClass
 			uiclass.actions.add(op.equivalent("UIAction"));
 		}	
 	}
-	
-	for (class : PSM!JClass in jclass.getSuperTypes()) {
-		var superType = class.equivalent("UIClass");
-		var inheretedAttributes = superType.attributes;
-		var inheretedActions = superType.actions;
-		
-		uiclass.inheritedAttributes.addAll(inheretedAttributes);
-		uiclass.inheritedActions.addAll(inheretedActions);
-	}
 
 	uiclass.~attributesForListing = new Sequence(UI!UIComponentType);
 	for (attribute in jclass.attributesForListing) {
 		uiclass.~attributesForListing.add(attribute.equivalent("UIBaseComponentType"));
 	}
-
-	//create Views
-	uiclass.classView = createClassView(uiclass, jclass, uiclass.name, uiclass.uuid + '_oview_default');
-	uiclass.listView = createListView(uiclass, uiclass.name, uiclass.uuid + '_lview_default', uiclass.classView);
 	
 }
 
