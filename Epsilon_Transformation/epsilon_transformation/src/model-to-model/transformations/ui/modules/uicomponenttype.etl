@@ -79,6 +79,15 @@ rule UIParameterComponentType
 		uiparameter.lower = jparameter.lower;
 		uiparameter.upper = jparameter.upper;
 		uiparameter.interval = jparameter.interval;
+		
+		if (jparameter.type.isTypeOf(PSM!JClass)) {
+			uiparameter.referenced = jparameter.type.equivalent("UIClass");
+			uiparameter.type = jparameter.type.equivalent("UIClass").name;
+		} else {
+			uiparameter.type = jparameter.type.componentType().name;
+		}
+		
+		uiparameter.createIntervals(jparameter.interval, jparameter.ownerOperation.ownerClass.uuid);
 	}
 	
 	
