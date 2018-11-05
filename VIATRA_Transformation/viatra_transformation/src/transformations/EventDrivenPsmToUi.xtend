@@ -6,6 +6,7 @@ import org.eclipse.viatra.transformation.evm.specific.resolver.InvertedDisappear
 import org.eclipse.viatra.transformation.runtime.emf.transformation.eventdriven.EventDrivenTransformation
 import queries.PatternProvider
 import traceability.PSMToUI
+import org.apache.log4j.Level
 
 class EventDrivenPsmToUi {
     extension Logger logger = Logger.getLogger(EventDrivenPsmToUi)
@@ -27,7 +28,8 @@ class EventDrivenPsmToUi {
     }
 
     public def execute() {
-        debug('''Executing transformation on:�resource.URI�''')
+        //debug('''Executing transformation on:�resource.URI�''')
+        logger.setLevel(Level.DEBUG)
         
         transformation.executionSchema.startUnscheduledExecution
     }
@@ -37,9 +39,11 @@ class EventDrivenPsmToUi {
         this.ruleProvider = new RuleProvider(psm2ui, engine)
 
 		var Integer priority = 1;
+		
+		//UIInfo
 
     	val fixedPriorityResolver = new InvertedDisappearancePriorityConflictResolver
-    	fixedPriorityResolver.setPriority(getPrimitiveRule().ruleSpecification, priority++)
+      	fixedPriorityResolver.setPriority(getPrimitiveRule().ruleSpecification, priority++)
     	fixedPriorityResolver.setPriority(getModelRule().ruleSpecification, priority++)
     	fixedPriorityResolver.setPriority(getPackageRule().ruleSpecification, priority++)
     	fixedPriorityResolver.setPriority(getClassRule().ruleSpecification, priority++)
@@ -49,11 +53,10 @@ class EventDrivenPsmToUi {
 		fixedPriorityResolver.setPriority(getRoleRule().ruleSpecification, priority++)
 		fixedPriorityResolver.setPriority(getOperationRule().ruleSpecification, priority++)
 		fixedPriorityResolver.setPriority(getParameterRule().ruleSpecification, priority++)
-		fixedPriorityResolver.setPriority(getMenuRule().ruleSpecification, priority++)
+		fixedPriorityResolver.setPriority(getMenuRule().ruleSpecification, priority++) 
 		fixedPriorityResolver.setPriority(getMenuParentSetterRule().ruleSpecification, priority++)
-    	fixedPriorityResolver.setPriority(getFilterRule().ruleSpecification, priority++)
-    	fixedPriorityResolver.setPriority(getInfoRule().ruleSpecification, priority++)
-    	fixedPriorityResolver.setPriority(getModifyModelRule().ruleSpecification, priority++)
+     	fixedPriorityResolver.setPriority(getFilterRule().ruleSpecification, priority++)
+   		fixedPriorityResolver.setPriority(getModifyModelRule().ruleSpecification, priority++)
     	fixedPriorityResolver.setPriority(getModifyPackageRule().ruleSpecification, priority++)
     	fixedPriorityResolver.setPriority(getModifyClassRule().ruleSpecification, priority++)
     	fixedPriorityResolver.setPriority(getModifyAttributeGroupRule().ruleSpecification, priority++)
@@ -65,43 +68,47 @@ class EventDrivenPsmToUi {
     	fixedPriorityResolver.setPriority(getModifyParameterRule().ruleSpecification, priority++)
     	fixedPriorityResolver.setPriority(getParameterViewFieldRule().ruleSpecification, priority++)
     	fixedPriorityResolver.setPriority(getModifyMenuRule().ruleSpecification, priority++)
-    	fixedPriorityResolver.setPriority(getModifyFilterRule().ruleSpecification, priority++)
+     	fixedPriorityResolver.setPriority(getModifyFilterRule().ruleSpecification, priority++)
+  /*	 	fixedPriorityResolver.setPriority(getInfoRule().ruleSpecification, priority++)
     	fixedPriorityResolver.setPriority(getModifyInfoRule().ruleSpecification, priority++)
-    	fixedPriorityResolver.setPriority(getRepresentsUserIdForInfoRule().ruleSpecification, priority++)
+    	fixedPriorityResolver.setPriority(getRepresentsUserIdForInfoRule().ruleSpecification, priority++)*/
     	
         //Initialize event-driven transformation
         transformation = EventDrivenTransformation.forEngine(engine)
         	.setConflictResolver(fixedPriorityResolver)
-        	.addRule(getPrimitiveRule)
+ 	       	.addRule(getPrimitiveRule)
             .addRule(getModelRule)
             .addRule(getPackageRule)
             .addRule(getClassRule)
+            .addRule(getAttributeGroupRule)
             .addRule(getAttributeRule)
+            .addRule(getAttributeInGroupViewFieldRule)
             .addRule(getRoleRule)
             .addRule(getOperationRule)
             .addRule(getParameterRule)
-            .addRule(getMenuRule)
+     		.addRule(getMenuRule)
             .addRule(getMenuParentSetterRule)
             .addRule(getFilterRule)
-            .addRule(getInfoRule)
-            .addRule(getAttributeGroupRule)
-            .addRule(getAttributeInGroupViewFieldRule)
-            .addRule(getModifyModelRule)
-            .addRule(getModifyPackageRule)
-            .addRule(getModifyClassRule)
+          	.addRule(getModifyModelRule)
+          	.addRule(getModifyPackageRule)
+     	    .addRule(getModifyClassRule)
             .addRule(getModifyAttributeGroupRule)
             .addRule(getModifyAttributeRule)
             .addRule(getModifyAttributeViewFieldRule)
             .addRule(getModifyRoleRule)
             .addRule(getRoleViewFieldRule)
-            .addRule(getModifyOperationRule)
+     	    .addRule(getModifyOperationRule)
             .addRule(getModifyParameterRule)
             .addRule(getParameterViewFieldRule)
-            .addRule(getModifyMenuRule)
-            .addRule(getModifyFilterRule)
+   	        .addRule(getModifyMenuRule)
+			.addRule(getModifyFilterRule)
+/* 			.addRule(getInfoRule)     
             .addRule(getModifyInfoRule)
-            .addRule(getRepresentsUserIdForInfoRule)
+            .addRule(getRepresentsUserIdForInfoRule)*/
             .build
+            
+            
+    	System.out.println("Transformation ready!")
     }
 
     // Dispose model transformation

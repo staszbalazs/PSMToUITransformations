@@ -17,6 +17,8 @@ import traceability.TraceabilityPackage
 import ui.UIInfo
 import ui.UiPackage
 import queries.RepresentsUserJClassQuery
+import queries.PatternProvider
+import queries.PsmToUiTrace.Match
 
 class InfoRuleFactory {
 	
@@ -97,6 +99,11 @@ class InfoRuleFactory {
 				.action(CRUDActivationStateEnum.UPDATED) [
 										
 					System.out.println("Updating info: " + JInfo.uuid)
+					
+					var UIInfo uiInfo = PatternProvider.instance().getPsmToUiTrace(engine)
+																	.getOneArbitraryMatch(JInfo, null, null)
+																	.get()
+																	.getIdentifiable() as UIInfo;
 										
 					uiInfo.versions.clear
 					uiInfo.submodels.clear
@@ -115,8 +122,12 @@ class InfoRuleFactory {
 										
 					System.out.println("Deleting info: " + JInfo.uuid)
 					
-					psm2ui.uiBase.remove(UIBase_Info, uiInfo)
-					psm2ui.remove(PSMToUI_Traces, trace)
+					var Match match = PatternProvider.instance().getPsmToUiTrace(engine)
+														.getOneArbitraryMatch(JInfo, null, null)
+														.get();
+					
+					psm2ui.uiBase.remove(UIBase_Info, match.getIdentifiable())
+					psm2ui.remove(PSMToUI_Traces, match.getTrace())
 					
 				].addLifeCycle(Lifecycles.getDefault(true, true)).build
 		}

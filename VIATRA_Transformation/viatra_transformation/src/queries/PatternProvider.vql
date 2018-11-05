@@ -21,7 +21,7 @@ pattern domainJModelQuery(jModel : JModel) {
 }
 
 pattern domainJModelQueryForModify(jModel : JModel) {
-	find alreadyTransformed(jModel, _, _);
+	find psmToUiTrace(jModel, _, _);
 }
 
 //JInfo Queries
@@ -30,8 +30,8 @@ pattern JInfoQuery(jInfo : JInfo) {
 	neg find alreadyTransformed(jInfo, _, _);
 }
 
-pattern JInfoQueryForModify(jInfo : JInfo, uiInfo : UIInfo, trace : PSMToUITrace) {
-	find alreadyTransformed(jInfo, uiInfo, trace);
+pattern JInfoQueryForModify(jInfo : JInfo) {
+	find alreadyTransformed(jInfo, _, _);
 }
 
 //JUIFilter Queries
@@ -49,14 +49,11 @@ pattern JUIFilterQuery(jFilter : JUIFilter, uiMenuItem : UIMenuItem, componentTy
 	neg find alreadyTransformed(jFilter, _, _);	
 }
 
-pattern JUIFilterQueryForModify(jFilter : JUIFilter, uiFilter : UIFilter, uiMenuItem : UIMenuItem, componentType : UIBaseComponentType, trace : PSMToUITrace) {
-	JUIMenuItem.uifilters(jMenuItem, jFilter);
-	find alreadyTransformed(jMenuItem, uiMenuItem, _);
+pattern JUIFilterQueryForModify(jFilter : JUIFilter, componentType : UIBaseComponentType, trace : PSMToUITrace) {
+	find psmToUiTrace(jFilter, _, trace);
 	
 	JUIFilter.attribute(jFilter, attribute);
-	find alreadyTransformed(attribute, componentType, _);
-	
-	find alreadyTransformed(jFilter, uiFilter, trace);
+	find psmToUiTrace(attribute, componentType, _);
 }
 
 //JPackage Queries
@@ -68,8 +65,8 @@ pattern JPackageToUIModuleQuery(jPackage : JPackage) {
 	neg find alreadyTransformed(jPackage, _, _);
 }
 
-pattern JPackageToUIModuleQueryForModify(jPackage : JPackage, uiModule : UIModule, trace : PSMToUITrace) {
-	find alreadyTransformed(jPackage, uiModule, trace);
+pattern JPackageToUIModuleQueryForModify(jPackage : JPackage, trace : PSMToUITrace) {
+	find psmToUiTrace(jPackage, _, trace);
 }
 
 private pattern findUIRelevantPackages(jPackage : JPackage) {
@@ -114,10 +111,8 @@ pattern JClassWithGuardConditionQuery(jClass : JClass, uiModule : UIModule) {
 	find alreadyTransformed(jPackage, uiModule, _);
 }
 
-pattern JClassWithGuardConditionQueryForModify(jClass : JClass, uiClass : UIClass, uiModule : UIModule, trace : PSMToUITrace) {
-	JClass.^package(jClass, jPackage);
-	find alreadyTransformed(jClass, uiClass, trace);
-	find alreadyTransformed(jPackage, uiModule, _);
+pattern JClassWithGuardConditionQueryForModify(jClass : JClass, trace : PSMToUITrace) {
+	find psmToUiTrace(jClass, _, trace);
 }
 
 pattern representsUserJClassQuery(jClass : JClass) {
@@ -134,10 +129,10 @@ pattern JOperationWithGuardQuery(jOperation : JOperation, uiClass : UIClass) {
 	neg find alreadyTransformed(jOperation, _, _);
 }
 
-pattern JOperationWithGuardQueryForModify(jOperation : JOperation, uiAction : UIAction, uiClass : UIClass, trace : PSMToUITrace) {
+pattern JOperationWithGuardQueryForModify(jOperation : JOperation, uiClass : UIClass, trace : PSMToUITrace) {
+	find psmToUiTrace(jOperation, _, trace);
 	JOperation.ownerClass(jOperation, jClass);
-	find alreadyTransformed(jClass, uiClass, _);
-	find alreadyTransformed(jOperation, uiAction, trace);
+	find psmToUiTrace(jClass, uiClass, _);
 }
 
 //JParameter Queries
@@ -151,21 +146,18 @@ pattern JParameterWithGuardQuery(jParameter : JParameter, uiAction : UIAction, u
 	neg find alreadyTransformed(jParameter, _, _);
 }
 
-pattern JParameterWithGuardQueryForModify(jParameter : JParameter, parameterType : UIParameterComponentType, uiAction : UIAction, trace : PSMToUITrace, uiType : Identifiable) {
+pattern JParameterWithGuardQueryForModify(jParameter : JParameter, uiAction : UIAction, uiType : Identifiable, trace : PSMToUITrace) {
 	JOperation.parameters(jOperation, jParameter);
-	find alreadyTransformed(jOperation, uiAction, _);
-	find alreadyTransformed(jParameter, parameterType, trace);
+	find psmToUiTrace(jOperation, uiAction, _);
+	find psmToUiTrace(jParameter, _, trace);
 	JParameter.type(jParameter, type);
-	find alreadyTransformed(type, uiType, _);
+	find psmToUiTrace(type, uiType, _);
 }
 
-pattern JParameterViewFieldQuery(jParameter : JParameter, viewField : UIViewField, viewFieldSet : UIViewFieldSet, uiView : UIView, uiAction : UIAction) {
-	find alreadyTransformed(jParameter, parameterType, _);
-	UIViewField.componentType(viewField, parameterType);
-	UIViewFieldSet.viewFields(viewFieldSet, viewField);
-	UIView.viewFieldSets(uiView, viewFieldSet);
+pattern JParameterViewFieldQuery(jParameter : JParameter, parameterType : UIParameterComponentType, uiAction : UIAction) {
+	find psmToUiTrace(jParameter, parameterType, _);
 	JOperation.parameters(jOperation, jParameter);
-	find alreadyTransformed(jOperation, uiAction, _);
+	find psmToUiTrace(jOperation, uiAction, _);
 }
 
 //JUIMenuItem Queries
@@ -175,14 +167,12 @@ pattern findMenuItemWithParent(jMenuItem : JUIMenuItem) {
 	neg find alreadyTransformed(jMenuItem, _, _);
 }
 
-pattern findMenuItemToSetParent(jMenuItem : JUIMenuItem, uiMenuItem : UIMenuItem, parentMenuItem : UIMenuItem) {
-	JUIMenuItem.parent(jMenuItem, parent);
-	find alreadyTransformed(jMenuItem, uiMenuItem, _);
-	find alreadyTransformed(parent, parentMenuItem, _);
+pattern findMenuItemToSetParent(jMenuItem : JUIMenuItem, uiMenuItem : UIMenuItem) {
+	find psmToUiTrace(jMenuItem, uiMenuItem, _);
 }
 
-pattern findMenuItemWithParentForModify(jMenuItem : JUIMenuItem, uiMenuItem : UIMenuItem, trace : PSMToUITrace) {
-	find alreadyTransformed(jMenuItem, uiMenuItem, trace);
+pattern findMenuItemWithParentForModify(jMenuItem : JUIMenuItem, trace : PSMToUITrace) {
+	find psmToUiTrace(jMenuItem, _, trace);
 }
 
 //JRole Queries
@@ -197,24 +187,28 @@ pattern JRoleQuery(jRole : JRole, opposite : JRole, uiClass : UIClass) {
 	find alreadyTransformed(jClass, uiClass, _);
 }
 
-pattern JRoleQueryForModify(jRole : JRole, referenceComponentType : UIReferenceComponentType, oppositeReferenceType : UIReferenceComponentType, trace : PSMToUITrace) {
-	find alreadyTransformed(jRole, referenceComponentType, trace);
-	
+pattern JRoleQueryForModify(jRole : JRole, uiClass : UIClass, trace : PSMToUITrace) {
+	find psmToUiTrace(jRole, _, trace);
+	JRole.ownerClass(jRole, jClass);
+	find psmToUiTrace(jClass, uiClass, _);
+}
+
+pattern findOppositeForRole(jRole : JRole, oppositeComponentType : UIReferenceComponentType) {
 	JRelationship.roles(relation, jRole);
 	JRelationship.roles(relation, opposite);
 	jRole != opposite;
-	
-	find alreadyTransformed(opposite, oppositeReferenceType, _);
+
+	find psmToUiTrace(opposite, oppositeComponentType, _);
 }
 
-pattern JRoleViewFieldQuery(jRole : JRole, referenceComponentType : UIReferenceComponentType, viewField : UIViewField, viewFieldSet : UIViewFieldSet, uiView : UIView, uiClass : UIClass) {
-	find alreadyTransformed(jRole, referenceComponentType, _);
+pattern JRoleViewFieldQuery(jRole : JRole, uiClass : UIClass, referenceComponentType : UIReferenceComponentType) {
+	find psmToUiTrace(jRole, referenceComponentType, _);
 	JRole.ownerClass(jRole, jClass);
-	find alreadyTransformed(jClass, uiClass, _);
-	UIViewField.componentType(viewField, referenceComponentType);
-	UIViewFieldSet.viewFields(viewFieldSet, viewField);
-	UIView.viewFieldSets(uiView, viewFieldSet);
+	JRole.navigable(jRole, true);
+	neg JRole.visibility(jRole, JVisibility::PRIVATE);
+	find psmToUiTrace(jClass, uiClass, _);
 }
+
 
 //JAttribute Queries
 pattern JAttributeQuery(jAttribute : JAttribute, uiClass : UIClass, baseType : UIBaseComponentType) {
@@ -226,51 +220,55 @@ pattern JAttributeQuery(jAttribute : JAttribute, uiClass : UIClass, baseType : U
 	neg find alreadyTransformed(jAttribute, _, _);
 }
 
-pattern JAttributeQueryForModify(jAttribute : JAttribute, uiClass : UIClass, componentType : UIBaseComponentType, baseType : UIBaseComponentType, trace : PSMToUITrace) {
-	JClass.attributes(jClass, jAttribute);
+pattern JAttributeQueryForModify(jAttribute : JAttribute, uiClass : UIClass, baseType : UIBaseComponentType, trace : PSMToUITrace) {
+	find psmToUiTrace(jAttribute, _, trace);
+	JAttribute.ownerClass(jAttribute, jClass);
 	JAttribute.type(jAttribute, jPrimitive);
-	find alreadyTransformed(jPrimitive, baseType, _);
-	find alreadyTransformed(jClass, uiClass, _);
-	find alreadyTransformed(jAttribute, componentType, trace);
+	find psmToUiTrace(jPrimitive, baseType, _);
+	find psmToUiTrace(jClass, uiClass, _);
 }
 
 pattern JAttributeInJGroupViewFieldQuery(jAttribute : JAttribute, viewFieldSet : UIViewFieldSet, uiBaseType : UIBaseComponentType, classView : UIClassView) {
-	find alreadyTransformed(jAttribute, uiBaseType, _);
+	find psmToUiTrace(jAttribute, uiBaseType, _);
 	JUIAttributeGroup.attributes(jGroup, jAttribute);
-	find alreadyTransformed(jGroup, viewFieldSet, _);
+	find psmToUiTrace(jGroup, viewFieldSet, _);
 	JClass.attributeOrder(jClass, jGroup);
-	find alreadyTransformed(jClass, uiClass, _);
+	find psmToUiTrace(jClass, uiClass, _);
 	UIClass.classView(uiClass, classView);
 }
 
-pattern JAttributeViewFieldQueryForModify(jAttribute : JAttribute, uiClass : UIClass, uiBaseType : UIBaseComponentType, viewField : UIViewField, viewFieldSet : UIViewFieldSet, uiView : UIView) {
-	find alreadyTransformed(jAttribute, uiBaseType, _);
+pattern JAttributeViewFieldQueryForModify(jAttribute : JAttribute, uiClass : UIClass, uiBaseType : UIBaseComponentType) {
+	find psmToUiTrace(jAttribute, uiBaseType, _);
+	UIBaseComponentType.^private(uiBaseType, false);
 	JAttribute.ownerClass(jAttribute, jClass);
-	find alreadyTransformed(jClass, uiClass, _);
-	UIViewField.componentType(viewField, uiBaseType);
-	UIViewFieldSet.viewFields(viewFieldSet, viewField);
+	find psmToUiTrace(jClass, uiClass, _);
+}
+
+pattern findViewFieldForComponentType(componentType : UIComponentType, uiView : UIView, viewField : UIViewField, viewFieldSet : UIViewFieldSet) {
 	UIView.viewFieldSets(uiView, viewFieldSet);
+	UIViewFieldSet.viewFields(viewFieldSet, viewField);
+	UIViewField.componentType(viewField, componentType);
 }
 
 //JUIAttributeGroup Queries
 pattern JAttributeGroupQuery(jAttributeGroup : JUIAttributeGroup, classView : UIClassView) {
 	find hasUuid(jAttributeGroup, _);
 	JClass.attributeOrder(jClass, jAttributeGroup);
-	find alreadyTransformed(jClass, uiClass, _);
+	find psmToUiTrace(jClass, uiClass, _);
 	UIClass.classView(uiClass, classView);
 	neg find alreadyTransformed(jAttributeGroup, _, _);
 }
 
-pattern JAttributeGroupQueryForModify(jAttributeGroup : JUIAttributeGroup, classView : UIClassView, viewFieldSet : UIViewFieldSet, trace : PSMToUITrace) {
+pattern JAttributeGroupQueryForModify(jAttributeGroup : JUIAttributeGroup, classView : UIClassView, trace : PSMToUITrace) {
 	JClass.attributeOrder(jClass, jAttributeGroup);
 	find alreadyTransformed(jClass, uiClass, _);
 	UIClass.classView(uiClass, classView);
-	find alreadyTransformed(jAttributeGroup, viewFieldSet, trace);
+	find psmToUiTrace(jAttributeGroup, _, trace);
 }
 
 
 //Trace Queries
-pattern psmToUiTrace(jElement : JElement, identifiable : Identifiable) {
+pattern psmToUiTrace(jElement : JElement, identifiable : Identifiable, trace : PSMToUITrace) {
 	PSMToUITrace.psmElements(trace, jElement);
 	PSMToUITrace.uiElements(trace, identifiable);
 }
@@ -288,6 +286,7 @@ pattern alreadyTransformed(jElement : JElement, identifiable : Identifiable, tra
 pattern findCorrespondingType(jPrimitive : JPrimitive, componentType : UIBaseComponentType) {
 	Mapping.componentType(mapping, componentType);
 	Mapping.psmType(mapping, jPrimitive);
+	neg find alreadyTransformed(jPrimitive, componentType, _);
 }
 
 

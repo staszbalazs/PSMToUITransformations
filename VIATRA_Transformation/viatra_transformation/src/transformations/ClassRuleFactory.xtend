@@ -14,12 +14,14 @@ import queries.JClassWithGuardConditionQuery
 import queries.JClassWithGuardConditionQueryForModify
 import queries.PatternProvider
 import traceability.PSMToUI
+import traceability.PSMToUITrace
 import traceability.TraceabilityPackage
 import ui.UIClass
 import ui.UIClassView
 import ui.UIListView
 import ui.UIViewFieldSet
 import ui.UiPackage
+import ui.UIBaseComponentType
 
 class ClassRuleFactory {
 	
@@ -51,7 +53,7 @@ class ClassRuleFactory {
 										
 					//Get or create the UIClass
 					val possibleMatch =  PatternProvider.instance().getPsmToUiTrace(engine)
-												.getOneArbitraryMatch(JClass, null)
+												.getOneArbitraryMatch(JClass, null, null)
 																
 					var UIClass uiClass
 					if (possibleMatch.isPresent) {
@@ -81,7 +83,7 @@ class ClassRuleFactory {
 					//Set supertype
 					if (JClass.getSupertype !== null) {
 						val potentialSuper = PatternProvider.instance().getPsmToUiTrace(engine)
-												.getOneArbitraryMatch(JClass.supertype, null)
+												.getOneArbitraryMatch(JClass.supertype, null, null)
 									
 						if (potentialSuper.isPresent) {
 							uiClass.^super = (potentialSuper.get().getIdentifiable as UIClass)
@@ -121,38 +123,55 @@ class ClassRuleFactory {
 		if (modifyClassRule === null) {			
 			modifyClassRule = createRule.name("ModifyClassRule").precondition(JClassWithGuardConditionQueryForModify.Matcher.querySpecification())
 				.action(CRUDActivationStateEnum.UPDATED) [
-															
-					System.out.println("Updating class: " + JClass.uuid)
 					
-					uiClass.name = JClass.name
-					uiClass.uuid = JClass.uuid
-					uiClass.abstract = JClass.isAbstract
-					uiClass.enumClass = JClass.isRepresentsEnum
-					uiClass.singleton = JClass.isBusinessSingleton
+					if (JClass.eContainer !== null) {
+						System.out.println("Updating class: " + JClass.uuid)
 					
-					if (JClass.visibility == JVisibility::PUBLIC) {
-						uiClass.readonly = false	
-					} else {
-						uiClass.readonly = true
-					}
-					
-					val UIClassView classView = uiClass.classView
-					classView.uuid = uiClass.uuid.replace("\\.", "_") + "_oview_default"
-					classView.name = uiClass.name
-					
-					val UIListView listView = uiClass.listView
-					listView.uuid = uiClass.uuid.replace("\\.", "_") + "_lview_default"
-					listView.name = uiClass.name;
-					
-					val UIViewFieldSet viewFieldSet = listView.viewFieldSets.get(0)
-					viewFieldSet.name = listView.name;
-					viewFieldSet.uuid = listView.uuid + "_viewfieldset_" + listView.name;
+						val UIClass uiClass = (trace as PSMToUITrace).uiElements.get(0) as UIClass
+						
+						uiClass.name = JClass.name
+						uiClass.uuid = JClass.uuid
+						uiClass.abstract = JClass.isAbstract
+						uiClass.enumClass = JClass.isRepresentsEnum
+						uiClass.singleton = JClass.isBusinessSingleton
+						
+						if (JClass.visibility == JVisibility::PUBLIC) {
+							uiClass.readonly = false	
+						} else {
+							uiClass.readonly = true
+						}
+						
+						
+						if (JClass.representation !== null) {			
+							val UIBaseComponentType componentType = PatternProvider.instance().getPsmToUiTrace(engine)
+																									.getOneArbitraryMatch(JClass.representation, null, null)
+																									.get()
+																									.getIdentifiable as UIBaseComponentType
+							
+							componentType.representation = true;
+							uiClass.representation = componentType;	
+						}
+						
+						val UIClassView classView = uiClass.classView
+						classView.uuid = uiClass.uuid.replace("\\.", "_") + "_oview_default"
+						classView.name = uiClass.name
+						
+						val UIListView listView = uiClass.listView
+						listView.uuid = uiClass.uuid.replace("\\.", "_") + "_lview_default"
+						listView.name = uiClass.name;
+						
+						val UIViewFieldSet viewFieldSet = listView.viewFieldSets.get(0)
+						viewFieldSet.name = listView.name;
+						viewFieldSet.uuid = listView.uuid + "_viewfieldset_" + listView.name;
+					}	
 					
 				].action(CRUDActivationStateEnum.DELETED) [
 										
 					System.out.println("Deleting class: " + JClass.uuid)
-										
-					uiModule.remove(UIModule_Classes, uiClass)
+					
+					val UIClass uiClass = (trace as PSMToUITrace).uiElements.get(0) as UIClass
+					
+					uiClass.eContainer.remove(UIModule_Classes, uiClass)
 					psm2ui.remove(PSMToUI_Traces, trace)
 					
 				].addLifeCycle(Lifecycles.getDefault(true, true)).build

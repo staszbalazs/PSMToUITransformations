@@ -1,8 +1,10 @@
 package transformations
 
+import queries.FindDescendantsForClassWithJClass.Match
 import java.util.List
+import java.util.Set
 import java.util.stream.Collectors
-import operations.ComponentType
+import operations.Interval
 import org.eclipse.viatra.query.runtime.api.IPatternMatch
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
 import org.eclipse.viatra.query.runtime.api.ViatraQueryMatcher
@@ -12,25 +14,23 @@ import org.eclipse.viatra.transformation.runtime.emf.modelmanipulation.IModelMan
 import org.eclipse.viatra.transformation.runtime.emf.modelmanipulation.SimpleModelManipulations
 import org.eclipse.viatra.transformation.runtime.emf.rules.eventdriven.EventDrivenTransformationRule
 import org.eclipse.viatra.transformation.runtime.emf.rules.eventdriven.EventDrivenTransformationRuleFactory
-import queries.FindCorrespondingType
-import queries.JAttributeQuery
-import queries.JAttributeQueryForModify
-import queries.PatternProvider
-import traceability.PSMToUI
-import traceability.TraceabilityPackage
-import ui.UIClass
-import ui.UiPackage
-import queries.FindDescendantsForClassWithJClass.Match
 import psm.JAttribute
 import psm.JClass
-import ui.UIBaseComponentType
-import ui.UIViewFieldSet
-import ui.UIViewField
-import java.util.Set
+import psm.JVisibility
+import queries.FindCorrespondingType
 import queries.JAttributeInJGroupViewFieldQuery
+import queries.JAttributeQuery
+import queries.JAttributeQueryForModify
 import queries.JAttributeViewFieldQueryForModify
-import ui.UIClassView
-import ui.UIListView
+import queries.PatternProvider
+import traceability.PSMToUI
+import traceability.PSMToUITrace
+import traceability.TraceabilityPackage
+import ui.UIBaseComponentType
+import ui.UIClass
+import ui.UIViewField
+import ui.UIViewFieldSet
+import ui.UiPackage
 
 class AttributeRuleFactory {
 	
@@ -43,8 +43,8 @@ class AttributeRuleFactory {
 	
 	extension PSMToUI psm2ui
 	
-	extension ComponentType componentTypeExtension
-	
+	extension Interval interval
+		
 	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> attributeRule
 	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> modifyAttributeRule
 	private EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> attributeInGroupViewFieldRule
@@ -54,7 +54,7 @@ class AttributeRuleFactory {
 	
 	new(PSMToUI psm2ui, ViatraQueryEngine engine) {
 		this.manipulation = new SimpleModelManipulations(engine);
-		this.componentTypeExtension = new ComponentType(psm2ui, engine)
+		this.interval = new Interval(engine)
 		this.engine = engine;
 		this.psm2ui = psm2ui;
 	}
@@ -66,8 +66,41 @@ class AttributeRuleFactory {
 										
 					System.out.println("Transforming attribute: " + JAttribute.uuid)
 																				
-					//Create role for owner
-					val uiBaseType = createUIBaseType(uiClass, JAttribute, baseType)
+					//create UIBaseComponentType
+					val UIBaseComponentType uiBaseType = uiClass.createChild(getUIClass_Attributes, UIBaseComponentType) as UIBaseComponentType
+					
+					//set attributes
+					uiBaseType.name = JAttribute.name
+					uiBaseType.uuid = uiClass.uuid + "." + JAttribute.name
+					if (JAttribute.visibility == JVisibility::PROTECTED) {
+						uiBaseType.readonly = true
+					} else if (JAttribute.visibility == JVisibility::PRIVATE) {
+						uiBaseType.private = true
+					}
+								
+					if (JAttribute.isDerived || JAttribute.calculated || JAttribute.visibility == JVisibility::PROTECTED) {
+						uiBaseType.value = ""
+					} else {
+						uiBaseType.value = JAttribute.value
+					}
+					uiBaseType.derived = JAttribute.derived
+					uiBaseType.lower = JAttribute.lower
+					uiBaseType.upper = JAttribute.upper
+					uiBaseType.regexp = JAttribute.regexp
+					uiBaseType.decimals = JAttribute.decimals
+					uiBaseType.placeholder = JAttribute.placeholder
+					uiBaseType.interval = JAttribute.interval
+					
+					if (JAttribute.ownerClass.representation !== null && JAttribute.ownerClass.representation == JAttribute) {
+						uiBaseType.representation = true;
+						uiClass.representation = uiBaseType;	
+					}
+					
+					//set type							
+					uiBaseType.type = baseType.name
+					
+					//create intervals
+					createIntervals(uiBaseType, uiBaseType.ownerClass.uuid)
 					val trace = psm2ui.createChild(PSMToUI_Traces, PSMToUITrace)
 					trace.addTo(PSMToUITrace_PsmElements, JAttribute)
 					trace.addTo(PSMToUITrace_UiElements, uiBaseType)
@@ -98,13 +131,45 @@ class AttributeRuleFactory {
 			modifyAttributeRule = createRule.name("ModifyAttributeRule").precondition(JAttributeQueryForModify.Matcher.querySpecification())
 				.action(CRUDActivationStateEnum.UPDATED) [
 					
-					System.out.println("Updating attribute: " + JAttribute.uuid)
+					if (JAttribute.eContainer !== null && JAttribute.eContainer.eContainer !== null) {
+						System.out.println("Updating attribute: " + JAttribute.uuid)
 					
-					modifyUIBaseType(componentType, uiClass, JAttribute, baseType)
-					
+						val UIBaseComponentType componentType = (trace as PSMToUITrace).uiElements.get(0) as UIBaseComponentType
+						//set attributes
+						componentType.name = JAttribute.name
+						componentType.uuid = uiClass.uuid + "." + JAttribute.name
+						if (JAttribute.visibility == JVisibility::PROTECTED) {
+							componentType.readonly = true
+						} else if (JAttribute.visibility == JVisibility::PRIVATE) {
+							componentType.private = true
+						}
+									
+						if (JAttribute.isDerived || JAttribute.calculated || JAttribute.visibility == JVisibility::PROTECTED) {
+							componentType.value = ""
+						} else {
+							componentType.value = JAttribute.value
+						}
+						componentType.derived = JAttribute.derived
+						componentType.lower = JAttribute.lower
+						componentType.upper = JAttribute.upper
+						componentType.regexp = JAttribute.regexp
+						componentType.decimals = JAttribute.decimals
+						componentType.placeholder = JAttribute.placeholder
+						componentType.interval = JAttribute.interval
+						
+						//set type							
+						componentType.type = baseType.name
+						
+						//create intervals
+						componentType.intervals.clear
+						createIntervals(componentType, uiClass.uuid)	
+					}
+		
 				].action(CRUDActivationStateEnum.DELETED) [
 					
 					System.out.println("Deleting attribute: " + JAttribute.uuid)
+					
+					val UIBaseComponentType componentType = (trace as PSMToUITrace).uiElements.get(0) as UIBaseComponentType
 					
 					uiClass.remove(UIClass_Attributes, componentType)
 					psm2ui.remove(PSMToUI_Traces, trace)
@@ -139,35 +204,63 @@ class AttributeRuleFactory {
 			modifyAttributeViewFieldRule = createRule.name("ModifyAttributeViewFieldRule").precondition(JAttributeViewFieldQueryForModify.Matcher.querySpecification())
 				.action(CRUDActivationStateEnum.UPDATED) [
 					
-					System.out.println("Updating view field for attribute: " + JAttribute.uuid)
+					if (JAttribute.eContainer !== null && JAttribute.eContainer.eContainer !== null) {
+						System.out.println("Updating view field for attribute: " + JAttribute.uuid)
 					
-					if (uiView instanceof UIClassView) {
-						if (!viewFieldSet.uuid.endsWith("Group")) {
-							viewFieldSet.name = uiBaseType.name;
-							viewFieldSet.uuid = uiView.uuid + "_viewfieldset_" + uiBaseType.name
+						//Update viewField in classView
+						var match = PatternProvider.instance().getFindViewFieldForComponentType(engine)
+																	.getOneArbitraryMatch(uiBaseType, uiClass.classView, null, null)
+																	.get();
+													
+						val UIViewFieldSet classViewFieldSet = match.getViewFieldSet;
+						val UIViewField classViewField = match.getViewField;
+						
+						if (!classViewFieldSet.uuid.endsWith("Group")) {
+							classViewFieldSet.name = uiBaseType.name;
+							classViewFieldSet.uuid = uiClass.classView.uuid + "_viewfieldset_" + uiBaseType.name
 						}
+							
+						classViewField.name = uiBaseType.name;
+						classViewField.uuid = uiClass.uuid + "." + uiBaseType.name + "_viewField_classView"				
+						classViewField.searchable = !JAttribute.uiNoSearch
 						
-						viewField.name = uiBaseType.name;
-						viewField.uuid = uiClass.uuid + "." + uiBaseType.name + "_viewField_classView"				
-						viewField.searchable = !JAttribute.uiNoSearch
-					} else if (uiView instanceof UIListView) {					
-						viewFieldSet.name = uiView.name;
-						viewFieldSet.uuid = uiView.uuid + "_viewfieldset_" + uiView.name;
-						
-						viewField.uuid = uiClass.uuid + "." + uiBaseType.name + "_viewField_listView"
-						viewField.name = uiBaseType.name				
-						viewField.searchable = !JAttribute.uiNoSearch;
+						//Update viewField in listView
+						match = PatternProvider.instance().getFindViewFieldForComponentType(engine)
+																	.getOneArbitraryMatch(uiBaseType, uiClass.listView, null, null)
+																	.get();
+									
+						val UIViewFieldSet listViewFieldSet = match.getViewFieldSet;
+						val UIViewField listViewField = match.getViewField;
+									
+						listViewFieldSet.name = uiClass.listView.name;
+						listViewFieldSet.uuid = uiClass.listView.uuid + "_viewfieldset_" + uiClass.listView.name;
+							
+						listViewField.uuid = uiClass.uuid + "." + uiBaseType.name + "_viewField_listView"
+						listViewField.name = uiBaseType.name				
+						listViewField.searchable = !JAttribute.uiNoSearch;
 					}
 										
 				].action(CRUDActivationStateEnum.DELETED) [
 					
 					System.out.println("Deleting view field for attribute: " + JAttribute.uuid)
 					
-					if (!viewFieldSet.uuid.endsWith("Group") && viewFieldSet.viewFields.size() == 1) {
-						uiView.remove(UIView_ViewFieldSets, viewField)
+					//Remove ViewField form ClassView
+					var match = PatternProvider.instance().getFindViewFieldForComponentType(engine)
+																.getOneArbitraryMatch(uiBaseType, uiClass.classView, null, null)
+																.get();
+					
+					if (!match.viewFieldSet.uuid.endsWith("Group") && match.viewFieldSet.viewFields.size() == 1) {
+						uiClass.classView.remove(UIView_ViewFieldSets, match.viewFieldSet)
 					} else {
-						viewFieldSet.remove(UIViewFieldSet_ViewFields, viewField)
+						match.viewFieldSet.remove(UIViewFieldSet_ViewFields, match.viewField)
 					}
+					
+					//Remove ViewField from ListView
+					match = PatternProvider.instance().getFindViewFieldForComponentType(engine)
+																.getOneArbitraryMatch(uiBaseType, uiClass.listView, null, null)
+																.get();
+																
+					match.viewFieldSet.remove(UIViewFieldSet_ViewFields, match.viewField)
 					
 				].addLifeCycle(Lifecycles.getDefault(true, true)).build
 		}

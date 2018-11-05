@@ -22,6 +22,10 @@ import ui.UIParameterComponentType
 import ui.UIViewField
 import ui.UIViewFieldSet
 import ui.UiPackage
+import traceability.PSMToUITrace
+import queries.PatternProvider
+import queries.FindViewFieldForComponentType.Match
+import ui.UIView
 
 class ParameterRuleFactory {
 	
@@ -115,29 +119,33 @@ class ParameterRuleFactory {
 		if (modifyParameterRule === null) {			
 			modifyParameterRule = createRule.name("ModifyParameterRule").precondition(JParameterWithGuardQueryForModify.Matcher.querySpecification())
 				.action(CRUDActivationStateEnum.UPDATED) [
-										
-					System.out.println("Updating parameter: " + JParameter.uuid)
-										
-					if (JParameter.type instanceof JClass) {						
-						parameterType.referenced = uiType as UIClass
-						parameterType.type = uiType.name;
-					} else {
-						parameterType.type = uiType.name
-					}
 					
-					parameterType.uuid = JParameter.uuid;
-					parameterType.name = JParameter.name;
-					parameterType.lower = JParameter.lower;
-					parameterType.upper = JParameter.upper;
-					parameterType.interval = JParameter.interval;
+					if (JParameter.eContainer !== null) {
+						System.out.println("Updating parameter: " + JParameter.uuid)
 					
-					parameterType.intervals.clear
-					createIntervals(parameterType, JParameter.ownerOperation.ownerClass.uuid)
+						val UIParameterComponentType parameterType = (trace as PSMToUITrace).uiElements.get(0) as UIParameterComponentType
+						if (JParameter.type instanceof JClass) {						
+							parameterType.referenced = uiType as UIClass
+							parameterType.type = uiType.name;
+						} else {
+							parameterType.type = uiType.name
+						}
+						
+						parameterType.uuid = JParameter.uuid;
+						parameterType.name = JParameter.name;
+						parameterType.lower = JParameter.lower;
+						parameterType.upper = JParameter.upper;
+						parameterType.interval = JParameter.interval;
+						
+						parameterType.intervals.clear
+						createIntervals(parameterType, JParameter.ownerOperation.ownerClass.uuid)	
+					}			
 					
 				].action(CRUDActivationStateEnum.DELETED) [
 										
 					System.out.println("Deleting parameter: " + JParameter.uuid)
 					
+					val UIParameterComponentType parameterType = (trace as PSMToUITrace).uiElements.get(0) as UIParameterComponentType
 					uiAction.remove(UIAction_Parameters, parameterType)
 					psm2ui.remove(PSMToUI_Traces, trace)
 										
@@ -152,29 +160,45 @@ class ParameterRuleFactory {
 			parameterViewFieldRule = createRule.name("parameterViewFieldRule").precondition(JParameterViewFieldQuery.Matcher.querySpecification())
 				.action(CRUDActivationStateEnum.UPDATED) [
 					
-					System.out.println("Updating viewField for parameter: " + JParameter.uuid)
+					if (JParameter.eContainer !== null) {
+						System.out.println("Updating viewField for parameter: " + JParameter.uuid)
 							
-					if (JParameter.input) {																								
-						viewField.name = JParameter.name;
-						viewField.uuid = uiAction.uuid + "." + JParameter.name + "_viewField"
-						
-					} else {										
-						viewField.name = JParameter.name;
-						viewField.uuid = uiView.uuid + "." + JParameter.name + "_viewField"
+						if (JParameter.input) {
+							val match = PatternProvider.instance().getFindViewFieldForComponentType(engine)
+																		.getOneArbitraryMatch(parameterType, uiAction.paramView, null, null)
+																		.get();
+							val UIViewField viewField = match.getViewField;
+																															
+							viewField.name = parameterType.name;
+							viewField.uuid = uiAction.uuid + "." + parameterType.name + "_viewField"
+							
+						} else {
+							val match = PatternProvider.instance().getFindViewFieldForComponentType(engine)
+																		.getOneArbitraryMatch(parameterType, uiAction.resultView, null, null)
+																		.get();
+							val UIViewField viewField = match.getViewField;
+																	
+							viewField.name = parameterType.name;
+							viewField.uuid = uiAction.resultView.uuid + "." + parameterType.name + "_viewField"
+						}
 					}
 					
 				].action(CRUDActivationStateEnum.DELETED) [
 					
 					System.out.println("Deleting viewField for parameter: " + JParameter.uuid)
 					
-					viewFieldSet.remove(UIViewFieldSet_ViewFields, viewField)
-					if (viewFieldSet.viewFields.size() == 0) {
-						uiView.remove(UIView_ViewFieldSets, viewFieldSet)
+					var UIView uiView;
+					if (JParameter.input) {
+						uiView = uiAction.paramView
 					} else {
-						viewFieldSet.viewFields.stream()
-													.filter[field | field.position > viewField.position]
-													.forEach(field | field.position = field.position - 1)								
-					}				
+						uiView = uiAction.resultView
+					}
+					
+					val Match match = PatternProvider.instance().getFindViewFieldForComponentType(engine)
+																	.getOneArbitraryMatch(parameterType, uiAction.paramView, null, null)
+																	.get();		
+					
+					match.viewFieldSet.remove(UIViewFieldSet_ViewFields, match.viewField)
 
 				].addLifeCycle(Lifecycles.getDefault(true, true)).build
 		}

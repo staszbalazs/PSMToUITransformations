@@ -57,11 +57,13 @@
       <query-specification fqn="queries.findMenuItemWithParentForModify"/>
       <query-specification fqn="queries.JRoleQuery"/>
       <query-specification fqn="queries.JRoleQueryForModify"/>
+      <query-specification fqn="queries.findOppositeForRole"/>
       <query-specification fqn="queries.JRoleViewFieldQuery"/>
       <query-specification fqn="queries.JAttributeQuery"/>
       <query-specification fqn="queries.JAttributeQueryForModify"/>
       <query-specification fqn="queries.JAttributeInJGroupViewFieldQuery"/>
       <query-specification fqn="queries.JAttributeViewFieldQueryForModify"/>
+      <query-specification fqn="queries.findViewFieldForComponentType"/>
       <query-specification fqn="queries.JAttributeGroupQuery"/>
       <query-specification fqn="queries.JAttributeGroupQueryForModify"/>
       <query-specification fqn="queries.psmToUiTrace"/>

@@ -16,6 +16,7 @@ import traceability.PSMToUI
 import traceability.TraceabilityPackage
 import ui.UIModule
 import ui.UiPackage
+import traceability.PSMToUITrace
 
 class PackageRuleFactory {
 	
@@ -64,16 +65,22 @@ class PackageRuleFactory {
 			modifyPackageRule = createRule.name("ModifyPackageRule").precondition(JPackageToUIModuleQueryForModify.Matcher.querySpecification())
 				.action(CRUDActivationStateEnum.UPDATED) [
 					
-					System.out.println("Updating package: " + JPackage.uuid)
-												
-					uiModule.uuid = JPackage.uuid
-					uiModule.name = JPackage.name
-					uiModule.fullyQualifiedName = JPackage.fqName()						
+					if (JPackage.eContainer !== null) {
+						System.out.println("Updating package: " + JPackage.uuid)
 					
+						var UIModule uiModule = (trace as PSMToUITrace).uiElements.get(0) as UIModule
+						
+						uiModule.uuid = JPackage.uuid
+						uiModule.name = JPackage.name
+						uiModule.fullyQualifiedName = JPackage.fqName()		
+					}
+									
 				].action(CRUDActivationStateEnum.DELETED) [
 					
 					System.out.println("Deleting package: " + JPackage.uuid)
 												
+					var UIModule uiModule = (trace as PSMToUITrace).uiElements.get(0) as UIModule
+					
 					psm2ui.uiBase.remove(UIBase_Modules, uiModule)
 					psm2ui.remove(PSMToUI_Traces, trace)
 					

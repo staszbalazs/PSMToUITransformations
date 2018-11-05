@@ -8,9 +8,7 @@ Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Export-Package: handlers,
   queries,
-  src,
-  src-gen,
-  xtend-gen
+  src
 Require-Bundle: org.eclipse.viatra.transformation.runtime.emf,
   org.eclipse.viatra.transformation.evm,
   org.eclipse.viatra.transformation.runtime.debug,

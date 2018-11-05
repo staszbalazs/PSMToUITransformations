@@ -22,6 +22,7 @@ import ui.UiPackage
 import queries.PatternProvider
 import ui.UIClass
 import java.util.stream.Collectors
+import traceability.PSMToUITrace
 
 class OperationRuleFactory {
 	
@@ -110,38 +111,44 @@ class OperationRuleFactory {
 		if (modifyOperationRule === null) {			
 			modifyOperationRule = createRule.name("ModifyOperationRule").precondition(JOperationWithGuardQueryForModify.Matcher.querySpecification())
 				.action(CRUDActivationStateEnum.UPDATED) [
-										
-					System.out.println("Updating operation: " + JOperation.uuid)
 					
-					uiAction.uuid = uiClass.uuid + "." + JOperation.name
-					uiAction.name = JOperation.name;
-					uiAction.classBased = JOperation.classBased;
-					uiAction.toBeConfirmed = JOperation.uiMustConfirm;
-					uiAction.notBulk = !JOperation.bulk;
-					uiAction.isQuery = (JOperation.kind == JOperationKind::QUERY);
+					if (JOperation.eContainer !== null) {
+						System.out.println("Updating operation: " + JOperation.uuid)
 					
-					uiAction.paramView.name = uiAction.name
-					uiAction.paramView.uuid = uiAction.uuid.replace(".", "_") + "_paramView"
-					
-					for (UIViewFieldSet viewFieldSet : uiAction.paramView.viewFieldSets) {
-						viewFieldSet.name = uiAction.name
-						viewFieldSet.uuid = uiAction.paramView.uuid +  "_viewFieldSet_" + uiAction.name
-					}
-									
-					if (uiAction.resultView !== null) {
-						uiAction.resultView.name = uiAction.name;
-						uiAction.resultView.uuid = uiAction.uuid.replace(".", "_") + "_resultView"
+						val UIAction uiAction = (trace as PSMToUITrace).uiElements.get(0) as UIAction
 						
-						for (UIViewFieldSet viewFieldSet : uiAction.resultView.viewFieldSets) {
+						uiAction.uuid = uiClass.uuid + "." + JOperation.name
+						uiAction.name = JOperation.name;
+						uiAction.classBased = JOperation.classBased;
+						uiAction.toBeConfirmed = JOperation.uiMustConfirm;
+						uiAction.notBulk = !JOperation.bulk;
+						uiAction.isQuery = (JOperation.kind == JOperationKind::QUERY);
+						
+						uiAction.paramView.name = uiAction.name
+						uiAction.paramView.uuid = uiAction.uuid.replace(".", "_") + "_paramView"
+						
+						for (UIViewFieldSet viewFieldSet : uiAction.paramView.viewFieldSets) {
 							viewFieldSet.name = uiAction.name
-							viewFieldSet.uuid = uiAction.resultView.uuid +  "_viewFieldSet_" + uiAction.name
+							viewFieldSet.uuid = uiAction.paramView.uuid +  "_viewFieldSet_" + uiAction.name
 						}
+										
+						if (uiAction.resultView !== null) {
+							uiAction.resultView.name = uiAction.name;
+							uiAction.resultView.uuid = uiAction.uuid.replace(".", "_") + "_resultView"
+							
+							for (UIViewFieldSet viewFieldSet : uiAction.resultView.viewFieldSets) {
+								viewFieldSet.name = uiAction.name
+								viewFieldSet.uuid = uiAction.resultView.uuid +  "_viewFieldSet_" + uiAction.name
+							}
+						}	
 					}
-					
+						
 				].action(CRUDActivationStateEnum.DELETED) [
 										
 					System.out.println("Deleting operation: " + JOperation.uuid)
-										
+					
+					val UIAction uiAction = (trace as PSMToUITrace).uiElements.get(0) as UIAction
+					
 					uiClass.remove(UIClass_Actions, uiAction)
 					psm2ui.remove(PSMToUI_Traces, trace)
 					

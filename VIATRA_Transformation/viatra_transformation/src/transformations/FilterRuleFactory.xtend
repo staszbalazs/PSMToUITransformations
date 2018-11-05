@@ -12,6 +12,7 @@ import org.eclipse.viatra.transformation.runtime.emf.rules.eventdriven.EventDriv
 import queries.JUIFilterQuery
 import queries.JUIFilterQueryForModify
 import traceability.PSMToUI
+import traceability.PSMToUITrace
 import traceability.TraceabilityPackage
 import ui.UIFilter
 import ui.UiPackage
@@ -71,26 +72,32 @@ class FilterRuleFactory {
 		if (modifyFilterRule === null) {		
 			modifyFilterRule = createRule.name("ModifyFilterRule").precondition(JUIFilterQueryForModify.Matcher.querySpecification())
 				.action(CRUDActivationStateEnum.UPDATED) [
-															
-					System.out.println("Updating filter: " + JFilter.uuid)
-																					
-					uiFilter.uuid = JFilter.uuid + "_UIFilter"
-					uiFilter.operator = JFilter.operator.toString()
-					uiFilter.value = JFilter.value
 					
-					if (JFilter.name !== null) {
-						uiFilter.name = JFilter.name
-					} else {
-						uiFilter.name = "filter"
+					if (JFilter.eContainer !== null) {
+						System.out.println("Updating filter: " + JFilter.uuid)
+					
+						var UIFilter uiFilter = (trace as PSMToUITrace).uiElements.get(0) as UIFilter
+																						
+						uiFilter.uuid = JFilter.uuid + "_UIFilter"
+						uiFilter.operator = JFilter.operator.toString()
+						uiFilter.value = JFilter.value
+						
+						if (JFilter.name !== null) {
+							uiFilter.name = JFilter.name
+						} else {
+							uiFilter.name = "filter"
+						}
+						
+						uiFilter.attribute = componentType.uuid
 					}
-					
-					uiFilter.attribute = componentType.uuid
-					
+															
 				].action(CRUDActivationStateEnum.DELETED) [
 										
 					System.out.println("Deleting filter: " + JFilter.uuid)
 					
-					uiMenuItem.remove(UIMenuItem_Filters, uiFilter);
+					val UIFilter uiFilter = (trace as PSMToUITrace).uiElements.get(0) as UIFilter
+					
+					uiFilter.eContainer.remove(UIMenuItem_Filters, uiFilter);
 					psm2ui.remove(PSMToUI_Traces, trace);					
 					
 				].addLifeCycle(Lifecycles.getDefault(true, true)).build

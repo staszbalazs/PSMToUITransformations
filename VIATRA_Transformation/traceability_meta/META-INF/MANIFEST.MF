@@ -14,6 +14,6 @@ Export-Package: traceability,
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
  org.eclipse.emf.ecore.xmi;visibility:=reexport,
- ui_meta;bundle-version="1.0.0";visibility:=reexport,
- psm_meta;bundle-version="1.0.0";visibility:=reexport
+ ui_meta;bundle-version="1.0.0",
+ psm_meta;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy

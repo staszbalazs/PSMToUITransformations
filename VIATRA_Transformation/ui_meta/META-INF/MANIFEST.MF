@@ -16,6 +16,5 @@ Export-Package: psmToUiTypeMapping,
  ui.util
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
- psm_meta;bundle-version="1.0.0";visibility:=reexport,
- ui_meta;visibility:=reexport
+ psm_meta;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy

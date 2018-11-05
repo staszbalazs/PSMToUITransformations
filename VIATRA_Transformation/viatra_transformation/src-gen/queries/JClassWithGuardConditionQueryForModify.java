@@ -24,11 +24,9 @@ import org.eclipse.viatra.query.runtime.api.impl.BaseGeneratedEMFQuerySpecificat
 import org.eclipse.viatra.query.runtime.api.impl.BaseMatcher;
 import org.eclipse.viatra.query.runtime.api.impl.BasePatternMatch;
 import org.eclipse.viatra.query.runtime.emf.types.EClassTransitiveInstancesKey;
-import org.eclipse.viatra.query.runtime.emf.types.EStructuralFeatureInstancesKey;
 import org.eclipse.viatra.query.runtime.matchers.backend.QueryEvaluationHint;
 import org.eclipse.viatra.query.runtime.matchers.psystem.PBody;
 import org.eclipse.viatra.query.runtime.matchers.psystem.PVariable;
-import org.eclipse.viatra.query.runtime.matchers.psystem.basicdeferred.Equality;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicdeferred.ExportedParameter;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicenumerables.PositivePatternCall;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicenumerables.TypeConstraint;
@@ -39,19 +37,15 @@ import org.eclipse.viatra.query.runtime.matchers.tuple.Tuple;
 import org.eclipse.viatra.query.runtime.matchers.tuple.Tuples;
 import org.eclipse.viatra.query.runtime.util.ViatraQueryLoggingUtil;
 import psm.JClass;
-import queries.AlreadyTransformed;
-import ui.UIClass;
-import ui.UIModule;
+import queries.PsmToUiTrace;
 
 /**
  * A pattern-specific query specification that can instantiate Matcher in a type-safe way.
  * 
  * <p>Original source:
  *         <code><pre>
- *         pattern JClassWithGuardConditionQueryForModify(jClass : JClass, uiClass : UIClass, uiModule : UIModule, trace : PSMToUITrace) {
- *         	JClass.^package(jClass, jPackage);
- *         	find alreadyTransformed(jClass, uiClass, trace);
- *         	find alreadyTransformed(jPackage, uiModule, _);
+ *         pattern JClassWithGuardConditionQueryForModify(jClass : JClass, trace : PSMToUITrace) {
+ *         	find psmToUiTrace(jClass, _, trace);
  *         }
  * </pre></code>
  * 
@@ -76,40 +70,24 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
   public static abstract class Match extends BasePatternMatch {
     private JClass fJClass;
     
-    private UIClass fUiClass;
-    
-    private UIModule fUiModule;
-    
     private EObject fTrace;
     
-    private static List<String> parameterNames = makeImmutableList("jClass", "uiClass", "uiModule", "trace");
+    private static List<String> parameterNames = makeImmutableList("jClass", "trace");
     
-    private Match(final JClass pJClass, final UIClass pUiClass, final UIModule pUiModule, final EObject pTrace) {
+    private Match(final JClass pJClass, final EObject pTrace) {
       this.fJClass = pJClass;
-      this.fUiClass = pUiClass;
-      this.fUiModule = pUiModule;
       this.fTrace = pTrace;
     }
     
     @Override
     public Object get(final String parameterName) {
       if ("jClass".equals(parameterName)) return this.fJClass;
-      if ("uiClass".equals(parameterName)) return this.fUiClass;
-      if ("uiModule".equals(parameterName)) return this.fUiModule;
       if ("trace".equals(parameterName)) return this.fTrace;
       return null;
     }
     
     public JClass getJClass() {
       return this.fJClass;
-    }
-    
-    public UIClass getUiClass() {
-      return this.fUiClass;
-    }
-    
-    public UIModule getUiModule() {
-      return this.fUiModule;
     }
     
     public EObject getTrace() {
@@ -123,14 +101,6 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
           this.fJClass = (JClass) newValue;
           return true;
       }
-      if ("uiClass".equals(parameterName) ) {
-          this.fUiClass = (UIClass) newValue;
-          return true;
-      }
-      if ("uiModule".equals(parameterName) ) {
-          this.fUiModule = (UIModule) newValue;
-          return true;
-      }
       if ("trace".equals(parameterName) ) {
           this.fTrace = (EObject) newValue;
           return true;
@@ -141,16 +111,6 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
     public void setJClass(final JClass pJClass) {
       if (!isMutable()) throw new java.lang.UnsupportedOperationException();
       this.fJClass = pJClass;
-    }
-    
-    public void setUiClass(final UIClass pUiClass) {
-      if (!isMutable()) throw new java.lang.UnsupportedOperationException();
-      this.fUiClass = pUiClass;
-    }
-    
-    public void setUiModule(final UIModule pUiModule) {
-      if (!isMutable()) throw new java.lang.UnsupportedOperationException();
-      this.fUiModule = pUiModule;
     }
     
     public void setTrace(final EObject pTrace) {
@@ -170,27 +130,25 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
     
     @Override
     public Object[] toArray() {
-      return new Object[]{fJClass, fUiClass, fUiModule, fTrace};
+      return new Object[]{fJClass, fTrace};
     }
     
     @Override
     public JClassWithGuardConditionQueryForModify.Match toImmutable() {
-      return isMutable() ? newMatch(fJClass, fUiClass, fUiModule, fTrace) : this;
+      return isMutable() ? newMatch(fJClass, fTrace) : this;
     }
     
     @Override
     public String prettyPrint() {
       StringBuilder result = new StringBuilder();
       result.append("\"jClass\"=" + prettyPrintValue(fJClass) + ", ");
-      result.append("\"uiClass\"=" + prettyPrintValue(fUiClass) + ", ");
-      result.append("\"uiModule\"=" + prettyPrintValue(fUiModule) + ", ");
       result.append("\"trace\"=" + prettyPrintValue(fTrace));
       return result.toString();
     }
     
     @Override
     public int hashCode() {
-      return Objects.hash(fJClass, fUiClass, fUiModule, fTrace);
+      return Objects.hash(fJClass, fTrace);
     }
     
     @Override
@@ -202,7 +160,7 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
       }
       if ((obj instanceof JClassWithGuardConditionQueryForModify.Match)) {
           JClassWithGuardConditionQueryForModify.Match other = (JClassWithGuardConditionQueryForModify.Match) obj;
-          return Objects.equals(fJClass, other.fJClass) && Objects.equals(fUiClass, other.fUiClass) && Objects.equals(fUiModule, other.fUiModule) && Objects.equals(fTrace, other.fTrace);
+          return Objects.equals(fJClass, other.fJClass) && Objects.equals(fTrace, other.fTrace);
       } else {
           // this should be infrequent
           if (!(obj instanceof IPatternMatch)) {
@@ -226,7 +184,7 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
      * 
      */
     public static JClassWithGuardConditionQueryForModify.Match newEmptyMatch() {
-      return new Mutable(null, null, null, null);
+      return new Mutable(null, null);
     }
     
     /**
@@ -234,14 +192,12 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
      * Fields of the mutable match can be filled to create a partial match, usable as matcher input.
      * 
      * @param pJClass the fixed value of pattern parameter jClass, or null if not bound.
-     * @param pUiClass the fixed value of pattern parameter uiClass, or null if not bound.
-     * @param pUiModule the fixed value of pattern parameter uiModule, or null if not bound.
      * @param pTrace the fixed value of pattern parameter trace, or null if not bound.
      * @return the new, mutable (partial) match object.
      * 
      */
-    public static JClassWithGuardConditionQueryForModify.Match newMutableMatch(final JClass pJClass, final UIClass pUiClass, final UIModule pUiModule, final EObject pTrace) {
-      return new Mutable(pJClass, pUiClass, pUiModule, pTrace);
+    public static JClassWithGuardConditionQueryForModify.Match newMutableMatch(final JClass pJClass, final EObject pTrace) {
+      return new Mutable(pJClass, pTrace);
     }
     
     /**
@@ -249,19 +205,17 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
      * This can be used e.g. to call the matcher with a partial match.
      * <p>The returned match will be immutable. Use {@link #newEmptyMatch()} to obtain a mutable match object.
      * @param pJClass the fixed value of pattern parameter jClass, or null if not bound.
-     * @param pUiClass the fixed value of pattern parameter uiClass, or null if not bound.
-     * @param pUiModule the fixed value of pattern parameter uiModule, or null if not bound.
      * @param pTrace the fixed value of pattern parameter trace, or null if not bound.
      * @return the (partial) match object.
      * 
      */
-    public static JClassWithGuardConditionQueryForModify.Match newMatch(final JClass pJClass, final UIClass pUiClass, final UIModule pUiModule, final EObject pTrace) {
-      return new Immutable(pJClass, pUiClass, pUiModule, pTrace);
+    public static JClassWithGuardConditionQueryForModify.Match newMatch(final JClass pJClass, final EObject pTrace) {
+      return new Immutable(pJClass, pTrace);
     }
     
     private static final class Mutable extends JClassWithGuardConditionQueryForModify.Match {
-      Mutable(final JClass pJClass, final UIClass pUiClass, final UIModule pUiModule, final EObject pTrace) {
-        super(pJClass, pUiClass, pUiModule, pTrace);
+      Mutable(final JClass pJClass, final EObject pTrace) {
+        super(pJClass, pTrace);
       }
       
       @Override
@@ -271,8 +225,8 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
     }
     
     private static final class Immutable extends JClassWithGuardConditionQueryForModify.Match {
-      Immutable(final JClass pJClass, final UIClass pUiClass, final UIModule pUiModule, final EObject pTrace) {
-        super(pJClass, pUiClass, pUiModule, pTrace);
+      Immutable(final JClass pJClass, final EObject pTrace) {
+        super(pJClass, pTrace);
       }
       
       @Override
@@ -293,10 +247,8 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
    * 
    * <p>Original source:
    * <code><pre>
-   * pattern JClassWithGuardConditionQueryForModify(jClass : JClass, uiClass : UIClass, uiModule : UIModule, trace : PSMToUITrace) {
-   * 	JClass.^package(jClass, jPackage);
-   * 	find alreadyTransformed(jClass, uiClass, trace);
-   * 	find alreadyTransformed(jPackage, uiModule, _);
+   * pattern JClassWithGuardConditionQueryForModify(jClass : JClass, trace : PSMToUITrace) {
+   * 	find psmToUiTrace(jClass, _, trace);
    * }
    * </pre></code>
    * 
@@ -334,11 +286,7 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
     
     private final static int POSITION_JCLASS = 0;
     
-    private final static int POSITION_UICLASS = 1;
-    
-    private final static int POSITION_UIMODULE = 2;
-    
-    private final static int POSITION_TRACE = 3;
+    private final static int POSITION_TRACE = 1;
     
     private final static Logger LOGGER = ViatraQueryLoggingUtil.getLogger(JClassWithGuardConditionQueryForModify.Matcher.class);
     
@@ -357,14 +305,12 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
     /**
      * Returns the set of all matches of the pattern that conform to the given fixed values of some parameters.
      * @param pJClass the fixed value of pattern parameter jClass, or null if not bound.
-     * @param pUiClass the fixed value of pattern parameter uiClass, or null if not bound.
-     * @param pUiModule the fixed value of pattern parameter uiModule, or null if not bound.
      * @param pTrace the fixed value of pattern parameter trace, or null if not bound.
      * @return matches represented as a Match object.
      * 
      */
-    public Collection<JClassWithGuardConditionQueryForModify.Match> getAllMatches(final JClass pJClass, final UIClass pUiClass, final UIModule pUiModule, final EObject pTrace) {
-      return rawStreamAllMatches(new Object[]{pJClass, pUiClass, pUiModule, pTrace}).collect(Collectors.toSet());
+    public Collection<JClassWithGuardConditionQueryForModify.Match> getAllMatches(final JClass pJClass, final EObject pTrace) {
+      return rawStreamAllMatches(new Object[]{pJClass, pTrace}).collect(Collectors.toSet());
     }
     
     /**
@@ -374,70 +320,60 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
      * If the match set of the pattern changes during processing, the contents of the stream is <strong>undefined</strong>.
      * In such cases, either rely on {@link #getAllMatches()} or collect the results of the stream in end-user code.
      * @param pJClass the fixed value of pattern parameter jClass, or null if not bound.
-     * @param pUiClass the fixed value of pattern parameter uiClass, or null if not bound.
-     * @param pUiModule the fixed value of pattern parameter uiModule, or null if not bound.
      * @param pTrace the fixed value of pattern parameter trace, or null if not bound.
      * @return a stream of matches represented as a Match object.
      * 
      */
-    public Stream<JClassWithGuardConditionQueryForModify.Match> streamAllMatches(final JClass pJClass, final UIClass pUiClass, final UIModule pUiModule, final EObject pTrace) {
-      return rawStreamAllMatches(new Object[]{pJClass, pUiClass, pUiModule, pTrace});
+    public Stream<JClassWithGuardConditionQueryForModify.Match> streamAllMatches(final JClass pJClass, final EObject pTrace) {
+      return rawStreamAllMatches(new Object[]{pJClass, pTrace});
     }
     
     /**
      * Returns an arbitrarily chosen match of the pattern that conforms to the given fixed values of some parameters.
      * Neither determinism nor randomness of selection is guaranteed.
      * @param pJClass the fixed value of pattern parameter jClass, or null if not bound.
-     * @param pUiClass the fixed value of pattern parameter uiClass, or null if not bound.
-     * @param pUiModule the fixed value of pattern parameter uiModule, or null if not bound.
      * @param pTrace the fixed value of pattern parameter trace, or null if not bound.
      * @return a match represented as a Match object, or null if no match is found.
      * 
      */
-    public Optional<JClassWithGuardConditionQueryForModify.Match> getOneArbitraryMatch(final JClass pJClass, final UIClass pUiClass, final UIModule pUiModule, final EObject pTrace) {
-      return rawGetOneArbitraryMatch(new Object[]{pJClass, pUiClass, pUiModule, pTrace});
+    public Optional<JClassWithGuardConditionQueryForModify.Match> getOneArbitraryMatch(final JClass pJClass, final EObject pTrace) {
+      return rawGetOneArbitraryMatch(new Object[]{pJClass, pTrace});
     }
     
     /**
      * Indicates whether the given combination of specified pattern parameters constitute a valid pattern match,
      * under any possible substitution of the unspecified parameters (if any).
      * @param pJClass the fixed value of pattern parameter jClass, or null if not bound.
-     * @param pUiClass the fixed value of pattern parameter uiClass, or null if not bound.
-     * @param pUiModule the fixed value of pattern parameter uiModule, or null if not bound.
      * @param pTrace the fixed value of pattern parameter trace, or null if not bound.
      * @return true if the input is a valid (partial) match of the pattern.
      * 
      */
-    public boolean hasMatch(final JClass pJClass, final UIClass pUiClass, final UIModule pUiModule, final EObject pTrace) {
-      return rawHasMatch(new Object[]{pJClass, pUiClass, pUiModule, pTrace});
+    public boolean hasMatch(final JClass pJClass, final EObject pTrace) {
+      return rawHasMatch(new Object[]{pJClass, pTrace});
     }
     
     /**
      * Returns the number of all matches of the pattern that conform to the given fixed values of some parameters.
      * @param pJClass the fixed value of pattern parameter jClass, or null if not bound.
-     * @param pUiClass the fixed value of pattern parameter uiClass, or null if not bound.
-     * @param pUiModule the fixed value of pattern parameter uiModule, or null if not bound.
      * @param pTrace the fixed value of pattern parameter trace, or null if not bound.
      * @return the number of pattern matches found.
      * 
      */
-    public int countMatches(final JClass pJClass, final UIClass pUiClass, final UIModule pUiModule, final EObject pTrace) {
-      return rawCountMatches(new Object[]{pJClass, pUiClass, pUiModule, pTrace});
+    public int countMatches(final JClass pJClass, final EObject pTrace) {
+      return rawCountMatches(new Object[]{pJClass, pTrace});
     }
     
     /**
      * Executes the given processor on an arbitrarily chosen match of the pattern that conforms to the given fixed values of some parameters.
      * Neither determinism nor randomness of selection is guaranteed.
      * @param pJClass the fixed value of pattern parameter jClass, or null if not bound.
-     * @param pUiClass the fixed value of pattern parameter uiClass, or null if not bound.
-     * @param pUiModule the fixed value of pattern parameter uiModule, or null if not bound.
      * @param pTrace the fixed value of pattern parameter trace, or null if not bound.
      * @param processor the action that will process the selected match.
      * @return true if the pattern has at least one match with the given parameter values, false if the processor was not invoked
      * 
      */
-    public boolean forOneArbitraryMatch(final JClass pJClass, final UIClass pUiClass, final UIModule pUiModule, final EObject pTrace, final Consumer<? super JClassWithGuardConditionQueryForModify.Match> processor) {
-      return rawForOneArbitraryMatch(new Object[]{pJClass, pUiClass, pUiModule, pTrace}, processor);
+    public boolean forOneArbitraryMatch(final JClass pJClass, final EObject pTrace, final Consumer<? super JClassWithGuardConditionQueryForModify.Match> processor) {
+      return rawForOneArbitraryMatch(new Object[]{pJClass, pTrace}, processor);
     }
     
     /**
@@ -445,14 +381,12 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
      * This can be used e.g. to call the matcher with a partial match.
      * <p>The returned match will be immutable. Use {@link #newEmptyMatch()} to obtain a mutable match object.
      * @param pJClass the fixed value of pattern parameter jClass, or null if not bound.
-     * @param pUiClass the fixed value of pattern parameter uiClass, or null if not bound.
-     * @param pUiModule the fixed value of pattern parameter uiModule, or null if not bound.
      * @param pTrace the fixed value of pattern parameter trace, or null if not bound.
      * @return the (partial) match object.
      * 
      */
-    public JClassWithGuardConditionQueryForModify.Match newMatch(final JClass pJClass, final UIClass pUiClass, final UIModule pUiModule, final EObject pTrace) {
-      return JClassWithGuardConditionQueryForModify.Match.newMatch(pJClass, pUiClass, pUiModule, pTrace);
+    public JClassWithGuardConditionQueryForModify.Match newMatch(final JClass pJClass, final EObject pTrace) {
+      return JClassWithGuardConditionQueryForModify.Match.newMatch(pJClass, pTrace);
     }
     
     /**
@@ -506,8 +440,8 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
      * @return the Stream of all values or empty set if there are no matches
      * 
      */
-    public Stream<JClass> streamAllValuesOfjClass(final UIClass pUiClass, final UIModule pUiModule, final EObject pTrace) {
-      return rawStreamAllValuesOfjClass(new Object[]{null, pUiClass, pUiModule, pTrace});
+    public Stream<JClass> streamAllValuesOfjClass(final EObject pTrace) {
+      return rawStreamAllValuesOfjClass(new Object[]{null, pTrace});
     }
     
     /**
@@ -524,154 +458,8 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
      * @return the Set of all values or empty set if there are no matches
      * 
      */
-    public Set<JClass> getAllValuesOfjClass(final UIClass pUiClass, final UIModule pUiModule, final EObject pTrace) {
-      return rawStreamAllValuesOfjClass(new Object[]{null, pUiClass, pUiModule, pTrace}).collect(Collectors.toSet());
-    }
-    
-    /**
-     * Retrieve the set of values that occur in matches for uiClass.
-     * @return the Set of all values or empty set if there are no matches
-     * 
-     */
-    protected Stream<UIClass> rawStreamAllValuesOfuiClass(final Object[] parameters) {
-      return rawStreamAllValues(POSITION_UICLASS, parameters).map(UIClass.class::cast);
-    }
-    
-    /**
-     * Retrieve the set of values that occur in matches for uiClass.
-     * @return the Set of all values or empty set if there are no matches
-     * 
-     */
-    public Set<UIClass> getAllValuesOfuiClass() {
-      return rawStreamAllValuesOfuiClass(emptyArray()).collect(Collectors.toSet());
-    }
-    
-    /**
-     * Retrieve the set of values that occur in matches for uiClass.
-     * @return the Set of all values or empty set if there are no matches
-     * 
-     */
-    public Stream<UIClass> streamAllValuesOfuiClass() {
-      return rawStreamAllValuesOfuiClass(emptyArray());
-    }
-    
-    /**
-     * Retrieve the set of values that occur in matches for uiClass.
-     * </p>
-     * <strong>NOTE</strong>: It is important not to modify the source model while the stream is being processed.
-     * If the match set of the pattern changes during processing, the contents of the stream is <strong>undefined</strong>.
-     * In such cases, either rely on {@link #getAllMatches()} or collect the results of the stream in end-user code.
-     *      
-     * @return the Stream of all values or empty set if there are no matches
-     * 
-     */
-    public Stream<UIClass> streamAllValuesOfuiClass(final JClassWithGuardConditionQueryForModify.Match partialMatch) {
-      return rawStreamAllValuesOfuiClass(partialMatch.toArray());
-    }
-    
-    /**
-     * Retrieve the set of values that occur in matches for uiClass.
-     * </p>
-     * <strong>NOTE</strong>: It is important not to modify the source model while the stream is being processed.
-     * If the match set of the pattern changes during processing, the contents of the stream is <strong>undefined</strong>.
-     * In such cases, either rely on {@link #getAllMatches()} or collect the results of the stream in end-user code.
-     *      
-     * @return the Stream of all values or empty set if there are no matches
-     * 
-     */
-    public Stream<UIClass> streamAllValuesOfuiClass(final JClass pJClass, final UIModule pUiModule, final EObject pTrace) {
-      return rawStreamAllValuesOfuiClass(new Object[]{pJClass, null, pUiModule, pTrace});
-    }
-    
-    /**
-     * Retrieve the set of values that occur in matches for uiClass.
-     * @return the Set of all values or empty set if there are no matches
-     * 
-     */
-    public Set<UIClass> getAllValuesOfuiClass(final JClassWithGuardConditionQueryForModify.Match partialMatch) {
-      return rawStreamAllValuesOfuiClass(partialMatch.toArray()).collect(Collectors.toSet());
-    }
-    
-    /**
-     * Retrieve the set of values that occur in matches for uiClass.
-     * @return the Set of all values or empty set if there are no matches
-     * 
-     */
-    public Set<UIClass> getAllValuesOfuiClass(final JClass pJClass, final UIModule pUiModule, final EObject pTrace) {
-      return rawStreamAllValuesOfuiClass(new Object[]{pJClass, null, pUiModule, pTrace}).collect(Collectors.toSet());
-    }
-    
-    /**
-     * Retrieve the set of values that occur in matches for uiModule.
-     * @return the Set of all values or empty set if there are no matches
-     * 
-     */
-    protected Stream<UIModule> rawStreamAllValuesOfuiModule(final Object[] parameters) {
-      return rawStreamAllValues(POSITION_UIMODULE, parameters).map(UIModule.class::cast);
-    }
-    
-    /**
-     * Retrieve the set of values that occur in matches for uiModule.
-     * @return the Set of all values or empty set if there are no matches
-     * 
-     */
-    public Set<UIModule> getAllValuesOfuiModule() {
-      return rawStreamAllValuesOfuiModule(emptyArray()).collect(Collectors.toSet());
-    }
-    
-    /**
-     * Retrieve the set of values that occur in matches for uiModule.
-     * @return the Set of all values or empty set if there are no matches
-     * 
-     */
-    public Stream<UIModule> streamAllValuesOfuiModule() {
-      return rawStreamAllValuesOfuiModule(emptyArray());
-    }
-    
-    /**
-     * Retrieve the set of values that occur in matches for uiModule.
-     * </p>
-     * <strong>NOTE</strong>: It is important not to modify the source model while the stream is being processed.
-     * If the match set of the pattern changes during processing, the contents of the stream is <strong>undefined</strong>.
-     * In such cases, either rely on {@link #getAllMatches()} or collect the results of the stream in end-user code.
-     *      
-     * @return the Stream of all values or empty set if there are no matches
-     * 
-     */
-    public Stream<UIModule> streamAllValuesOfuiModule(final JClassWithGuardConditionQueryForModify.Match partialMatch) {
-      return rawStreamAllValuesOfuiModule(partialMatch.toArray());
-    }
-    
-    /**
-     * Retrieve the set of values that occur in matches for uiModule.
-     * </p>
-     * <strong>NOTE</strong>: It is important not to modify the source model while the stream is being processed.
-     * If the match set of the pattern changes during processing, the contents of the stream is <strong>undefined</strong>.
-     * In such cases, either rely on {@link #getAllMatches()} or collect the results of the stream in end-user code.
-     *      
-     * @return the Stream of all values or empty set if there are no matches
-     * 
-     */
-    public Stream<UIModule> streamAllValuesOfuiModule(final JClass pJClass, final UIClass pUiClass, final EObject pTrace) {
-      return rawStreamAllValuesOfuiModule(new Object[]{pJClass, pUiClass, null, pTrace});
-    }
-    
-    /**
-     * Retrieve the set of values that occur in matches for uiModule.
-     * @return the Set of all values or empty set if there are no matches
-     * 
-     */
-    public Set<UIModule> getAllValuesOfuiModule(final JClassWithGuardConditionQueryForModify.Match partialMatch) {
-      return rawStreamAllValuesOfuiModule(partialMatch.toArray()).collect(Collectors.toSet());
-    }
-    
-    /**
-     * Retrieve the set of values that occur in matches for uiModule.
-     * @return the Set of all values or empty set if there are no matches
-     * 
-     */
-    public Set<UIModule> getAllValuesOfuiModule(final JClass pJClass, final UIClass pUiClass, final EObject pTrace) {
-      return rawStreamAllValuesOfuiModule(new Object[]{pJClass, pUiClass, null, pTrace}).collect(Collectors.toSet());
+    public Set<JClass> getAllValuesOfjClass(final EObject pTrace) {
+      return rawStreamAllValuesOfjClass(new Object[]{null, pTrace}).collect(Collectors.toSet());
     }
     
     /**
@@ -725,8 +513,8 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
      * @return the Stream of all values or empty set if there are no matches
      * 
      */
-    public Stream<EObject> streamAllValuesOftrace(final JClass pJClass, final UIClass pUiClass, final UIModule pUiModule) {
-      return rawStreamAllValuesOftrace(new Object[]{pJClass, pUiClass, pUiModule, null});
+    public Stream<EObject> streamAllValuesOftrace(final JClass pJClass) {
+      return rawStreamAllValuesOftrace(new Object[]{pJClass, null});
     }
     
     /**
@@ -743,14 +531,14 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
      * @return the Set of all values or empty set if there are no matches
      * 
      */
-    public Set<EObject> getAllValuesOftrace(final JClass pJClass, final UIClass pUiClass, final UIModule pUiModule) {
-      return rawStreamAllValuesOftrace(new Object[]{pJClass, pUiClass, pUiModule, null}).collect(Collectors.toSet());
+    public Set<EObject> getAllValuesOftrace(final JClass pJClass) {
+      return rawStreamAllValuesOftrace(new Object[]{pJClass, null}).collect(Collectors.toSet());
     }
     
     @Override
     protected JClassWithGuardConditionQueryForModify.Match tupleToMatch(final Tuple t) {
       try {
-          return JClassWithGuardConditionQueryForModify.Match.newMatch((JClass) t.get(POSITION_JCLASS), (UIClass) t.get(POSITION_UICLASS), (UIModule) t.get(POSITION_UIMODULE), (EObject) t.get(POSITION_TRACE));
+          return JClassWithGuardConditionQueryForModify.Match.newMatch((JClass) t.get(POSITION_JCLASS), (EObject) t.get(POSITION_TRACE));
       } catch(ClassCastException e) {
           LOGGER.error("Element(s) in tuple not properly typed!",e);
           return null;
@@ -760,7 +548,7 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
     @Override
     protected JClassWithGuardConditionQueryForModify.Match arrayToMatch(final Object[] match) {
       try {
-          return JClassWithGuardConditionQueryForModify.Match.newMatch((JClass) match[POSITION_JCLASS], (UIClass) match[POSITION_UICLASS], (UIModule) match[POSITION_UIMODULE], (EObject) match[POSITION_TRACE]);
+          return JClassWithGuardConditionQueryForModify.Match.newMatch((JClass) match[POSITION_JCLASS], (EObject) match[POSITION_TRACE]);
       } catch(ClassCastException e) {
           LOGGER.error("Element(s) in array not properly typed!",e);
           return null;
@@ -770,7 +558,7 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
     @Override
     protected JClassWithGuardConditionQueryForModify.Match arrayToMatchMutable(final Object[] match) {
       try {
-          return JClassWithGuardConditionQueryForModify.Match.newMutableMatch((JClass) match[POSITION_JCLASS], (UIClass) match[POSITION_UICLASS], (UIModule) match[POSITION_UIMODULE], (EObject) match[POSITION_TRACE]);
+          return JClassWithGuardConditionQueryForModify.Match.newMutableMatch((JClass) match[POSITION_JCLASS], (EObject) match[POSITION_TRACE]);
       } catch(ClassCastException e) {
           LOGGER.error("Element(s) in array not properly typed!",e);
           return null;
@@ -821,7 +609,7 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
   
   @Override
   public JClassWithGuardConditionQueryForModify.Match newMatch(final Object... parameters) {
-    return JClassWithGuardConditionQueryForModify.Match.newMatch((psm.JClass) parameters[0], (ui.UIClass) parameters[1], (ui.UIModule) parameters[2], (org.eclipse.emf.ecore.EObject) parameters[3]);
+    return JClassWithGuardConditionQueryForModify.Match.newMatch((psm.JClass) parameters[0], (org.eclipse.emf.ecore.EObject) parameters[1]);
   }
   
   /**
@@ -855,13 +643,9 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
     
     private final PParameter parameter_jClass = new PParameter("jClass", "psm.JClass", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://blackbelt.hu/judo/meta/psm", "JClass")), PParameterDirection.INOUT);
     
-    private final PParameter parameter_uiClass = new PParameter("uiClass", "ui.UIClass", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://blackbelt.hu/judo/meta/psm/ui", "UIClass")), PParameterDirection.INOUT);
-    
-    private final PParameter parameter_uiModule = new PParameter("uiModule", "ui.UIModule", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://blackbelt.hu/judo/meta/psm/ui", "UIModule")), PParameterDirection.INOUT);
-    
     private final PParameter parameter_trace = new PParameter("trace", "org.eclipse.emf.ecore.EObject", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://blackbelt.hu/judo/meta/psm/ui/traceability", "PSMToUITrace")), PParameterDirection.INOUT);
     
-    private final List<PParameter> parameters = Arrays.asList(parameter_jClass, parameter_uiClass, parameter_uiModule, parameter_trace);
+    private final List<PParameter> parameters = Arrays.asList(parameter_jClass, parameter_trace);
     
     private GeneratedPQuery() {
       super(PVisibility.PUBLIC);
@@ -874,7 +658,7 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
     
     @Override
     public List<String> getParameterNames() {
-      return Arrays.asList("jClass","uiClass","uiModule","trace");
+      return Arrays.asList("jClass","trace");
     }
     
     @Override
@@ -889,31 +673,16 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
       {
           PBody body = new PBody(this);
           PVariable var_jClass = body.getOrCreateVariableByName("jClass");
-          PVariable var_uiClass = body.getOrCreateVariableByName("uiClass");
-          PVariable var_uiModule = body.getOrCreateVariableByName("uiModule");
           PVariable var_trace = body.getOrCreateVariableByName("trace");
-          PVariable var_jPackage = body.getOrCreateVariableByName("jPackage");
           PVariable var___0_ = body.getOrCreateVariableByName("_<0>");
           new TypeConstraint(body, Tuples.flatTupleOf(var_jClass), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm", "JClass")));
-          new TypeConstraint(body, Tuples.flatTupleOf(var_uiClass), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm/ui", "UIClass")));
-          new TypeConstraint(body, Tuples.flatTupleOf(var_uiModule), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm/ui", "UIModule")));
           new TypeConstraint(body, Tuples.flatTupleOf(var_trace), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm/ui/traceability", "PSMToUITrace")));
           body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
              new ExportedParameter(body, var_jClass, parameter_jClass),
-             new ExportedParameter(body, var_uiClass, parameter_uiClass),
-             new ExportedParameter(body, var_uiModule, parameter_uiModule),
              new ExportedParameter(body, var_trace, parameter_trace)
           ));
-          // 	JClass.^package(jClass, jPackage)
-          new TypeConstraint(body, Tuples.flatTupleOf(var_jClass), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm", "JClass")));
-          PVariable var__virtual_0_ = body.getOrCreateVariableByName(".virtual{0}");
-          new TypeConstraint(body, Tuples.flatTupleOf(var_jClass, var__virtual_0_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://blackbelt.hu/judo/meta/psm", "JClass", "package")));
-          new TypeConstraint(body, Tuples.flatTupleOf(var__virtual_0_), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm", "JPackage")));
-          new Equality(body, var__virtual_0_, var_jPackage);
-          // 	find alreadyTransformed(jClass, uiClass, trace)
-          new PositivePatternCall(body, Tuples.flatTupleOf(var_jClass, var_uiClass, var_trace), AlreadyTransformed.instance().getInternalQueryRepresentation());
-          // 	find alreadyTransformed(jPackage, uiModule, _)
-          new PositivePatternCall(body, Tuples.flatTupleOf(var_jPackage, var_uiModule, var___0_), AlreadyTransformed.instance().getInternalQueryRepresentation());
+          // 	find psmToUiTrace(jClass, _, trace)
+          new PositivePatternCall(body, Tuples.flatTupleOf(var_jClass, var___0_, var_trace), PsmToUiTrace.instance().getInternalQueryRepresentation());
           bodies.add(body);
       }
       return bodies;

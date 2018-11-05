@@ -23,11 +23,9 @@ import org.eclipse.viatra.query.runtime.api.impl.BaseGeneratedEMFQuerySpecificat
 import org.eclipse.viatra.query.runtime.api.impl.BaseMatcher;
 import org.eclipse.viatra.query.runtime.api.impl.BasePatternMatch;
 import org.eclipse.viatra.query.runtime.emf.types.EClassTransitiveInstancesKey;
-import org.eclipse.viatra.query.runtime.emf.types.EStructuralFeatureInstancesKey;
 import org.eclipse.viatra.query.runtime.matchers.backend.QueryEvaluationHint;
 import org.eclipse.viatra.query.runtime.matchers.psystem.PBody;
 import org.eclipse.viatra.query.runtime.matchers.psystem.PVariable;
-import org.eclipse.viatra.query.runtime.matchers.psystem.basicdeferred.Equality;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicdeferred.ExportedParameter;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicenumerables.PositivePatternCall;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicenumerables.TypeConstraint;
@@ -38,7 +36,7 @@ import org.eclipse.viatra.query.runtime.matchers.tuple.Tuple;
 import org.eclipse.viatra.query.runtime.matchers.tuple.Tuples;
 import org.eclipse.viatra.query.runtime.util.ViatraQueryLoggingUtil;
 import psm.JUIMenuItem;
-import queries.AlreadyTransformed;
+import queries.PsmToUiTrace;
 import ui.UIMenuItem;
 
 /**
@@ -46,10 +44,8 @@ import ui.UIMenuItem;
  * 
  * <p>Original source:
  *         <code><pre>
- *         pattern findMenuItemToSetParent(jMenuItem : JUIMenuItem, uiMenuItem : UIMenuItem, parentMenuItem : UIMenuItem) {
- *         	JUIMenuItem.parent(jMenuItem, parent);
- *         	find alreadyTransformed(jMenuItem, uiMenuItem, _);
- *         	find alreadyTransformed(parent, parentMenuItem, _);
+ *         pattern findMenuItemToSetParent(jMenuItem : JUIMenuItem, uiMenuItem : UIMenuItem) {
+ *         	find psmToUiTrace(jMenuItem, uiMenuItem, _);
  *         }
  * </pre></code>
  * 
@@ -76,21 +72,17 @@ public final class FindMenuItemToSetParent extends BaseGeneratedEMFQuerySpecific
     
     private UIMenuItem fUiMenuItem;
     
-    private UIMenuItem fParentMenuItem;
+    private static List<String> parameterNames = makeImmutableList("jMenuItem", "uiMenuItem");
     
-    private static List<String> parameterNames = makeImmutableList("jMenuItem", "uiMenuItem", "parentMenuItem");
-    
-    private Match(final JUIMenuItem pJMenuItem, final UIMenuItem pUiMenuItem, final UIMenuItem pParentMenuItem) {
+    private Match(final JUIMenuItem pJMenuItem, final UIMenuItem pUiMenuItem) {
       this.fJMenuItem = pJMenuItem;
       this.fUiMenuItem = pUiMenuItem;
-      this.fParentMenuItem = pParentMenuItem;
     }
     
     @Override
     public Object get(final String parameterName) {
       if ("jMenuItem".equals(parameterName)) return this.fJMenuItem;
       if ("uiMenuItem".equals(parameterName)) return this.fUiMenuItem;
-      if ("parentMenuItem".equals(parameterName)) return this.fParentMenuItem;
       return null;
     }
     
@@ -102,10 +94,6 @@ public final class FindMenuItemToSetParent extends BaseGeneratedEMFQuerySpecific
       return this.fUiMenuItem;
     }
     
-    public UIMenuItem getParentMenuItem() {
-      return this.fParentMenuItem;
-    }
-    
     @Override
     public boolean set(final String parameterName, final Object newValue) {
       if (!isMutable()) throw new java.lang.UnsupportedOperationException();
@@ -115,10 +103,6 @@ public final class FindMenuItemToSetParent extends BaseGeneratedEMFQuerySpecific
       }
       if ("uiMenuItem".equals(parameterName) ) {
           this.fUiMenuItem = (UIMenuItem) newValue;
-          return true;
-      }
-      if ("parentMenuItem".equals(parameterName) ) {
-          this.fParentMenuItem = (UIMenuItem) newValue;
           return true;
       }
       return false;
@@ -134,11 +118,6 @@ public final class FindMenuItemToSetParent extends BaseGeneratedEMFQuerySpecific
       this.fUiMenuItem = pUiMenuItem;
     }
     
-    public void setParentMenuItem(final UIMenuItem pParentMenuItem) {
-      if (!isMutable()) throw new java.lang.UnsupportedOperationException();
-      this.fParentMenuItem = pParentMenuItem;
-    }
-    
     @Override
     public String patternName() {
       return "queries.findMenuItemToSetParent";
@@ -151,26 +130,25 @@ public final class FindMenuItemToSetParent extends BaseGeneratedEMFQuerySpecific
     
     @Override
     public Object[] toArray() {
-      return new Object[]{fJMenuItem, fUiMenuItem, fParentMenuItem};
+      return new Object[]{fJMenuItem, fUiMenuItem};
     }
     
     @Override
     public FindMenuItemToSetParent.Match toImmutable() {
-      return isMutable() ? newMatch(fJMenuItem, fUiMenuItem, fParentMenuItem) : this;
+      return isMutable() ? newMatch(fJMenuItem, fUiMenuItem) : this;
     }
     
     @Override
     public String prettyPrint() {
       StringBuilder result = new StringBuilder();
       result.append("\"jMenuItem\"=" + prettyPrintValue(fJMenuItem) + ", ");
-      result.append("\"uiMenuItem\"=" + prettyPrintValue(fUiMenuItem) + ", ");
-      result.append("\"parentMenuItem\"=" + prettyPrintValue(fParentMenuItem));
+      result.append("\"uiMenuItem\"=" + prettyPrintValue(fUiMenuItem));
       return result.toString();
     }
     
     @Override
     public int hashCode() {
-      return Objects.hash(fJMenuItem, fUiMenuItem, fParentMenuItem);
+      return Objects.hash(fJMenuItem, fUiMenuItem);
     }
     
     @Override
@@ -182,7 +160,7 @@ public final class FindMenuItemToSetParent extends BaseGeneratedEMFQuerySpecific
       }
       if ((obj instanceof FindMenuItemToSetParent.Match)) {
           FindMenuItemToSetParent.Match other = (FindMenuItemToSetParent.Match) obj;
-          return Objects.equals(fJMenuItem, other.fJMenuItem) && Objects.equals(fUiMenuItem, other.fUiMenuItem) && Objects.equals(fParentMenuItem, other.fParentMenuItem);
+          return Objects.equals(fJMenuItem, other.fJMenuItem) && Objects.equals(fUiMenuItem, other.fUiMenuItem);
       } else {
           // this should be infrequent
           if (!(obj instanceof IPatternMatch)) {
@@ -206,7 +184,7 @@ public final class FindMenuItemToSetParent extends BaseGeneratedEMFQuerySpecific
      * 
      */
     public static FindMenuItemToSetParent.Match newEmptyMatch() {
-      return new Mutable(null, null, null);
+      return new Mutable(null, null);
     }
     
     /**
@@ -215,12 +193,11 @@ public final class FindMenuItemToSetParent extends BaseGeneratedEMFQuerySpecific
      * 
      * @param pJMenuItem the fixed value of pattern parameter jMenuItem, or null if not bound.
      * @param pUiMenuItem the fixed value of pattern parameter uiMenuItem, or null if not bound.
-     * @param pParentMenuItem the fixed value of pattern parameter parentMenuItem, or null if not bound.
      * @return the new, mutable (partial) match object.
      * 
      */
-    public static FindMenuItemToSetParent.Match newMutableMatch(final JUIMenuItem pJMenuItem, final UIMenuItem pUiMenuItem, final UIMenuItem pParentMenuItem) {
-      return new Mutable(pJMenuItem, pUiMenuItem, pParentMenuItem);
+    public static FindMenuItemToSetParent.Match newMutableMatch(final JUIMenuItem pJMenuItem, final UIMenuItem pUiMenuItem) {
+      return new Mutable(pJMenuItem, pUiMenuItem);
     }
     
     /**
@@ -229,17 +206,16 @@ public final class FindMenuItemToSetParent extends BaseGeneratedEMFQuerySpecific
      * <p>The returned match will be immutable. Use {@link #newEmptyMatch()} to obtain a mutable match object.
      * @param pJMenuItem the fixed value of pattern parameter jMenuItem, or null if not bound.
      * @param pUiMenuItem the fixed value of pattern parameter uiMenuItem, or null if not bound.
-     * @param pParentMenuItem the fixed value of pattern parameter parentMenuItem, or null if not bound.
      * @return the (partial) match object.
      * 
      */
-    public static FindMenuItemToSetParent.Match newMatch(final JUIMenuItem pJMenuItem, final UIMenuItem pUiMenuItem, final UIMenuItem pParentMenuItem) {
-      return new Immutable(pJMenuItem, pUiMenuItem, pParentMenuItem);
+    public static FindMenuItemToSetParent.Match newMatch(final JUIMenuItem pJMenuItem, final UIMenuItem pUiMenuItem) {
+      return new Immutable(pJMenuItem, pUiMenuItem);
     }
     
     private static final class Mutable extends FindMenuItemToSetParent.Match {
-      Mutable(final JUIMenuItem pJMenuItem, final UIMenuItem pUiMenuItem, final UIMenuItem pParentMenuItem) {
-        super(pJMenuItem, pUiMenuItem, pParentMenuItem);
+      Mutable(final JUIMenuItem pJMenuItem, final UIMenuItem pUiMenuItem) {
+        super(pJMenuItem, pUiMenuItem);
       }
       
       @Override
@@ -249,8 +225,8 @@ public final class FindMenuItemToSetParent extends BaseGeneratedEMFQuerySpecific
     }
     
     private static final class Immutable extends FindMenuItemToSetParent.Match {
-      Immutable(final JUIMenuItem pJMenuItem, final UIMenuItem pUiMenuItem, final UIMenuItem pParentMenuItem) {
-        super(pJMenuItem, pUiMenuItem, pParentMenuItem);
+      Immutable(final JUIMenuItem pJMenuItem, final UIMenuItem pUiMenuItem) {
+        super(pJMenuItem, pUiMenuItem);
       }
       
       @Override
@@ -271,10 +247,8 @@ public final class FindMenuItemToSetParent extends BaseGeneratedEMFQuerySpecific
    * 
    * <p>Original source:
    * <code><pre>
-   * pattern findMenuItemToSetParent(jMenuItem : JUIMenuItem, uiMenuItem : UIMenuItem, parentMenuItem : UIMenuItem) {
-   * 	JUIMenuItem.parent(jMenuItem, parent);
-   * 	find alreadyTransformed(jMenuItem, uiMenuItem, _);
-   * 	find alreadyTransformed(parent, parentMenuItem, _);
+   * pattern findMenuItemToSetParent(jMenuItem : JUIMenuItem, uiMenuItem : UIMenuItem) {
+   * 	find psmToUiTrace(jMenuItem, uiMenuItem, _);
    * }
    * </pre></code>
    * 
@@ -314,8 +288,6 @@ public final class FindMenuItemToSetParent extends BaseGeneratedEMFQuerySpecific
     
     private final static int POSITION_UIMENUITEM = 1;
     
-    private final static int POSITION_PARENTMENUITEM = 2;
-    
     private final static Logger LOGGER = ViatraQueryLoggingUtil.getLogger(FindMenuItemToSetParent.Matcher.class);
     
     /**
@@ -334,12 +306,11 @@ public final class FindMenuItemToSetParent extends BaseGeneratedEMFQuerySpecific
      * Returns the set of all matches of the pattern that conform to the given fixed values of some parameters.
      * @param pJMenuItem the fixed value of pattern parameter jMenuItem, or null if not bound.
      * @param pUiMenuItem the fixed value of pattern parameter uiMenuItem, or null if not bound.
-     * @param pParentMenuItem the fixed value of pattern parameter parentMenuItem, or null if not bound.
      * @return matches represented as a Match object.
      * 
      */
-    public Collection<FindMenuItemToSetParent.Match> getAllMatches(final JUIMenuItem pJMenuItem, final UIMenuItem pUiMenuItem, final UIMenuItem pParentMenuItem) {
-      return rawStreamAllMatches(new Object[]{pJMenuItem, pUiMenuItem, pParentMenuItem}).collect(Collectors.toSet());
+    public Collection<FindMenuItemToSetParent.Match> getAllMatches(final JUIMenuItem pJMenuItem, final UIMenuItem pUiMenuItem) {
+      return rawStreamAllMatches(new Object[]{pJMenuItem, pUiMenuItem}).collect(Collectors.toSet());
     }
     
     /**
@@ -350,12 +321,11 @@ public final class FindMenuItemToSetParent extends BaseGeneratedEMFQuerySpecific
      * In such cases, either rely on {@link #getAllMatches()} or collect the results of the stream in end-user code.
      * @param pJMenuItem the fixed value of pattern parameter jMenuItem, or null if not bound.
      * @param pUiMenuItem the fixed value of pattern parameter uiMenuItem, or null if not bound.
-     * @param pParentMenuItem the fixed value of pattern parameter parentMenuItem, or null if not bound.
      * @return a stream of matches represented as a Match object.
      * 
      */
-    public Stream<FindMenuItemToSetParent.Match> streamAllMatches(final JUIMenuItem pJMenuItem, final UIMenuItem pUiMenuItem, final UIMenuItem pParentMenuItem) {
-      return rawStreamAllMatches(new Object[]{pJMenuItem, pUiMenuItem, pParentMenuItem});
+    public Stream<FindMenuItemToSetParent.Match> streamAllMatches(final JUIMenuItem pJMenuItem, final UIMenuItem pUiMenuItem) {
+      return rawStreamAllMatches(new Object[]{pJMenuItem, pUiMenuItem});
     }
     
     /**
@@ -363,12 +333,11 @@ public final class FindMenuItemToSetParent extends BaseGeneratedEMFQuerySpecific
      * Neither determinism nor randomness of selection is guaranteed.
      * @param pJMenuItem the fixed value of pattern parameter jMenuItem, or null if not bound.
      * @param pUiMenuItem the fixed value of pattern parameter uiMenuItem, or null if not bound.
-     * @param pParentMenuItem the fixed value of pattern parameter parentMenuItem, or null if not bound.
      * @return a match represented as a Match object, or null if no match is found.
      * 
      */
-    public Optional<FindMenuItemToSetParent.Match> getOneArbitraryMatch(final JUIMenuItem pJMenuItem, final UIMenuItem pUiMenuItem, final UIMenuItem pParentMenuItem) {
-      return rawGetOneArbitraryMatch(new Object[]{pJMenuItem, pUiMenuItem, pParentMenuItem});
+    public Optional<FindMenuItemToSetParent.Match> getOneArbitraryMatch(final JUIMenuItem pJMenuItem, final UIMenuItem pUiMenuItem) {
+      return rawGetOneArbitraryMatch(new Object[]{pJMenuItem, pUiMenuItem});
     }
     
     /**
@@ -376,24 +345,22 @@ public final class FindMenuItemToSetParent extends BaseGeneratedEMFQuerySpecific
      * under any possible substitution of the unspecified parameters (if any).
      * @param pJMenuItem the fixed value of pattern parameter jMenuItem, or null if not bound.
      * @param pUiMenuItem the fixed value of pattern parameter uiMenuItem, or null if not bound.
-     * @param pParentMenuItem the fixed value of pattern parameter parentMenuItem, or null if not bound.
      * @return true if the input is a valid (partial) match of the pattern.
      * 
      */
-    public boolean hasMatch(final JUIMenuItem pJMenuItem, final UIMenuItem pUiMenuItem, final UIMenuItem pParentMenuItem) {
-      return rawHasMatch(new Object[]{pJMenuItem, pUiMenuItem, pParentMenuItem});
+    public boolean hasMatch(final JUIMenuItem pJMenuItem, final UIMenuItem pUiMenuItem) {
+      return rawHasMatch(new Object[]{pJMenuItem, pUiMenuItem});
     }
     
     /**
      * Returns the number of all matches of the pattern that conform to the given fixed values of some parameters.
      * @param pJMenuItem the fixed value of pattern parameter jMenuItem, or null if not bound.
      * @param pUiMenuItem the fixed value of pattern parameter uiMenuItem, or null if not bound.
-     * @param pParentMenuItem the fixed value of pattern parameter parentMenuItem, or null if not bound.
      * @return the number of pattern matches found.
      * 
      */
-    public int countMatches(final JUIMenuItem pJMenuItem, final UIMenuItem pUiMenuItem, final UIMenuItem pParentMenuItem) {
-      return rawCountMatches(new Object[]{pJMenuItem, pUiMenuItem, pParentMenuItem});
+    public int countMatches(final JUIMenuItem pJMenuItem, final UIMenuItem pUiMenuItem) {
+      return rawCountMatches(new Object[]{pJMenuItem, pUiMenuItem});
     }
     
     /**
@@ -401,13 +368,12 @@ public final class FindMenuItemToSetParent extends BaseGeneratedEMFQuerySpecific
      * Neither determinism nor randomness of selection is guaranteed.
      * @param pJMenuItem the fixed value of pattern parameter jMenuItem, or null if not bound.
      * @param pUiMenuItem the fixed value of pattern parameter uiMenuItem, or null if not bound.
-     * @param pParentMenuItem the fixed value of pattern parameter parentMenuItem, or null if not bound.
      * @param processor the action that will process the selected match.
      * @return true if the pattern has at least one match with the given parameter values, false if the processor was not invoked
      * 
      */
-    public boolean forOneArbitraryMatch(final JUIMenuItem pJMenuItem, final UIMenuItem pUiMenuItem, final UIMenuItem pParentMenuItem, final Consumer<? super FindMenuItemToSetParent.Match> processor) {
-      return rawForOneArbitraryMatch(new Object[]{pJMenuItem, pUiMenuItem, pParentMenuItem}, processor);
+    public boolean forOneArbitraryMatch(final JUIMenuItem pJMenuItem, final UIMenuItem pUiMenuItem, final Consumer<? super FindMenuItemToSetParent.Match> processor) {
+      return rawForOneArbitraryMatch(new Object[]{pJMenuItem, pUiMenuItem}, processor);
     }
     
     /**
@@ -416,12 +382,11 @@ public final class FindMenuItemToSetParent extends BaseGeneratedEMFQuerySpecific
      * <p>The returned match will be immutable. Use {@link #newEmptyMatch()} to obtain a mutable match object.
      * @param pJMenuItem the fixed value of pattern parameter jMenuItem, or null if not bound.
      * @param pUiMenuItem the fixed value of pattern parameter uiMenuItem, or null if not bound.
-     * @param pParentMenuItem the fixed value of pattern parameter parentMenuItem, or null if not bound.
      * @return the (partial) match object.
      * 
      */
-    public FindMenuItemToSetParent.Match newMatch(final JUIMenuItem pJMenuItem, final UIMenuItem pUiMenuItem, final UIMenuItem pParentMenuItem) {
-      return FindMenuItemToSetParent.Match.newMatch(pJMenuItem, pUiMenuItem, pParentMenuItem);
+    public FindMenuItemToSetParent.Match newMatch(final JUIMenuItem pJMenuItem, final UIMenuItem pUiMenuItem) {
+      return FindMenuItemToSetParent.Match.newMatch(pJMenuItem, pUiMenuItem);
     }
     
     /**
@@ -475,8 +440,8 @@ public final class FindMenuItemToSetParent extends BaseGeneratedEMFQuerySpecific
      * @return the Stream of all values or empty set if there are no matches
      * 
      */
-    public Stream<JUIMenuItem> streamAllValuesOfjMenuItem(final UIMenuItem pUiMenuItem, final UIMenuItem pParentMenuItem) {
-      return rawStreamAllValuesOfjMenuItem(new Object[]{null, pUiMenuItem, pParentMenuItem});
+    public Stream<JUIMenuItem> streamAllValuesOfjMenuItem(final UIMenuItem pUiMenuItem) {
+      return rawStreamAllValuesOfjMenuItem(new Object[]{null, pUiMenuItem});
     }
     
     /**
@@ -493,8 +458,8 @@ public final class FindMenuItemToSetParent extends BaseGeneratedEMFQuerySpecific
      * @return the Set of all values or empty set if there are no matches
      * 
      */
-    public Set<JUIMenuItem> getAllValuesOfjMenuItem(final UIMenuItem pUiMenuItem, final UIMenuItem pParentMenuItem) {
-      return rawStreamAllValuesOfjMenuItem(new Object[]{null, pUiMenuItem, pParentMenuItem}).collect(Collectors.toSet());
+    public Set<JUIMenuItem> getAllValuesOfjMenuItem(final UIMenuItem pUiMenuItem) {
+      return rawStreamAllValuesOfjMenuItem(new Object[]{null, pUiMenuItem}).collect(Collectors.toSet());
     }
     
     /**
@@ -548,8 +513,8 @@ public final class FindMenuItemToSetParent extends BaseGeneratedEMFQuerySpecific
      * @return the Stream of all values or empty set if there are no matches
      * 
      */
-    public Stream<UIMenuItem> streamAllValuesOfuiMenuItem(final JUIMenuItem pJMenuItem, final UIMenuItem pParentMenuItem) {
-      return rawStreamAllValuesOfuiMenuItem(new Object[]{pJMenuItem, null, pParentMenuItem});
+    public Stream<UIMenuItem> streamAllValuesOfuiMenuItem(final JUIMenuItem pJMenuItem) {
+      return rawStreamAllValuesOfuiMenuItem(new Object[]{pJMenuItem, null});
     }
     
     /**
@@ -566,87 +531,14 @@ public final class FindMenuItemToSetParent extends BaseGeneratedEMFQuerySpecific
      * @return the Set of all values or empty set if there are no matches
      * 
      */
-    public Set<UIMenuItem> getAllValuesOfuiMenuItem(final JUIMenuItem pJMenuItem, final UIMenuItem pParentMenuItem) {
-      return rawStreamAllValuesOfuiMenuItem(new Object[]{pJMenuItem, null, pParentMenuItem}).collect(Collectors.toSet());
-    }
-    
-    /**
-     * Retrieve the set of values that occur in matches for parentMenuItem.
-     * @return the Set of all values or empty set if there are no matches
-     * 
-     */
-    protected Stream<UIMenuItem> rawStreamAllValuesOfparentMenuItem(final Object[] parameters) {
-      return rawStreamAllValues(POSITION_PARENTMENUITEM, parameters).map(UIMenuItem.class::cast);
-    }
-    
-    /**
-     * Retrieve the set of values that occur in matches for parentMenuItem.
-     * @return the Set of all values or empty set if there are no matches
-     * 
-     */
-    public Set<UIMenuItem> getAllValuesOfparentMenuItem() {
-      return rawStreamAllValuesOfparentMenuItem(emptyArray()).collect(Collectors.toSet());
-    }
-    
-    /**
-     * Retrieve the set of values that occur in matches for parentMenuItem.
-     * @return the Set of all values or empty set if there are no matches
-     * 
-     */
-    public Stream<UIMenuItem> streamAllValuesOfparentMenuItem() {
-      return rawStreamAllValuesOfparentMenuItem(emptyArray());
-    }
-    
-    /**
-     * Retrieve the set of values that occur in matches for parentMenuItem.
-     * </p>
-     * <strong>NOTE</strong>: It is important not to modify the source model while the stream is being processed.
-     * If the match set of the pattern changes during processing, the contents of the stream is <strong>undefined</strong>.
-     * In such cases, either rely on {@link #getAllMatches()} or collect the results of the stream in end-user code.
-     *      
-     * @return the Stream of all values or empty set if there are no matches
-     * 
-     */
-    public Stream<UIMenuItem> streamAllValuesOfparentMenuItem(final FindMenuItemToSetParent.Match partialMatch) {
-      return rawStreamAllValuesOfparentMenuItem(partialMatch.toArray());
-    }
-    
-    /**
-     * Retrieve the set of values that occur in matches for parentMenuItem.
-     * </p>
-     * <strong>NOTE</strong>: It is important not to modify the source model while the stream is being processed.
-     * If the match set of the pattern changes during processing, the contents of the stream is <strong>undefined</strong>.
-     * In such cases, either rely on {@link #getAllMatches()} or collect the results of the stream in end-user code.
-     *      
-     * @return the Stream of all values or empty set if there are no matches
-     * 
-     */
-    public Stream<UIMenuItem> streamAllValuesOfparentMenuItem(final JUIMenuItem pJMenuItem, final UIMenuItem pUiMenuItem) {
-      return rawStreamAllValuesOfparentMenuItem(new Object[]{pJMenuItem, pUiMenuItem, null});
-    }
-    
-    /**
-     * Retrieve the set of values that occur in matches for parentMenuItem.
-     * @return the Set of all values or empty set if there are no matches
-     * 
-     */
-    public Set<UIMenuItem> getAllValuesOfparentMenuItem(final FindMenuItemToSetParent.Match partialMatch) {
-      return rawStreamAllValuesOfparentMenuItem(partialMatch.toArray()).collect(Collectors.toSet());
-    }
-    
-    /**
-     * Retrieve the set of values that occur in matches for parentMenuItem.
-     * @return the Set of all values or empty set if there are no matches
-     * 
-     */
-    public Set<UIMenuItem> getAllValuesOfparentMenuItem(final JUIMenuItem pJMenuItem, final UIMenuItem pUiMenuItem) {
-      return rawStreamAllValuesOfparentMenuItem(new Object[]{pJMenuItem, pUiMenuItem, null}).collect(Collectors.toSet());
+    public Set<UIMenuItem> getAllValuesOfuiMenuItem(final JUIMenuItem pJMenuItem) {
+      return rawStreamAllValuesOfuiMenuItem(new Object[]{pJMenuItem, null}).collect(Collectors.toSet());
     }
     
     @Override
     protected FindMenuItemToSetParent.Match tupleToMatch(final Tuple t) {
       try {
-          return FindMenuItemToSetParent.Match.newMatch((JUIMenuItem) t.get(POSITION_JMENUITEM), (UIMenuItem) t.get(POSITION_UIMENUITEM), (UIMenuItem) t.get(POSITION_PARENTMENUITEM));
+          return FindMenuItemToSetParent.Match.newMatch((JUIMenuItem) t.get(POSITION_JMENUITEM), (UIMenuItem) t.get(POSITION_UIMENUITEM));
       } catch(ClassCastException e) {
           LOGGER.error("Element(s) in tuple not properly typed!",e);
           return null;
@@ -656,7 +548,7 @@ public final class FindMenuItemToSetParent extends BaseGeneratedEMFQuerySpecific
     @Override
     protected FindMenuItemToSetParent.Match arrayToMatch(final Object[] match) {
       try {
-          return FindMenuItemToSetParent.Match.newMatch((JUIMenuItem) match[POSITION_JMENUITEM], (UIMenuItem) match[POSITION_UIMENUITEM], (UIMenuItem) match[POSITION_PARENTMENUITEM]);
+          return FindMenuItemToSetParent.Match.newMatch((JUIMenuItem) match[POSITION_JMENUITEM], (UIMenuItem) match[POSITION_UIMENUITEM]);
       } catch(ClassCastException e) {
           LOGGER.error("Element(s) in array not properly typed!",e);
           return null;
@@ -666,7 +558,7 @@ public final class FindMenuItemToSetParent extends BaseGeneratedEMFQuerySpecific
     @Override
     protected FindMenuItemToSetParent.Match arrayToMatchMutable(final Object[] match) {
       try {
-          return FindMenuItemToSetParent.Match.newMutableMatch((JUIMenuItem) match[POSITION_JMENUITEM], (UIMenuItem) match[POSITION_UIMENUITEM], (UIMenuItem) match[POSITION_PARENTMENUITEM]);
+          return FindMenuItemToSetParent.Match.newMutableMatch((JUIMenuItem) match[POSITION_JMENUITEM], (UIMenuItem) match[POSITION_UIMENUITEM]);
       } catch(ClassCastException e) {
           LOGGER.error("Element(s) in array not properly typed!",e);
           return null;
@@ -717,7 +609,7 @@ public final class FindMenuItemToSetParent extends BaseGeneratedEMFQuerySpecific
   
   @Override
   public FindMenuItemToSetParent.Match newMatch(final Object... parameters) {
-    return FindMenuItemToSetParent.Match.newMatch((psm.JUIMenuItem) parameters[0], (ui.UIMenuItem) parameters[1], (ui.UIMenuItem) parameters[2]);
+    return FindMenuItemToSetParent.Match.newMatch((psm.JUIMenuItem) parameters[0], (ui.UIMenuItem) parameters[1]);
   }
   
   /**
@@ -753,9 +645,7 @@ public final class FindMenuItemToSetParent extends BaseGeneratedEMFQuerySpecific
     
     private final PParameter parameter_uiMenuItem = new PParameter("uiMenuItem", "ui.UIMenuItem", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://blackbelt.hu/judo/meta/psm/ui", "UIMenuItem")), PParameterDirection.INOUT);
     
-    private final PParameter parameter_parentMenuItem = new PParameter("parentMenuItem", "ui.UIMenuItem", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://blackbelt.hu/judo/meta/psm/ui", "UIMenuItem")), PParameterDirection.INOUT);
-    
-    private final List<PParameter> parameters = Arrays.asList(parameter_jMenuItem, parameter_uiMenuItem, parameter_parentMenuItem);
+    private final List<PParameter> parameters = Arrays.asList(parameter_jMenuItem, parameter_uiMenuItem);
     
     private GeneratedPQuery() {
       super(PVisibility.PUBLIC);
@@ -768,7 +658,7 @@ public final class FindMenuItemToSetParent extends BaseGeneratedEMFQuerySpecific
     
     @Override
     public List<String> getParameterNames() {
-      return Arrays.asList("jMenuItem","uiMenuItem","parentMenuItem");
+      return Arrays.asList("jMenuItem","uiMenuItem");
     }
     
     @Override
@@ -784,28 +674,15 @@ public final class FindMenuItemToSetParent extends BaseGeneratedEMFQuerySpecific
           PBody body = new PBody(this);
           PVariable var_jMenuItem = body.getOrCreateVariableByName("jMenuItem");
           PVariable var_uiMenuItem = body.getOrCreateVariableByName("uiMenuItem");
-          PVariable var_parentMenuItem = body.getOrCreateVariableByName("parentMenuItem");
-          PVariable var_parent = body.getOrCreateVariableByName("parent");
           PVariable var___0_ = body.getOrCreateVariableByName("_<0>");
-          PVariable var___1_ = body.getOrCreateVariableByName("_<1>");
           new TypeConstraint(body, Tuples.flatTupleOf(var_jMenuItem), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm", "JUIMenuItem")));
           new TypeConstraint(body, Tuples.flatTupleOf(var_uiMenuItem), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm/ui", "UIMenuItem")));
-          new TypeConstraint(body, Tuples.flatTupleOf(var_parentMenuItem), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm/ui", "UIMenuItem")));
           body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
              new ExportedParameter(body, var_jMenuItem, parameter_jMenuItem),
-             new ExportedParameter(body, var_uiMenuItem, parameter_uiMenuItem),
-             new ExportedParameter(body, var_parentMenuItem, parameter_parentMenuItem)
+             new ExportedParameter(body, var_uiMenuItem, parameter_uiMenuItem)
           ));
-          // 	JUIMenuItem.parent(jMenuItem, parent)
-          new TypeConstraint(body, Tuples.flatTupleOf(var_jMenuItem), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm", "JUIMenuItem")));
-          PVariable var__virtual_0_ = body.getOrCreateVariableByName(".virtual{0}");
-          new TypeConstraint(body, Tuples.flatTupleOf(var_jMenuItem, var__virtual_0_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://blackbelt.hu/judo/meta/psm", "JUIMenuItem", "parent")));
-          new TypeConstraint(body, Tuples.flatTupleOf(var__virtual_0_), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm", "JUIMenuItem")));
-          new Equality(body, var__virtual_0_, var_parent);
-          // 	find alreadyTransformed(jMenuItem, uiMenuItem, _)
-          new PositivePatternCall(body, Tuples.flatTupleOf(var_jMenuItem, var_uiMenuItem, var___0_), AlreadyTransformed.instance().getInternalQueryRepresentation());
-          // 	find alreadyTransformed(parent, parentMenuItem, _)
-          new PositivePatternCall(body, Tuples.flatTupleOf(var_parent, var_parentMenuItem, var___1_), AlreadyTransformed.instance().getInternalQueryRepresentation());
+          // 	find psmToUiTrace(jMenuItem, uiMenuItem, _)
+          new PositivePatternCall(body, Tuples.flatTupleOf(var_jMenuItem, var_uiMenuItem, var___0_), PsmToUiTrace.instance().getInternalQueryRepresentation());
           bodies.add(body);
       }
       return bodies;

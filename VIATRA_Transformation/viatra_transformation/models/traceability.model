@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ASCII"?>
 <traceability:PSMToUI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:psm="http://blackbelt.hu/judo/meta/psm" xmlns:traceability="http://blackbelt.hu/judo/meta/psm/ui/traceability" xmlns:ui="http://blackbelt.hu/judo/meta/psm/ui" xmi:id="_FWdGsK7fEei6TNRUv-4xJg">
-  <jModel href="car-psm.model#/"/>
-  <uiBase href="ui.model#/"/>
+  <jModel href="car-psm.model#_k7bSqrbdEeiRo-00sQWKtg"/>
+  <uiBase href="ui.model#_y1LcgK7hEei6TNRUv-4xJg"/>
   <typeMappings href="../ui_meta/src/library/psmToUiTypeMapping.model#_41J3oMPhEeehI5I5hnUh6Q"/>
 </traceability:PSMToUI>

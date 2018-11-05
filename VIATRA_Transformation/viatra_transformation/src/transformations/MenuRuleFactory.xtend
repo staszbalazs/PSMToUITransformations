@@ -10,15 +10,16 @@ import org.eclipse.viatra.transformation.runtime.emf.modelmanipulation.SimpleMod
 import org.eclipse.viatra.transformation.runtime.emf.rules.eventdriven.EventDrivenTransformationRule
 import org.eclipse.viatra.transformation.runtime.emf.rules.eventdriven.EventDrivenTransformationRuleFactory
 import psm.JMenuItemType
+import queries.FindMenuItemToSetParent
 import queries.FindMenuItemWithParent
 import queries.FindMenuItemWithParentForModify
 import queries.PatternProvider
 import traceability.PSMToUI
+import traceability.PSMToUITrace
 import traceability.TraceabilityPackage
 import ui.UIClass
 import ui.UIMenuItem
 import ui.UiPackage
-import queries.FindMenuItemToSetParent
 
 class MenuRuleFactory {
 	
@@ -44,16 +45,10 @@ class MenuRuleFactory {
 	public def getMenuRule() {
 		if (menuRule === null) {			
 			menuRule = createRule.name("MenuRule").precondition(FindMenuItemWithParent.Matcher.querySpecification())
-				.action(CRUDActivationStateEnum.CREATED) [
-										
+				.action(CRUDActivationStateEnum.CREATED) [ 
 					System.out.println("Transforming menuItem: " + JMenuItem.uuid)
 					
-					var UIMenuItem uiMenuItem;
-					if (JMenuItem.parent.parent === null) {
-						uiMenuItem = psm2ui.uiBase.mainMenu.createChild(UIMenuItem_MenuItems, UIMenuItem) as UIMenuItem
-					} else {
-						uiMenuItem = psm2ui.uiBase.eResource.create(UIMenuItem) as UIMenuItem
-					}
+					var UIMenuItem uiMenuItem = psm2ui.uiBase.eResource.create(UIMenuItem) as UIMenuItem
 					uiMenuItem.name = JMenuItem.name
 					uiMenuItem.uuid = JMenuItem.uuid
 						
@@ -63,8 +58,8 @@ class MenuRuleFactory {
 					
 					//Get menuView
 					if (JMenuItem.getRepresent !== null) {
-						val UIClass represented = PatternProvider.instance().getPsmToUiTrace(engine)
-																.getOneArbitraryMatch(JMenuItem.getRepresent, null)
+						val UIClass represented = PatternProvider.instance().getPsmToUiTrace(engine)	
+																.getOneArbitraryMatch(JMenuItem.getRepresent, null, null)
 																.get()
 																.getIdentifiable as UIClass
 					
@@ -74,11 +69,11 @@ class MenuRuleFactory {
 							uiMenuItem.menuView = represented.getClassView
 						}
 					}
-						
 			].addLifeCycle(Lifecycles.getDefault(false, false)).build
 		}
 		return menuRule
 	}
+	
 	
 	public def getMenuParentSetterRule() {
 		if (menuParentSetterRule === null) {			
@@ -86,9 +81,17 @@ class MenuRuleFactory {
 				.action(CRUDActivationStateEnum.CREATED) [
 										
 					System.out.println("Setting parent to menuItem: " + JMenuItem.uuid)
+							
+					if (JMenuItem.parent.parent === null) {
+						uiMenuItem.moveTo(uiBase.mainMenu, UIMenuItem_MenuItems)
+					} else {
+						val UIMenuItem parentMenuItem = PatternProvider.instance().getPsmToUiTrace(engine)
+															.getOneArbitraryMatch(JMenuItem.parent, null, null)
+															.get()
+															.getIdentifiable() as UIMenuItem
+						uiMenuItem.moveTo(parentMenuItem, UIMenuItem_MenuItems)	
+					}
 					
-					uiMenuItem.moveTo(parentMenuItem, UIMenuItem_MenuItems)
-						
 			].addLifeCycle(Lifecycles.getDefault(false, false)).build
 		}
 		return menuParentSetterRule
@@ -99,29 +102,35 @@ class MenuRuleFactory {
 		if (modifyMenuRule === null) {			
 			modifyMenuRule = createRule.name("ModifyMenuRule").precondition(FindMenuItemWithParentForModify.Matcher.querySpecification())
 			.action(CRUDActivationStateEnum.UPDATED) [
-									
-				System.out.println("Updating menuItem: " + JMenuItem.uuid)
-								
-				uiMenuItem.uuid = JMenuItem.uuid
-				uiMenuItem.name = JMenuItem.name
 				
-				if (JMenuItem.getRepresent !== null) {
-					val UIClass represented = PatternProvider.instance().getPsmToUiTrace(engine)
-															.getOneArbitraryMatch(JMenuItem.getRepresent, null)
-															.get()
-															.getIdentifiable as UIClass
+				if (JMenuItem.eContainer !== null) {
+					System.out.println("Updating menuItem: " + JMenuItem.uuid)
+				
+					var UIMenuItem uiMenuItem = (trace as PSMToUITrace).uiElements.get(0) as UIMenuItem
+					uiMenuItem.uuid = JMenuItem.uuid
+					uiMenuItem.name = JMenuItem.name
 					
-					if (JMenuItem.type == JMenuItemType::LIST) {
-						uiMenuItem.menuView = represented.getListView
-					} else if (JMenuItem.type == JMenuItemType::OBJECT) {
-						uiMenuItem.menuView = represented.getClassView
+					if (JMenuItem.getRepresent !== null) {
+						val UIClass represented = PatternProvider.instance().getPsmToUiTrace(engine)
+																.getOneArbitraryMatch(JMenuItem.getRepresent, null, null)
+																.get()
+																.getIdentifiable as UIClass
+						
+						if (JMenuItem.type == JMenuItemType::LIST) {
+							uiMenuItem.menuView = represented.getListView
+						} else if (JMenuItem.type == JMenuItemType::OBJECT) {
+							uiMenuItem.menuView = represented.getClassView
+						}
+					} else {
+						uiMenuItem.menuView = null;
 					}
 				}
-				
+									
 			].action(CRUDActivationStateEnum.DELETED) [
 									
 				System.out.println("Deleting menuItem: " + JMenuItem.uuid)
-								
+				
+				var UIMenuItem uiMenuItem = (trace as PSMToUITrace).uiElements.get(0) as UIMenuItem
 				uiMenuItem.ownerMenuItem.remove(UIMenuItem_MenuItems, uiMenuItem)
 				psm2ui.remove(PSMToUI_Traces, trace)
 				
