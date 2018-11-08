@@ -3,7 +3,6 @@
   <viewpoint:DAnalysis xmi:id="_QBTJIJ1iEeijQc-iU-grLw" selectedViews="_Q1sagJ1iEeijQc-iU-grLw _Q1yhIJ1iEeijQc-iU-grLw _Q1zIMJ1iEeijQc-iU-grLw _F8FlQJ52EeidSbT92tCKog" version="13.0.0.201804031646">
     <semanticResources>traceability.ecore</semanticResources>
     <semanticResources>http://www.eclipse.org/emf/2002/Ecore</semanticResources>
-    <semanticResources>traceability.genmodel</semanticResources>
     <semanticResources>platform:/resource/ui_meta/model/ui.genmodel</semanticResources>
     <semanticResources>platform:/resource/psm_meta/model/psm.ecore</semanticResources>
     <semanticResources>platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore</semanticResources>
@@ -17,6 +16,10 @@
     <semanticResources>http://blackbelt.hu/judo/meta/psm</semanticResources>
     <semanticResources>http://blackbelt.hu/judo/meta/psm/ui</semanticResources>
     <semanticResources>platform:/resource/ui_meta/src/model/psmToUiTypeMapping.genmodel</semanticResources>
+    <semanticResources>traceability.genmodel</semanticResources>
+    <semanticResources>http://blackbelt/judo/meta/psm</semanticResources>
+    <semanticResources>http://blackbelt/judo/meta/psm/ui</semanticResources>
+    <semanticResources>http://blackbelt/judo/meta/psm/ui/mapping</semanticResources>
     <ownedViews xmi:type="viewpoint:DView" xmi:id="_Q1sagJ1iEeijQc-iU-grLw">
       <viewpoint xmi:type="description:Viewpoint" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Review']"/>
     </ownedViews>

@@ -1,9 +1,9 @@
 package queries
 
-import "platform:/resource/psm_meta/src/model/psm.ecore"
-import "platform:/resource/ui_meta/src/model/ui.ecore"
-import "platform:/resource/ui_meta/src/model/psmToUiTypeMapping.ecore"
-import "platform:/resource/traceability_meta/model/traceability.ecore"
+import "http://blackbelt/judo/meta/psm"
+import "http://blackbelt/judo/meta/psm/ui"
+import "http://blackbelt/judo/meta/psm/ui/traceability"
+import "http://blackbelt/judo/meta/psm/ui/mapping"
 
 //General
 pattern hasUuid(jElement : JElement, uuid : java String) {

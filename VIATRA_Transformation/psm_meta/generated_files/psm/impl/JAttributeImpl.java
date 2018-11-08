@@ -669,7 +669,7 @@ public class JAttributeImpl extends JTypedElementImpl implements JAttribute {
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
-		StringBuilder result = new StringBuilder(super.toString());
+		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (placeholder: ");
 		result.append(placeholder);
 		result.append(", regexp: ");

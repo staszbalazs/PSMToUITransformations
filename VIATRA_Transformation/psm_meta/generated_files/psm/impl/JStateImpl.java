@@ -390,7 +390,7 @@ public class JStateImpl extends JElementImpl implements JState {
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
-		StringBuilder result = new StringBuilder(super.toString());
+		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (initialState: ");
 		result.append(initialState);
 		result.append(", finalState: ");

@@ -915,7 +915,7 @@ public class JRoleImpl extends JElementImpl implements JRole {
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
-		StringBuilder result = new StringBuilder(super.toString());
+		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (lower: ");
 		result.append(lower);
 		result.append(", upper: ");

@@ -39,7 +39,7 @@ public interface PsmPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://blackbelt.hu/judo/meta/psm";
+	String eNS_URI = "http://blackbelt/judo/meta/psm";
 
 	/**
 	 * The package namespace name.

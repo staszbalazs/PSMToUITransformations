@@ -655,7 +655,7 @@ public final class HasUuid extends BaseGeneratedEMFQuerySpecification<HasUuid.Ma
   private static class GeneratedPQuery extends BaseGeneratedEMFPQuery {
     private final static HasUuid.GeneratedPQuery INSTANCE = new GeneratedPQuery();
     
-    private final PParameter parameter_jElement = new PParameter("jElement", "psm.JElement", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://blackbelt.hu/judo/meta/psm", "JElement")), PParameterDirection.INOUT);
+    private final PParameter parameter_jElement = new PParameter("jElement", "psm.JElement", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://blackbelt/judo/meta/psm", "JElement")), PParameterDirection.INOUT);
     
     private final PParameter parameter_uuid = new PParameter("uuid", "java.lang.String", new JavaTransitiveInstancesKey(java.lang.String.class), PParameterDirection.INOUT);
     
@@ -688,16 +688,16 @@ public final class HasUuid extends BaseGeneratedEMFQuerySpecification<HasUuid.Ma
           PBody body = new PBody(this);
           PVariable var_jElement = body.getOrCreateVariableByName("jElement");
           PVariable var_uuid = body.getOrCreateVariableByName("uuid");
-          new TypeConstraint(body, Tuples.flatTupleOf(var_jElement), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm", "JElement")));
+          new TypeConstraint(body, Tuples.flatTupleOf(var_jElement), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt/judo/meta/psm", "JElement")));
           new TypeFilterConstraint(body, Tuples.flatTupleOf(var_uuid), new JavaTransitiveInstancesKey(java.lang.String.class));
           body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
              new ExportedParameter(body, var_jElement, parameter_jElement),
              new ExportedParameter(body, var_uuid, parameter_uuid)
           ));
           // 	JElement.uuid(jElement, uuid)
-          new TypeConstraint(body, Tuples.flatTupleOf(var_jElement), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm", "JElement")));
+          new TypeConstraint(body, Tuples.flatTupleOf(var_jElement), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt/judo/meta/psm", "JElement")));
           PVariable var__virtual_0_ = body.getOrCreateVariableByName(".virtual{0}");
-          new TypeConstraint(body, Tuples.flatTupleOf(var_jElement, var__virtual_0_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://blackbelt.hu/judo/meta/psm", "JElement", "uuid")));
+          new TypeConstraint(body, Tuples.flatTupleOf(var_jElement, var__virtual_0_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://blackbelt/judo/meta/psm", "JElement", "uuid")));
           new TypeConstraint(body, Tuples.flatTupleOf(var__virtual_0_), new EDataTypeInSlotsKey((EDataType)getClassifierLiteral("http://www.eclipse.org/emf/2002/Ecore", "EString")));
           new Equality(body, var__virtual_0_, var_uuid);
           // 	check (		uuid.length > 0	)

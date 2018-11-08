@@ -1,19 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?><plugin>
-  <extension point="org.eclipse.emf.ecore.generated_package">
-    <!-- @generated traceability -->
-    <package class="traceability.TraceabilityPackage" genModel="platform:/traceability_meta/model/traceability.genmodel" uri="http://blackbelt.hu/judo/meta/psm/ui/traceability"/>
-  </extension>
-  <extension point="org.eclipse.emf.ecore.generated_package">
-    <!-- @generated traceability -->
-    <package class="psm.PsmPackage" genModel="platform:/resource/psm_meta/src/model/psm.genmodel" uri="http://blackbelt.hu/judo/meta/psm"/>
-  </extension>
-  <extension point="org.eclipse.emf.ecore.generated_package">
-    <!-- @generated traceability -->
-    <package class="ui.UiPackage" genModel="platform:/resource/ui_meta/src/model/ui.genmodel" uri="http://blackbelt.hu/judo/meta/psm/ui"/>
-  </extension>
-  <extension point="org.eclipse.emf.ecore.generated_package">
-    <package class="psmToUiTypeMapping.PsmToUiTypeMappingPackage" genModel="platform:/resource/ui_meta/src/model/psmToUiTypeMapping.genmodel" uri="http://blackbelt.hu/judo/meta/psm/ui/mapping"/>
-  </extension>
   <extension point="org.eclipse.ui.commands">
     <command defaultHandler="handlers.ToggleTransformationHandler" id="viatra_transformation.command" name="Toggle Transformation"/>
   </extension>

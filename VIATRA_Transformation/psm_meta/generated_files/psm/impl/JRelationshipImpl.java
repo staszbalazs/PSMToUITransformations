@@ -300,7 +300,7 @@ public class JRelationshipImpl extends JElementImpl implements JRelationship {
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
-		StringBuilder result = new StringBuilder(super.toString());
+		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (derived: ");
 		result.append(derived);
 		result.append(')');

@@ -10,13 +10,16 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 import psm.PsmPackage;
 
+import psm.impl.PsmPackageImpl;
 import psmToUiTypeMapping.PsmToUiTypeMappingPackage;
+import psmToUiTypeMapping.impl.PsmToUiTypeMappingPackageImpl;
 import traceability.PSMToUI;
 import traceability.PSMToUITrace;
 import traceability.TraceabilityFactory;
 import traceability.TraceabilityPackage;
 
 import ui.UiPackage;
+import ui.impl.UiPackageImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -85,16 +88,22 @@ public class TraceabilityPackageImpl extends EPackageImpl implements Traceabilit
 
 		isInited = true;
 
-		// Initialize simple dependencies
-		PsmPackage.eINSTANCE.eClass();
-		PsmToUiTypeMappingPackage.eINSTANCE.eClass();
-		UiPackage.eINSTANCE.eClass();
+		// Obtain or create and register interdependencies
+		PsmPackageImpl thePsmPackage = (PsmPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(PsmPackage.eNS_URI) instanceof PsmPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(PsmPackage.eNS_URI) : PsmPackage.eINSTANCE);
+		UiPackageImpl theUiPackage = (UiPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(UiPackage.eNS_URI) instanceof UiPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(UiPackage.eNS_URI) : UiPackage.eINSTANCE);
+		PsmToUiTypeMappingPackageImpl thePsmToUiTypeMappingPackage = (PsmToUiTypeMappingPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(PsmToUiTypeMappingPackage.eNS_URI) instanceof PsmToUiTypeMappingPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(PsmToUiTypeMappingPackage.eNS_URI) : PsmToUiTypeMappingPackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theTraceabilityPackage.createPackageContents();
+		thePsmPackage.createPackageContents();
+		theUiPackage.createPackageContents();
+		thePsmToUiTypeMappingPackage.createPackageContents();
 
 		// Initialize created meta-data
 		theTraceabilityPackage.initializePackageContents();
+		thePsmPackage.initializePackageContents();
+		theUiPackage.initializePackageContents();
+		thePsmToUiTypeMappingPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theTraceabilityPackage.freeze();

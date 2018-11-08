@@ -641,9 +641,9 @@ public final class FindMenuItemToSetParent extends BaseGeneratedEMFQuerySpecific
   private static class GeneratedPQuery extends BaseGeneratedEMFPQuery {
     private final static FindMenuItemToSetParent.GeneratedPQuery INSTANCE = new GeneratedPQuery();
     
-    private final PParameter parameter_jMenuItem = new PParameter("jMenuItem", "psm.JUIMenuItem", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://blackbelt.hu/judo/meta/psm", "JUIMenuItem")), PParameterDirection.INOUT);
+    private final PParameter parameter_jMenuItem = new PParameter("jMenuItem", "psm.JUIMenuItem", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://blackbelt/judo/meta/psm", "JUIMenuItem")), PParameterDirection.INOUT);
     
-    private final PParameter parameter_uiMenuItem = new PParameter("uiMenuItem", "ui.UIMenuItem", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://blackbelt.hu/judo/meta/psm/ui", "UIMenuItem")), PParameterDirection.INOUT);
+    private final PParameter parameter_uiMenuItem = new PParameter("uiMenuItem", "ui.UIMenuItem", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://blackbelt/judo/meta/psm/ui", "UIMenuItem")), PParameterDirection.INOUT);
     
     private final List<PParameter> parameters = Arrays.asList(parameter_jMenuItem, parameter_uiMenuItem);
     
@@ -675,8 +675,8 @@ public final class FindMenuItemToSetParent extends BaseGeneratedEMFQuerySpecific
           PVariable var_jMenuItem = body.getOrCreateVariableByName("jMenuItem");
           PVariable var_uiMenuItem = body.getOrCreateVariableByName("uiMenuItem");
           PVariable var___0_ = body.getOrCreateVariableByName("_<0>");
-          new TypeConstraint(body, Tuples.flatTupleOf(var_jMenuItem), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm", "JUIMenuItem")));
-          new TypeConstraint(body, Tuples.flatTupleOf(var_uiMenuItem), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm/ui", "UIMenuItem")));
+          new TypeConstraint(body, Tuples.flatTupleOf(var_jMenuItem), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt/judo/meta/psm", "JUIMenuItem")));
+          new TypeConstraint(body, Tuples.flatTupleOf(var_uiMenuItem), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt/judo/meta/psm/ui", "UIMenuItem")));
           body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
              new ExportedParameter(body, var_jMenuItem, parameter_jMenuItem),
              new ExportedParameter(body, var_uiMenuItem, parameter_uiMenuItem)

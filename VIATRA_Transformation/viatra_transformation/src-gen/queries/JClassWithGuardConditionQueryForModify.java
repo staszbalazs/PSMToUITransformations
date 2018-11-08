@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.viatra.query.runtime.api.IPatternMatch;
 import org.eclipse.viatra.query.runtime.api.IQuerySpecification;
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine;
@@ -38,6 +37,7 @@ import org.eclipse.viatra.query.runtime.matchers.tuple.Tuples;
 import org.eclipse.viatra.query.runtime.util.ViatraQueryLoggingUtil;
 import psm.JClass;
 import queries.PsmToUiTrace;
+import traceability.PSMToUITrace;
 
 /**
  * A pattern-specific query specification that can instantiate Matcher in a type-safe way.
@@ -70,11 +70,11 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
   public static abstract class Match extends BasePatternMatch {
     private JClass fJClass;
     
-    private EObject fTrace;
+    private PSMToUITrace fTrace;
     
     private static List<String> parameterNames = makeImmutableList("jClass", "trace");
     
-    private Match(final JClass pJClass, final EObject pTrace) {
+    private Match(final JClass pJClass, final PSMToUITrace pTrace) {
       this.fJClass = pJClass;
       this.fTrace = pTrace;
     }
@@ -90,7 +90,7 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
       return this.fJClass;
     }
     
-    public EObject getTrace() {
+    public PSMToUITrace getTrace() {
       return this.fTrace;
     }
     
@@ -102,7 +102,7 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
           return true;
       }
       if ("trace".equals(parameterName) ) {
-          this.fTrace = (EObject) newValue;
+          this.fTrace = (PSMToUITrace) newValue;
           return true;
       }
       return false;
@@ -113,7 +113,7 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
       this.fJClass = pJClass;
     }
     
-    public void setTrace(final EObject pTrace) {
+    public void setTrace(final PSMToUITrace pTrace) {
       if (!isMutable()) throw new java.lang.UnsupportedOperationException();
       this.fTrace = pTrace;
     }
@@ -196,7 +196,7 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
      * @return the new, mutable (partial) match object.
      * 
      */
-    public static JClassWithGuardConditionQueryForModify.Match newMutableMatch(final JClass pJClass, final EObject pTrace) {
+    public static JClassWithGuardConditionQueryForModify.Match newMutableMatch(final JClass pJClass, final PSMToUITrace pTrace) {
       return new Mutable(pJClass, pTrace);
     }
     
@@ -209,12 +209,12 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
      * @return the (partial) match object.
      * 
      */
-    public static JClassWithGuardConditionQueryForModify.Match newMatch(final JClass pJClass, final EObject pTrace) {
+    public static JClassWithGuardConditionQueryForModify.Match newMatch(final JClass pJClass, final PSMToUITrace pTrace) {
       return new Immutable(pJClass, pTrace);
     }
     
     private static final class Mutable extends JClassWithGuardConditionQueryForModify.Match {
-      Mutable(final JClass pJClass, final EObject pTrace) {
+      Mutable(final JClass pJClass, final PSMToUITrace pTrace) {
         super(pJClass, pTrace);
       }
       
@@ -225,7 +225,7 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
     }
     
     private static final class Immutable extends JClassWithGuardConditionQueryForModify.Match {
-      Immutable(final JClass pJClass, final EObject pTrace) {
+      Immutable(final JClass pJClass, final PSMToUITrace pTrace) {
         super(pJClass, pTrace);
       }
       
@@ -309,7 +309,7 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
      * @return matches represented as a Match object.
      * 
      */
-    public Collection<JClassWithGuardConditionQueryForModify.Match> getAllMatches(final JClass pJClass, final EObject pTrace) {
+    public Collection<JClassWithGuardConditionQueryForModify.Match> getAllMatches(final JClass pJClass, final PSMToUITrace pTrace) {
       return rawStreamAllMatches(new Object[]{pJClass, pTrace}).collect(Collectors.toSet());
     }
     
@@ -324,7 +324,7 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
      * @return a stream of matches represented as a Match object.
      * 
      */
-    public Stream<JClassWithGuardConditionQueryForModify.Match> streamAllMatches(final JClass pJClass, final EObject pTrace) {
+    public Stream<JClassWithGuardConditionQueryForModify.Match> streamAllMatches(final JClass pJClass, final PSMToUITrace pTrace) {
       return rawStreamAllMatches(new Object[]{pJClass, pTrace});
     }
     
@@ -336,7 +336,7 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
      * @return a match represented as a Match object, or null if no match is found.
      * 
      */
-    public Optional<JClassWithGuardConditionQueryForModify.Match> getOneArbitraryMatch(final JClass pJClass, final EObject pTrace) {
+    public Optional<JClassWithGuardConditionQueryForModify.Match> getOneArbitraryMatch(final JClass pJClass, final PSMToUITrace pTrace) {
       return rawGetOneArbitraryMatch(new Object[]{pJClass, pTrace});
     }
     
@@ -348,7 +348,7 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
      * @return true if the input is a valid (partial) match of the pattern.
      * 
      */
-    public boolean hasMatch(final JClass pJClass, final EObject pTrace) {
+    public boolean hasMatch(final JClass pJClass, final PSMToUITrace pTrace) {
       return rawHasMatch(new Object[]{pJClass, pTrace});
     }
     
@@ -359,7 +359,7 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
      * @return the number of pattern matches found.
      * 
      */
-    public int countMatches(final JClass pJClass, final EObject pTrace) {
+    public int countMatches(final JClass pJClass, final PSMToUITrace pTrace) {
       return rawCountMatches(new Object[]{pJClass, pTrace});
     }
     
@@ -372,7 +372,7 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
      * @return true if the pattern has at least one match with the given parameter values, false if the processor was not invoked
      * 
      */
-    public boolean forOneArbitraryMatch(final JClass pJClass, final EObject pTrace, final Consumer<? super JClassWithGuardConditionQueryForModify.Match> processor) {
+    public boolean forOneArbitraryMatch(final JClass pJClass, final PSMToUITrace pTrace, final Consumer<? super JClassWithGuardConditionQueryForModify.Match> processor) {
       return rawForOneArbitraryMatch(new Object[]{pJClass, pTrace}, processor);
     }
     
@@ -385,7 +385,7 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
      * @return the (partial) match object.
      * 
      */
-    public JClassWithGuardConditionQueryForModify.Match newMatch(final JClass pJClass, final EObject pTrace) {
+    public JClassWithGuardConditionQueryForModify.Match newMatch(final JClass pJClass, final PSMToUITrace pTrace) {
       return JClassWithGuardConditionQueryForModify.Match.newMatch(pJClass, pTrace);
     }
     
@@ -440,7 +440,7 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
      * @return the Stream of all values or empty set if there are no matches
      * 
      */
-    public Stream<JClass> streamAllValuesOfjClass(final EObject pTrace) {
+    public Stream<JClass> streamAllValuesOfjClass(final PSMToUITrace pTrace) {
       return rawStreamAllValuesOfjClass(new Object[]{null, pTrace});
     }
     
@@ -458,7 +458,7 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
      * @return the Set of all values or empty set if there are no matches
      * 
      */
-    public Set<JClass> getAllValuesOfjClass(final EObject pTrace) {
+    public Set<JClass> getAllValuesOfjClass(final PSMToUITrace pTrace) {
       return rawStreamAllValuesOfjClass(new Object[]{null, pTrace}).collect(Collectors.toSet());
     }
     
@@ -467,8 +467,8 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
      * @return the Set of all values or empty set if there are no matches
      * 
      */
-    protected Stream<EObject> rawStreamAllValuesOftrace(final Object[] parameters) {
-      return rawStreamAllValues(POSITION_TRACE, parameters).map(EObject.class::cast);
+    protected Stream<PSMToUITrace> rawStreamAllValuesOftrace(final Object[] parameters) {
+      return rawStreamAllValues(POSITION_TRACE, parameters).map(PSMToUITrace.class::cast);
     }
     
     /**
@@ -476,7 +476,7 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
      * @return the Set of all values or empty set if there are no matches
      * 
      */
-    public Set<EObject> getAllValuesOftrace() {
+    public Set<PSMToUITrace> getAllValuesOftrace() {
       return rawStreamAllValuesOftrace(emptyArray()).collect(Collectors.toSet());
     }
     
@@ -485,7 +485,7 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
      * @return the Set of all values or empty set if there are no matches
      * 
      */
-    public Stream<EObject> streamAllValuesOftrace() {
+    public Stream<PSMToUITrace> streamAllValuesOftrace() {
       return rawStreamAllValuesOftrace(emptyArray());
     }
     
@@ -499,7 +499,7 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
      * @return the Stream of all values or empty set if there are no matches
      * 
      */
-    public Stream<EObject> streamAllValuesOftrace(final JClassWithGuardConditionQueryForModify.Match partialMatch) {
+    public Stream<PSMToUITrace> streamAllValuesOftrace(final JClassWithGuardConditionQueryForModify.Match partialMatch) {
       return rawStreamAllValuesOftrace(partialMatch.toArray());
     }
     
@@ -513,7 +513,7 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
      * @return the Stream of all values or empty set if there are no matches
      * 
      */
-    public Stream<EObject> streamAllValuesOftrace(final JClass pJClass) {
+    public Stream<PSMToUITrace> streamAllValuesOftrace(final JClass pJClass) {
       return rawStreamAllValuesOftrace(new Object[]{pJClass, null});
     }
     
@@ -522,7 +522,7 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
      * @return the Set of all values or empty set if there are no matches
      * 
      */
-    public Set<EObject> getAllValuesOftrace(final JClassWithGuardConditionQueryForModify.Match partialMatch) {
+    public Set<PSMToUITrace> getAllValuesOftrace(final JClassWithGuardConditionQueryForModify.Match partialMatch) {
       return rawStreamAllValuesOftrace(partialMatch.toArray()).collect(Collectors.toSet());
     }
     
@@ -531,14 +531,14 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
      * @return the Set of all values or empty set if there are no matches
      * 
      */
-    public Set<EObject> getAllValuesOftrace(final JClass pJClass) {
+    public Set<PSMToUITrace> getAllValuesOftrace(final JClass pJClass) {
       return rawStreamAllValuesOftrace(new Object[]{pJClass, null}).collect(Collectors.toSet());
     }
     
     @Override
     protected JClassWithGuardConditionQueryForModify.Match tupleToMatch(final Tuple t) {
       try {
-          return JClassWithGuardConditionQueryForModify.Match.newMatch((JClass) t.get(POSITION_JCLASS), (EObject) t.get(POSITION_TRACE));
+          return JClassWithGuardConditionQueryForModify.Match.newMatch((JClass) t.get(POSITION_JCLASS), (PSMToUITrace) t.get(POSITION_TRACE));
       } catch(ClassCastException e) {
           LOGGER.error("Element(s) in tuple not properly typed!",e);
           return null;
@@ -548,7 +548,7 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
     @Override
     protected JClassWithGuardConditionQueryForModify.Match arrayToMatch(final Object[] match) {
       try {
-          return JClassWithGuardConditionQueryForModify.Match.newMatch((JClass) match[POSITION_JCLASS], (EObject) match[POSITION_TRACE]);
+          return JClassWithGuardConditionQueryForModify.Match.newMatch((JClass) match[POSITION_JCLASS], (PSMToUITrace) match[POSITION_TRACE]);
       } catch(ClassCastException e) {
           LOGGER.error("Element(s) in array not properly typed!",e);
           return null;
@@ -558,7 +558,7 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
     @Override
     protected JClassWithGuardConditionQueryForModify.Match arrayToMatchMutable(final Object[] match) {
       try {
-          return JClassWithGuardConditionQueryForModify.Match.newMutableMatch((JClass) match[POSITION_JCLASS], (EObject) match[POSITION_TRACE]);
+          return JClassWithGuardConditionQueryForModify.Match.newMutableMatch((JClass) match[POSITION_JCLASS], (PSMToUITrace) match[POSITION_TRACE]);
       } catch(ClassCastException e) {
           LOGGER.error("Element(s) in array not properly typed!",e);
           return null;
@@ -609,7 +609,7 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
   
   @Override
   public JClassWithGuardConditionQueryForModify.Match newMatch(final Object... parameters) {
-    return JClassWithGuardConditionQueryForModify.Match.newMatch((psm.JClass) parameters[0], (org.eclipse.emf.ecore.EObject) parameters[1]);
+    return JClassWithGuardConditionQueryForModify.Match.newMatch((psm.JClass) parameters[0], (traceability.PSMToUITrace) parameters[1]);
   }
   
   /**
@@ -641,9 +641,9 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
   private static class GeneratedPQuery extends BaseGeneratedEMFPQuery {
     private final static JClassWithGuardConditionQueryForModify.GeneratedPQuery INSTANCE = new GeneratedPQuery();
     
-    private final PParameter parameter_jClass = new PParameter("jClass", "psm.JClass", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://blackbelt.hu/judo/meta/psm", "JClass")), PParameterDirection.INOUT);
+    private final PParameter parameter_jClass = new PParameter("jClass", "psm.JClass", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://blackbelt/judo/meta/psm", "JClass")), PParameterDirection.INOUT);
     
-    private final PParameter parameter_trace = new PParameter("trace", "org.eclipse.emf.ecore.EObject", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://blackbelt.hu/judo/meta/psm/ui/traceability", "PSMToUITrace")), PParameterDirection.INOUT);
+    private final PParameter parameter_trace = new PParameter("trace", "traceability.PSMToUITrace", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://blackbelt/judo/meta/psm/ui/traceability", "PSMToUITrace")), PParameterDirection.INOUT);
     
     private final List<PParameter> parameters = Arrays.asList(parameter_jClass, parameter_trace);
     
@@ -675,8 +675,8 @@ public final class JClassWithGuardConditionQueryForModify extends BaseGeneratedE
           PVariable var_jClass = body.getOrCreateVariableByName("jClass");
           PVariable var_trace = body.getOrCreateVariableByName("trace");
           PVariable var___0_ = body.getOrCreateVariableByName("_<0>");
-          new TypeConstraint(body, Tuples.flatTupleOf(var_jClass), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm", "JClass")));
-          new TypeConstraint(body, Tuples.flatTupleOf(var_trace), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt.hu/judo/meta/psm/ui/traceability", "PSMToUITrace")));
+          new TypeConstraint(body, Tuples.flatTupleOf(var_jClass), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt/judo/meta/psm", "JClass")));
+          new TypeConstraint(body, Tuples.flatTupleOf(var_trace), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://blackbelt/judo/meta/psm/ui/traceability", "PSMToUITrace")));
           body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
              new ExportedParameter(body, var_jClass, parameter_jClass),
              new ExportedParameter(body, var_trace, parameter_trace)

@@ -38,7 +38,7 @@ public interface UiPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://blackbelt.hu/judo/meta/psm/ui";
+	String eNS_URI = "http://blackbelt/judo/meta/psm/ui";
 
 	/**
 	 * The package namespace name.

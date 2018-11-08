@@ -508,7 +508,7 @@ public abstract class JElementImpl extends MinimalEObjectImpl.Container implemen
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
-		StringBuilder result = new StringBuilder(super.toString());
+		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (uuid: ");
 		result.append(uuid);
 		result.append(", name: ");

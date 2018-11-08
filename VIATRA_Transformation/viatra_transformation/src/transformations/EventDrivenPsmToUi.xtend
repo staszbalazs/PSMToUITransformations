@@ -69,8 +69,8 @@ class EventDrivenPsmToUi {
     	fixedPriorityResolver.setPriority(getParameterViewFieldRule().ruleSpecification, priority++)
     	fixedPriorityResolver.setPriority(getModifyMenuRule().ruleSpecification, priority++)
      	fixedPriorityResolver.setPriority(getModifyFilterRule().ruleSpecification, priority++)
-  /*	 	fixedPriorityResolver.setPriority(getInfoRule().ruleSpecification, priority++)
-    	fixedPriorityResolver.setPriority(getModifyInfoRule().ruleSpecification, priority++)
+  	 	fixedPriorityResolver.setPriority(getInfoRule().ruleSpecification, priority++)
+  /*  	fixedPriorityResolver.setPriority(getModifyInfoRule().ruleSpecification, priority++)
     	fixedPriorityResolver.setPriority(getRepresentsUserIdForInfoRule().ruleSpecification, priority++)*/
     	
         //Initialize event-driven transformation
@@ -102,8 +102,8 @@ class EventDrivenPsmToUi {
             .addRule(getParameterViewFieldRule)
    	        .addRule(getModifyMenuRule)
 			.addRule(getModifyFilterRule)
-/* 			.addRule(getInfoRule)     
-            .addRule(getModifyInfoRule)
+ 			.addRule(getInfoRule)     
+/*            .addRule(getModifyInfoRule)
             .addRule(getRepresentsUserIdForInfoRule)*/
             .build
             

@@ -288,7 +288,7 @@ public class PsmPackageImpl extends EPackageImpl implements PsmPackage {
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 *
+	 * 
 	 * <p>This method is used to initialize {@link PsmPackage#eINSTANCE} when that field is accessed.
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
@@ -302,8 +302,7 @@ public class PsmPackageImpl extends EPackageImpl implements PsmPackage {
 		if (isInited) return (PsmPackage)EPackage.Registry.INSTANCE.getEPackage(PsmPackage.eNS_URI);
 
 		// Obtain or create and register package
-		Object registeredPsmPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
-		PsmPackageImpl thePsmPackage = registeredPsmPackage instanceof PsmPackageImpl ? (PsmPackageImpl)registeredPsmPackage : new PsmPackageImpl();
+		PsmPackageImpl thePsmPackage = (PsmPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof PsmPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new PsmPackageImpl());
 
 		isInited = true;
 
@@ -316,6 +315,7 @@ public class PsmPackageImpl extends EPackageImpl implements PsmPackage {
 		// Mark meta-data to indicate it can't be changed
 		thePsmPackage.freeze();
 
+  
 		// Update the registry and return the package
 		EPackage.Registry.INSTANCE.put(PsmPackage.eNS_URI, thePsmPackage);
 		return thePsmPackage;
@@ -2174,12 +2174,12 @@ public class PsmPackageImpl extends EPackageImpl implements PsmPackage {
 	 * @generated
 	 */
 	protected void createExtendedMetaDataAnnotations() {
-		String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData";
+		String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData";	
 		addAnnotation
-		  (getJClass_Operations(),
-		   source,
+		  (getJClass_Operations(), 
+		   source, 
 		   new String[] {
-			   "kind", "simple"
+			 "kind", "simple"
 		   });
 	}
 

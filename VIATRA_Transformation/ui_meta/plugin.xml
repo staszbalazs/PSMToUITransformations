@@ -6,4 +6,19 @@
 
 <plugin>
 
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated psmToUiTypeMapping -->
+      <package
+            uri="http://blackbelt/judo/meta/psm/ui/mapping"
+            class="psmToUiTypeMapping.PsmToUiTypeMappingPackage"
+            genModel="src/model/psmToUiTypeMapping.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated psmToUiTypeMapping -->
+      <package
+            uri="http://blackbelt/judo/meta/psm/ui"
+            class="ui.UiPackage"
+            genModel="src/model/psmToUiTypeMapping.genmodel"/>
+   </extension>
 </plugin>

@@ -38,7 +38,7 @@ public interface PsmToUiTypeMappingPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://blackbelt.hu/judo/meta/psm/ui/mapping";
+	String eNS_URI = "http://blackbelt/judo/meta/psm/ui/mapping";
 
 	/**
 	 * The package namespace name.

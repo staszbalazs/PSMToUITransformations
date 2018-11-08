@@ -10,12 +10,17 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 import psm.PsmPackage;
+
+import psm.impl.PsmPackageImpl;
+
 import psmToUiTypeMapping.Mapping;
 import psmToUiTypeMapping.Mappings;
 import psmToUiTypeMapping.PsmToUiTypeMappingFactory;
 import psmToUiTypeMapping.PsmToUiTypeMappingPackage;
 
 import ui.UiPackage;
+
+import ui.impl.UiPackageImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -84,15 +89,19 @@ public class PsmToUiTypeMappingPackageImpl extends EPackageImpl implements PsmTo
 
 		isInited = true;
 
-		// Initialize simple dependencies
-		PsmPackage.eINSTANCE.eClass();
-		UiPackage.eINSTANCE.eClass();
+		// Obtain or create and register interdependencies
+		PsmPackageImpl thePsmPackage = (PsmPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(PsmPackage.eNS_URI) instanceof PsmPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(PsmPackage.eNS_URI) : PsmPackage.eINSTANCE);
+		UiPackageImpl theUiPackage = (UiPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(UiPackage.eNS_URI) instanceof UiPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(UiPackage.eNS_URI) : UiPackage.eINSTANCE);
 
 		// Create package meta-data objects
 		thePsmToUiTypeMappingPackage.createPackageContents();
+		thePsmPackage.createPackageContents();
+		theUiPackage.createPackageContents();
 
 		// Initialize created meta-data
 		thePsmToUiTypeMappingPackage.initializePackageContents();
+		thePsmPackage.initializePackageContents();
+		theUiPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		thePsmToUiTypeMappingPackage.freeze();

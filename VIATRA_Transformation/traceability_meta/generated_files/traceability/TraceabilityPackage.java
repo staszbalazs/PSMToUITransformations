@@ -37,7 +37,7 @@ public interface TraceabilityPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://blackbelt.hu/judo/meta/psm/ui/traceability";
+	String eNS_URI = "http://blackbelt/judo/meta/psm/ui/traceability";
 
 	/**
 	 * The package namespace name.

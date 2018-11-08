@@ -3,12 +3,11 @@
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/traceability_meta/generated_files" modelPluginID="traceability_meta"
     modelName="Traceability" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
-    usedGenPackages="../../psm_meta/src/model/psm.genmodel#//psm ../../ui_meta/src/model/psmToUiTypeMapping.genmodel#//psmToUiTypeMapping ../../ui_meta/src/model/ui.genmodel#//ui"
     operationReflection="true" importOrganizing="true">
   <foreignModel>traceability.ecore</foreignModel>
   <genPackages prefix="Traceability" disposableProviderFactory="true" ecorePackage="traceability.ecore#/">
     <genClasses ecoreClass="traceability.ecore#//PSMToUI">
-      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference traceability.ecore#//PSMToUI/traces"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference traceability.ecore#//PSMToUI/traces"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference traceability.ecore#//PSMToUI/jModel"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference traceability.ecore#//PSMToUI/uiBase"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference traceability.ecore#//PSMToUI/typeMappings"/>
@@ -16,6 +15,342 @@
     <genClasses ecoreClass="traceability.ecore#//PSMToUITrace">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference traceability.ecore#//PSMToUITrace/uiElements"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference traceability.ecore#//PSMToUITrace/psmElements"/>
+    </genClasses>
+  </genPackages>
+  <genPackages prefix="Psm" ecorePackage="http://blackbelt/judo/meta/psm#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="http://blackbelt/judo/meta/psm#//JVisibility">
+      <genEnumLiterals ecoreEnumLiteral="http://blackbelt/judo/meta/psm#//JVisibility/PUBLIC"/>
+      <genEnumLiterals ecoreEnumLiteral="http://blackbelt/judo/meta/psm#//JVisibility/PROTECTED"/>
+      <genEnumLiterals ecoreEnumLiteral="http://blackbelt/judo/meta/psm#//JVisibility/PACKAGE"/>
+      <genEnumLiterals ecoreEnumLiteral="http://blackbelt/judo/meta/psm#//JVisibility/PRIVATE"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="http://blackbelt/judo/meta/psm#//JAssociationKind">
+      <genEnumLiterals ecoreEnumLiteral="http://blackbelt/judo/meta/psm#//JAssociationKind/ASSOCIATION"/>
+      <genEnumLiterals ecoreEnumLiteral="http://blackbelt/judo/meta/psm#//JAssociationKind/AGGREGATION"/>
+      <genEnumLiterals ecoreEnumLiteral="http://blackbelt/judo/meta/psm#//JAssociationKind/COMPOSITION"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="http://blackbelt/judo/meta/psm#//JOperationKind">
+      <genEnumLiterals ecoreEnumLiteral="http://blackbelt/judo/meta/psm#//JOperationKind/CUSTOM"/>
+      <genEnumLiterals ecoreEnumLiteral="http://blackbelt/judo/meta/psm#//JOperationKind/QUERY"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="http://blackbelt/judo/meta/psm#//JLayer">
+      <genEnumLiterals ecoreEnumLiteral="http://blackbelt/judo/meta/psm#//JLayer/ALL"/>
+      <genEnumLiterals ecoreEnumLiteral="http://blackbelt/judo/meta/psm#//JLayer/PERSISTENCE"/>
+      <genEnumLiterals ecoreEnumLiteral="http://blackbelt/judo/meta/psm#//JLayer/SERVICE"/>
+      <genEnumLiterals ecoreEnumLiteral="http://blackbelt/judo/meta/psm#//JLayer/OPERATION"/>
+      <genEnumLiterals ecoreEnumLiteral="http://blackbelt/judo/meta/psm#//JLayer/REST"/>
+      <genEnumLiterals ecoreEnumLiteral="http://blackbelt/judo/meta/psm#//JLayer/UI"/>
+      <genEnumLiterals ecoreEnumLiteral="http://blackbelt/judo/meta/psm#//JLayer/DOCUMENT"/>
+      <genEnumLiterals ecoreEnumLiteral="http://blackbelt/judo/meta/psm#//JLayer/PERMISSION"/>
+      <genEnumLiterals ecoreEnumLiteral="http://blackbelt/judo/meta/psm#//JLayer/SCREEN"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="http://blackbelt/judo/meta/psm#//JMenuItemType">
+      <genEnumLiterals ecoreEnumLiteral="http://blackbelt/judo/meta/psm#//JMenuItemType/OBJECT"/>
+      <genEnumLiterals ecoreEnumLiteral="http://blackbelt/judo/meta/psm#//JMenuItemType/LIST"/>
+      <genEnumLiterals ecoreEnumLiteral="http://blackbelt/judo/meta/psm#//JMenuItemType/NONE"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="http://blackbelt/judo/meta/psm#//JOperator">
+      <genEnumLiterals ecoreEnumLiteral="http://blackbelt/judo/meta/psm#//JOperator/EQ"/>
+      <genEnumLiterals ecoreEnumLiteral="http://blackbelt/judo/meta/psm#//JOperator/NE"/>
+      <genEnumLiterals ecoreEnumLiteral="http://blackbelt/judo/meta/psm#//JOperator/LT"/>
+      <genEnumLiterals ecoreEnumLiteral="http://blackbelt/judo/meta/psm#//JOperator/LTE"/>
+      <genEnumLiterals ecoreEnumLiteral="http://blackbelt/judo/meta/psm#//JOperator/GT"/>
+      <genEnumLiterals ecoreEnumLiteral="http://blackbelt/judo/meta/psm#//JOperator/GTE"/>
+    </genEnums>
+    <genClasses image="false" ecoreClass="http://blackbelt/judo/meta/psm#//JElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JElement/uuid"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JElement/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JElement/shortName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JElement/fullName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JElement/description"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JElement/framework"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JElement/participates"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JElement/visibility"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="http://blackbelt/judo/meta/psm#//JType"/>
+    <genClasses image="false" ecoreClass="http://blackbelt/judo/meta/psm#//JTypedElement">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JTypedElement/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JTypedElement/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JTypedElement/derived"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JTypedElement/calculated"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JTypedElement/lower"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JTypedElement/upper"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JTypedElement/ordered"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JTypedElement/unique"/>
+    </genClasses>
+    <genClasses ecoreClass="http://blackbelt/judo/meta/psm#//JPrimitive">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JPrimitive/package"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JPrimitive/useForIdType"/>
+    </genClasses>
+    <genClasses ecoreClass="http://blackbelt/judo/meta/psm#//JEnumeration">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JEnumeration/package"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JEnumeration/literals"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JEnumeration/classRepresentation"/>
+    </genClasses>
+    <genClasses ecoreClass="http://blackbelt/judo/meta/psm#//JClass">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JClass/abstract"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JClass/stateMachines"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JClass/operations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JClass/attributeOrder"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JClass/attributesForListing"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JClass/fixedEnum"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JClass/representsTenant"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JClass/tenantMember"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JClass/representation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JClass/representsEnum"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JClass/representsTenantUser"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JClass/representsUser"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JClass/supertype"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JClass/package"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JClass/roles"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JClass/attributes"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JClass/businessSingleton"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JClass/aliases"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JClass/watched"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JClass/representsEnumValue"/>
+    </genClasses>
+    <genClasses ecoreClass="http://blackbelt/judo/meta/psm#//JAttribute">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JAttribute/placeholder"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JAttribute/regexp"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JAttribute/mandatory"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JAttribute/decimals"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JAttribute/interval"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JAttribute/technical"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JAttribute/ownerClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JAttribute/uiNoSearch"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JAttribute/watched"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JAttribute/representsId"/>
+    </genClasses>
+    <genClasses ecoreClass="http://blackbelt/judo/meta/psm#//JOperation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JOperation/classBased"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JOperation/ownerClass"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JOperation/parameters"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JOperation/transition"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JOperation/bulk"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JOperation/kind"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JOperation/uiMustConfirm"/>
+    </genClasses>
+    <genClasses ecoreClass="http://blackbelt/judo/meta/psm#//JParameter">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JParameter/ownerOperation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JParameter/input"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JParameter/interval"/>
+    </genClasses>
+    <genClasses ecoreClass="http://blackbelt/judo/meta/psm#//JRelationship">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JRelationship/package"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JRelationship/roles"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JRelationship/derived"/>
+    </genClasses>
+    <genClasses ecoreClass="http://blackbelt/judo/meta/psm#//JRole">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JRole/lower"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JRole/upper"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JRole/navigable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JRole/unique"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JRole/ordered"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JRole/ownerRelationship"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JRole/derivedExpression"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JRole/derivedDescription"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JRole/kind"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JRole/optionScript"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JRole/ownerClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JRole/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JRole/calculated"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JRole/interval"/>
+    </genClasses>
+    <genClasses ecoreClass="http://blackbelt/judo/meta/psm#//JLiteral">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JLiteral/enumeration"/>
+    </genClasses>
+    <genClasses ecoreClass="http://blackbelt/judo/meta/psm#//JPackage">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JPackage/enumerations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JPackage/primitives"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JPackage/relationships"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JPackage/children"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JPackage/parent"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JPackage/ownerModel"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JPackage/classes"/>
+    </genClasses>
+    <genClasses ecoreClass="http://blackbelt/judo/meta/psm#//JStateMachine">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JStateMachine/ownerClass"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JStateMachine/states"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JStateMachine/transitions"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JStateMachine/correspondingEnum"/>
+    </genClasses>
+    <genClasses ecoreClass="http://blackbelt/judo/meta/psm#//JTransition">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JTransition/stateMachine"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JTransition/guard"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JTransition/toState"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JTransition/fromState"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JTransition/executingOperation"/>
+    </genClasses>
+    <genClasses ecoreClass="http://blackbelt/judo/meta/psm#//JState">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JState/ownerStateMachine"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JState/incomingTransitions"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JState/outgoingTransitions"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JState/initialState"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JState/finalState"/>
+    </genClasses>
+    <genClasses ecoreClass="http://blackbelt/judo/meta/psm#//JGuard">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JGuard/transition"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JGuard/text"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JGuard/expression"/>
+    </genClasses>
+    <genClasses ecoreClass="http://blackbelt/judo/meta/psm#//JModel">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JModel/packages"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JModel/packagePrefix"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JModel/applicationTop"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JModel/rootMenuItems"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JModel/info"/>
+    </genClasses>
+    <genClasses ecoreClass="http://blackbelt/judo/meta/psm#//JUIMenuItem">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JUIMenuItem/children"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JUIMenuItem/parent"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JUIMenuItem/represent"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JUIMenuItem/uifilters"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JUIMenuItem/type"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JUIMenuItem/alias"/>
+    </genClasses>
+    <genClasses ecoreClass="http://blackbelt/judo/meta/psm#//JUIAttributeGroup">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JUIAttributeGroup/attributes"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JUIAttributeGroup/position"/>
+    </genClasses>
+    <genClasses ecoreClass="http://blackbelt/judo/meta/psm#//JUIFilter">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JUIFilter/attribute"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JUIFilter/operator"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JUIFilter/value"/>
+    </genClasses>
+    <genClasses ecoreClass="http://blackbelt/judo/meta/psm#//JUIAlias">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JUIAlias/ownerClass"/>
+    </genClasses>
+    <genClasses ecoreClass="http://blackbelt/judo/meta/psm#//JInfo">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm#//JInfo/submodels"/>
+    </genClasses>
+    <genClasses ecoreClass="http://blackbelt/judo/meta/psm#//JSubmodel">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm#//JSubmodel/version"/>
+    </genClasses>
+  </genPackages>
+  <genPackages prefix="Ui" ecorePackage="http://blackbelt/judo/meta/psm/ui#/">
+    <genClasses ecoreClass="http://blackbelt/judo/meta/psm/ui#//UIModule">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIModule/fullyQualifiedName"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm/ui#//UIModule/classes"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIModule/version"/>
+    </genClasses>
+    <genClasses ecoreClass="http://blackbelt/judo/meta/psm/ui#//UIClass">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm/ui#//UIClass/actions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm/ui#//UIClass/classView"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm/ui#//UIClass/listView"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm/ui#//UIClass/childClassViews"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIClass/abstract"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIClass/readonly"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIClass/enumClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIClass/singleton"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm/ui#//UIClass/super"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm/ui#//UIClass/representation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm/ui#//UIClass/attributes"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm/ui#//UIClass/inheritedAttributes"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm/ui#//UIClass/inheritedActions"/>
+    </genClasses>
+    <genClasses ecoreClass="http://blackbelt/judo/meta/psm/ui#//UIAction">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm/ui#//UIAction/paramView"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIAction/inherited"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIAction/classBased"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIAction/toBeConfirmed"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIAction/notBulk"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIAction/isQuery"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm/ui#//UIAction/resultView"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm/ui#//UIAction/result"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm/ui#//UIAction/parameters"/>
+    </genClasses>
+    <genClasses ecoreClass="http://blackbelt/judo/meta/psm/ui#//UIViewField">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIViewField/position"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIViewField/searchable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIViewField/order"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIViewField/show"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm/ui#//UIViewField/componentType"/>
+    </genClasses>
+    <genClasses ecoreClass="http://blackbelt/judo/meta/psm/ui#//UIViewFieldSet">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm/ui#//UIViewFieldSet/viewFields"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIViewFieldSet/position"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="http://blackbelt/judo/meta/psm/ui#//UIView">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm/ui#//UIView/viewFieldSets"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIView/pageSize"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIView/columns"/>
+    </genClasses>
+    <genClasses ecoreClass="http://blackbelt/judo/meta/psm/ui#//UIBase">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm/ui#//UIBase/modules"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm/ui#//UIBase/info"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm/ui#//UIBase/mainMenu"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="http://blackbelt/judo/meta/psm/ui#//Identifiable">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//Identifiable/uuid"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//Identifiable/name"/>
+    </genClasses>
+    <genClasses ecoreClass="http://blackbelt/judo/meta/psm/ui#//UIMenuItem">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm/ui#//UIMenuItem/menuView"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm/ui#//UIMenuItem/filters"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm/ui#//UIMenuItem/menuItems"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm/ui#//UIMenuItem/ownerMenuItem"/>
+    </genClasses>
+    <genClasses ecoreClass="http://blackbelt/judo/meta/psm/ui#//UIFilter">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIFilter/attribute"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIFilter/operator"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIFilter/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIFilter/fixed"/>
+    </genClasses>
+    <genClasses ecoreClass="http://blackbelt/judo/meta/psm/ui#//UIInterval">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIInterval/min"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIInterval/max"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIInterval/step"/>
+    </genClasses>
+    <genClasses ecoreClass="http://blackbelt/judo/meta/psm/ui#//UIInfo">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIInfo/userClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIInfo/versions"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIInfo/submodels"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="http://blackbelt/judo/meta/psm/ui#//UIComponentType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIComponentType/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIComponentType/lower"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIComponentType/upper"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIComponentType/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIComponentType/interval"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm/ui#//UIComponentType/intervals"/>
+    </genClasses>
+    <genClasses ecoreClass="http://blackbelt/judo/meta/psm/ui#//UIListView">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm/ui#//UIListView/detailView"/>
+    </genClasses>
+    <genClasses ecoreClass="http://blackbelt/judo/meta/psm/ui#//UIClassView"/>
+    <genClasses ecoreClass="http://blackbelt/judo/meta/psm/ui#//UIResultView"/>
+    <genClasses ecoreClass="http://blackbelt/judo/meta/psm/ui#//UIParamView"/>
+    <genClasses ecoreClass="http://blackbelt/judo/meta/psm/ui#//UIBaseComponentType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIBaseComponentType/regexp"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIBaseComponentType/decimals"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIBaseComponentType/placeholder"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIBaseComponentType/representation"/>
+    </genClasses>
+    <genClasses ecoreClass="http://blackbelt/judo/meta/psm/ui#//UIReferenceComponentType">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm/ui#//UIReferenceComponentType/referenced"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm/ui#//UIReferenceComponentType/opposite"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIReferenceComponentType/navigable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIReferenceComponentType/kind"/>
+    </genClasses>
+    <genClasses ecoreClass="http://blackbelt/judo/meta/psm/ui#//UIParameterComponentType">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm/ui#//UIParameterComponentType/referenced"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="http://blackbelt/judo/meta/psm/ui#//UIAttributeComponentType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIAttributeComponentType/derived"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIAttributeComponentType/private"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIAttributeComponentType/readonly"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui#//UIAttributeComponentType/disableOnCreate"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm/ui#//UIAttributeComponentType/ownerClass"/>
+    </genClasses>
+  </genPackages>
+  <genPackages prefix="PsmToUiTypeMapping" ecorePackage="http://blackbelt/judo/meta/psm/ui/mapping#/">
+    <genClasses ecoreClass="http://blackbelt/judo/meta/psm/ui/mapping#//Mapping">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm/ui/mapping#//Mapping/psmType"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm/ui/mapping#//Mapping/componentType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute http://blackbelt/judo/meta/psm/ui/mapping#//Mapping/name"/>
+    </genClasses>
+    <genClasses ecoreClass="http://blackbelt/judo/meta/psm/ui/mapping#//Mappings">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference http://blackbelt/judo/meta/psm/ui/mapping#//Mappings/mappings"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>
