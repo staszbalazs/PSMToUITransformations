@@ -65,7 +65,7 @@ class AttributeRuleFactory {
 				.action(CRUDActivationStateEnum.CREATED) [
 										
 					System.out.println("Transforming attribute: " + JAttribute.uuid)
-																				
+														
 					//create UIBaseComponentType
 					val UIBaseComponentType uiBaseType = uiClass.createChild(getUIClass_Attributes, UIBaseComponentType) as UIBaseComponentType
 					
@@ -119,7 +119,7 @@ class AttributeRuleFactory {
 						
 						createViewFields(match.getJClass, uiClass, JAttribute, uiBaseType);
 					}
-									
+							
 				].addLifeCycle(Lifecycles.getDefault(false, false)).build
 		}
 		return attributeRule
@@ -137,7 +137,7 @@ class AttributeRuleFactory {
 						val UIBaseComponentType componentType = (trace as PSMToUITrace).uiElements.get(0) as UIBaseComponentType
 						//set attributes
 						componentType.name = JAttribute.name
-						componentType.uuid = uiClass.uuid + "." + JAttribute.name
+						componentType.uuid = classUuid + "." + JAttribute.name
 						if (JAttribute.visibility == JVisibility::PROTECTED) {
 							componentType.readonly = true
 						} else if (JAttribute.visibility == JVisibility::PRIVATE) {
@@ -158,11 +158,11 @@ class AttributeRuleFactory {
 						componentType.interval = JAttribute.interval
 						
 						//set type							
-						componentType.type = baseType.name
+						componentType.type = typeName
 						
 						//create intervals
 						componentType.intervals.clear
-						createIntervals(componentType, uiClass.uuid)	
+						createIntervals(componentType, classUuid)
 					}
 		
 				].action(CRUDActivationStateEnum.DELETED) [
@@ -171,7 +171,7 @@ class AttributeRuleFactory {
 					
 					val UIBaseComponentType componentType = (trace as PSMToUITrace).uiElements.get(0) as UIBaseComponentType
 					
-					uiClass.remove(UIClass_Attributes, componentType)
+					componentType.eContainer.remove(UIClass_Attributes, componentType)
 					psm2ui.remove(PSMToUI_Traces, trace)
 					
 				].addLifeCycle(Lifecycles.getDefault(true, true)).build

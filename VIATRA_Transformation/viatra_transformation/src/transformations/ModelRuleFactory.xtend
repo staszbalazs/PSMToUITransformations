@@ -60,7 +60,7 @@ class ModelRuleFactory {
 					info.uuid = "main_info"
 					info.name = "main_info"
 					
-					info.userClass = "Model.judo.example.car.domain.Person"
+					info.userClass = ""
 					
 				].addLifeCycle(Lifecycles.getDefault(false, false)).build
 		}

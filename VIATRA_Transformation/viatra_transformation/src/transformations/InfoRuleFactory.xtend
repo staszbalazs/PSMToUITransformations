@@ -75,17 +75,17 @@ class InfoRuleFactory {
 			representUserIdForInfoRule = createRule.name("RepresentUserIdForInfoRule").precondition(RepresentsUserJClassQuery.Matcher.querySpecification())
 				.action(CRUDActivationStateEnum.CREATED) [
 					
-					System.out.println("Setting userClass for  info: " + JClass.uuid)
+					System.out.println("Setting userClass for info: " + JClass.uuid)
 					psm2ui.uiBase.info.userClass = JClass.uuid 
 					
 				].action(CRUDActivationStateEnum.UPDATED) [
 					
-					System.out.println("Setting userClass for  info: " + JClass.uuid)
+					System.out.println("Setting userClass for info: " + JClass.uuid)
 					psm2ui.uiBase.info.userClass = JClass.uuid 
 																				
 				].action(CRUDActivationStateEnum.DELETED) [
 					
-					System.out.println("Setting userClass for  info: " + JClass.uuid)
+					System.out.println("Setting userClass for info: " + JClass.uuid)
 					psm2ui.uiBase.info.userClass = "" 					
 					
 				].addLifeCycle(Lifecycles.getDefault(true, true)).build

@@ -88,7 +88,7 @@ class FilterRuleFactory {
 							uiFilter.name = "filter"
 						}
 						
-						uiFilter.attribute = componentType.uuid
+						uiFilter.attribute = typeUuid
 					}
 															
 				].action(CRUDActivationStateEnum.DELETED) [

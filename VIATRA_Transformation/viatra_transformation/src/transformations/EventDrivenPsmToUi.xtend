@@ -7,6 +7,7 @@ import org.eclipse.viatra.transformation.runtime.emf.transformation.eventdriven.
 import queries.PatternProvider
 import traceability.PSMToUI
 import org.apache.log4j.Level
+import org.eclipse.viatra.transformation.debug.configuration.TransformationDebuggerConfiguration
 
 class EventDrivenPsmToUi {
     extension Logger logger = Logger.getLogger(EventDrivenPsmToUi)
@@ -40,8 +41,6 @@ class EventDrivenPsmToUi {
 
 		var Integer priority = 1;
 		
-		//UIInfo
-
     	val fixedPriorityResolver = new InvertedDisappearancePriorityConflictResolver
       	fixedPriorityResolver.setPriority(getPrimitiveRule().ruleSpecification, priority++)
     	fixedPriorityResolver.setPriority(getModelRule().ruleSpecification, priority++)
@@ -70,8 +69,8 @@ class EventDrivenPsmToUi {
     	fixedPriorityResolver.setPriority(getModifyMenuRule().ruleSpecification, priority++)
      	fixedPriorityResolver.setPriority(getModifyFilterRule().ruleSpecification, priority++)
   	 	fixedPriorityResolver.setPriority(getInfoRule().ruleSpecification, priority++)
-  /*  	fixedPriorityResolver.setPriority(getModifyInfoRule().ruleSpecification, priority++)
-    	fixedPriorityResolver.setPriority(getRepresentsUserIdForInfoRule().ruleSpecification, priority++)*/
+    	fixedPriorityResolver.setPriority(getModifyInfoRule().ruleSpecification, priority++)
+    	fixedPriorityResolver.setPriority(getRepresentsUserIdForInfoRule().ruleSpecification, priority++)
     	
         //Initialize event-driven transformation
         transformation = EventDrivenTransformation.forEngine(engine)
@@ -103,8 +102,9 @@ class EventDrivenPsmToUi {
    	        .addRule(getModifyMenuRule)
 			.addRule(getModifyFilterRule)
  			.addRule(getInfoRule)     
-/*            .addRule(getModifyInfoRule)
-            .addRule(getRepresentsUserIdForInfoRule)*/
+            .addRule(getModifyInfoRule)
+            .addRule(getRepresentsUserIdForInfoRule)
+            //.addAdapterConfiguration(new TransformationDebuggerConfiguration("DebuggerHandle"))
             .build
             
             

@@ -146,7 +146,7 @@ class ParameterRuleFactory {
 					System.out.println("Deleting parameter: " + JParameter.uuid)
 					
 					val UIParameterComponentType parameterType = (trace as PSMToUITrace).uiElements.get(0) as UIParameterComponentType
-					uiAction.remove(UIAction_Parameters, parameterType)
+					parameterType.eContainer.remove(UIAction_Parameters, parameterType)
 					psm2ui.remove(PSMToUI_Traces, trace)
 										
 				].addLifeCycle(Lifecycles.getDefault(true, true)).build
@@ -185,7 +185,8 @@ class ParameterRuleFactory {
 					
 				].action(CRUDActivationStateEnum.DELETED) [
 					
-					System.out.println("Deleting viewField for parameter: " + JParameter.uuid)
+					if (parameterType.eContainer !== null) {
+											System.out.println("Deleting viewField for parameter: " + JParameter.uuid)
 					
 					var UIView uiView;
 					if (JParameter.input) {
@@ -199,6 +200,7 @@ class ParameterRuleFactory {
 																	.get();		
 					
 					match.viewFieldSet.remove(UIViewFieldSet_ViewFields, match.viewField)
+					}
 
 				].addLifeCycle(Lifecycles.getDefault(true, true)).build
 		}

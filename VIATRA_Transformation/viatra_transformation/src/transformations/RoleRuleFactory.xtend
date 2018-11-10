@@ -158,7 +158,7 @@ class RoleRuleFactory {
 						val UIReferenceComponentType referenceComponentType = (trace as PSMToUITrace).uiElements.get(0) as UIReferenceComponentType
 																	
 						referenceComponentType.name = JRole.name
-						referenceComponentType.uuid = uiClass.uuid + "." + JRole.name
+						referenceComponentType.uuid = classUuid + "." + JRole.name
 						if (JRole.visibility == JVisibility::PROTECTED) {
 							referenceComponentType.readonly = true
 						} else if (JRole.visibility == JVisibility::PRIVATE) {
@@ -178,7 +178,7 @@ class RoleRuleFactory {
 						referenceComponentType.interval = JRole.interval
 						
 						referenceComponentType.intervals.clear			
-						createIntervals(referenceComponentType, uiClass.uuid)
+						createIntervals(referenceComponentType, classUuid)
 						
 						val potentialOpposite = PatternProvider.instance().getFindOppositeForRole(engine)
 																	.getOneArbitraryMatch(JRole, null)
@@ -195,7 +195,7 @@ class RoleRuleFactory {
 					System.out.println("Deleting role: " + JRole.uuid)
 					
 					val UIReferenceComponentType referenceComponentType = (trace as PSMToUITrace).uiElements.get(0) as UIReferenceComponentType
-					referenceComponentType.ownerClass.remove(UIClass_Attributes, referenceComponentType)
+					referenceComponentType.eContainer.remove(UIClass_Attributes, referenceComponentType)
 					psm2ui.remove(PSMToUI_Traces, trace)
 					
 				].addLifeCycle(Lifecycles.getDefault(true, true)).build

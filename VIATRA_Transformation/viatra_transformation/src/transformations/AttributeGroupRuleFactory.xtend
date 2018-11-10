@@ -82,7 +82,7 @@ class AttributeGroupRuleFactory {
 							vfsName = JAttributeGroup.attributes.get(0).name
 						}
 						viewFieldSet.name = vfsName;
-						viewFieldSet.uuid = classView.uuid + "_viewfieldset_" + vfsName + "_Group"
+						viewFieldSet.uuid = viewUuid + "_viewfieldset_" + vfsName + "_Group"
 						viewFieldSet.position = JAttributeGroup.position;
 					}
 										
@@ -92,7 +92,7 @@ class AttributeGroupRuleFactory {
 					
 					var UIViewFieldSet viewFieldSet = (trace as PSMToUITrace).uiElements.get(0) as UIViewFieldSet
 					
-					classView.remove(UIView_ViewFieldSets, viewFieldSet)
+					viewFieldSet.eContainer.remove(UIView_ViewFieldSets, viewFieldSet)
 					psm2ui.remove(PSMToUI_Traces, trace)
 					
 				].addLifeCycle(Lifecycles.getDefault(true, true)).build

@@ -117,7 +117,7 @@ class OperationRuleFactory {
 					
 						val UIAction uiAction = (trace as PSMToUITrace).uiElements.get(0) as UIAction
 						
-						uiAction.uuid = uiClass.uuid + "." + JOperation.name
+						uiAction.uuid = classUuid + "." + JOperation.name
 						uiAction.name = JOperation.name;
 						uiAction.classBased = JOperation.classBased;
 						uiAction.toBeConfirmed = JOperation.uiMustConfirm;
@@ -149,7 +149,7 @@ class OperationRuleFactory {
 					
 					val UIAction uiAction = (trace as PSMToUITrace).uiElements.get(0) as UIAction
 					
-					uiClass.remove(UIClass_Actions, uiAction)
+					uiAction.eContainer.remove(UIClass_Actions, uiAction)
 					psm2ui.remove(PSMToUI_Traces, trace)
 					
 				].addLifeCycle(Lifecycles.getDefault(true, true)).build
