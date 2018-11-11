@@ -55,6 +55,7 @@ class EventDrivenPsmToUi {
 		fixedPriorityResolver.setPriority(getMenuRule().ruleSpecification, priority++) 
 		fixedPriorityResolver.setPriority(getMenuParentSetterRule().ruleSpecification, priority++)
      	fixedPriorityResolver.setPriority(getFilterRule().ruleSpecification, priority++)
+     	fixedPriorityResolver.setPriority(getRepresentsUserIdForInfoRule().ruleSpecification, priority++)
    		fixedPriorityResolver.setPriority(getModifyModelRule().ruleSpecification, priority++)
     	fixedPriorityResolver.setPriority(getModifyPackageRule().ruleSpecification, priority++)
     	fixedPriorityResolver.setPriority(getModifyClassRule().ruleSpecification, priority++)
@@ -68,9 +69,8 @@ class EventDrivenPsmToUi {
     	fixedPriorityResolver.setPriority(getParameterViewFieldRule().ruleSpecification, priority++)
     	fixedPriorityResolver.setPriority(getModifyMenuRule().ruleSpecification, priority++)
      	fixedPriorityResolver.setPriority(getModifyFilterRule().ruleSpecification, priority++)
-  	 	fixedPriorityResolver.setPriority(getInfoRule().ruleSpecification, priority++)
+     	fixedPriorityResolver.setPriority(getInfoRule().ruleSpecification, priority++)
     	fixedPriorityResolver.setPriority(getModifyInfoRule().ruleSpecification, priority++)
-    	fixedPriorityResolver.setPriority(getRepresentsUserIdForInfoRule().ruleSpecification, priority++)
     	
         //Initialize event-driven transformation
         transformation = EventDrivenTransformation.forEngine(engine)
@@ -104,7 +104,7 @@ class EventDrivenPsmToUi {
  			.addRule(getInfoRule)     
             .addRule(getModifyInfoRule)
             .addRule(getRepresentsUserIdForInfoRule)
-            //.addAdapterConfiguration(new TransformationDebuggerConfiguration("DebuggerHandle"))
+            .addAdapterConfiguration(new TransformationDebuggerConfiguration("EventDrivenDebug"))
             .build
             
             

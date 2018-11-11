@@ -20,7 +20,7 @@ public class DebuggerHandle extends AbstractHandler {
         final Job job = new Job("DebugEventDriven") {
             protected IStatus run(IProgressMonitor monitor) {
             	PSMToUiModelInitializer init = new PSMToUiModelInitializer();
-                PSMToUI psmToUi = init.loadModel("car-psm");
+                PSMToUI psmToUi = init.loadTraceModel();
                 ViatraQueryEngine engine = ViatraQueryEngine.on(new EMFScope(psmToUi.getJModel().eResource().getResourceSet()));
                 EventDrivenPsmToUi transformation = new EventDrivenPsmToUi(psmToUi, engine);
              
