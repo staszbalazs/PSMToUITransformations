@@ -1,5 +1,6 @@
 package transformations
 
+import java.util.stream.Collectors
 import org.eclipse.viatra.query.runtime.api.IPatternMatch
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
 import org.eclipse.viatra.query.runtime.api.ViatraQueryMatcher
@@ -12,17 +13,15 @@ import org.eclipse.viatra.transformation.runtime.emf.rules.eventdriven.EventDriv
 import psm.JOperationKind
 import queries.JOperationWithGuardQuery
 import queries.JOperationWithGuardQueryForModify
+import queries.PatternProvider
 import traceability.PSMToUI
 import traceability.TraceabilityPackage
 import ui.UIAction
+import ui.UIClass
 import ui.UIParamView
 import ui.UIResultView
 import ui.UIViewFieldSet
 import ui.UiPackage
-import queries.PatternProvider
-import ui.UIClass
-import java.util.stream.Collectors
-import traceability.PSMToUITrace
 
 class OperationRuleFactory {
 	
@@ -115,9 +114,9 @@ class OperationRuleFactory {
 					if (JOperation.eContainer !== null) {
 						System.out.println("Updating operation: " + JOperation.uuid)
 					
-						val UIAction uiAction = (trace as PSMToUITrace).uiElements.get(0) as UIAction
+						val UIAction uiAction = trace.uiElements.get(0) as UIAction
 						
-						uiAction.uuid = classUuid + "." + JOperation.name
+						uiAction.uuid = uiClass.uuid + "." + JOperation.name
 						uiAction.name = JOperation.name;
 						uiAction.classBased = JOperation.classBased;
 						uiAction.toBeConfirmed = JOperation.uiMustConfirm;
@@ -147,7 +146,7 @@ class OperationRuleFactory {
 										
 					System.out.println("Deleting operation: " + JOperation.uuid)
 					
-					val UIAction uiAction = (trace as PSMToUITrace).uiElements.get(0) as UIAction
+					val UIAction uiAction = trace.uiElements.get(0) as UIAction
 					
 					uiAction.eContainer.remove(UIClass_Actions, uiAction)
 					psm2ui.remove(PSMToUI_Traces, trace)

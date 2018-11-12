@@ -1,5 +1,6 @@
 package transformations
 
+import queries.FindViewFieldForComponentType.Match
 import operations.Interval
 import org.eclipse.viatra.query.runtime.api.IPatternMatch
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
@@ -14,18 +15,16 @@ import psm.JClass
 import queries.JParameterViewFieldQuery
 import queries.JParameterWithGuardQuery
 import queries.JParameterWithGuardQueryForModify
+import queries.PatternProvider
 import traceability.PSMToUI
 import traceability.TraceabilityPackage
 import ui.UIBaseComponentType
 import ui.UIClass
 import ui.UIParameterComponentType
+import ui.UIView
 import ui.UIViewField
 import ui.UIViewFieldSet
 import ui.UiPackage
-import traceability.PSMToUITrace
-import queries.PatternProvider
-import queries.FindViewFieldForComponentType.Match
-import ui.UIView
 
 class ParameterRuleFactory {
 	
@@ -123,7 +122,7 @@ class ParameterRuleFactory {
 					if (JParameter.eContainer !== null) {
 						System.out.println("Updating parameter: " + JParameter.uuid)
 					
-						val UIParameterComponentType parameterType = (trace as PSMToUITrace).uiElements.get(0) as UIParameterComponentType
+						val UIParameterComponentType parameterType = trace.uiElements.get(0) as UIParameterComponentType
 						if (JParameter.type instanceof JClass) {						
 							parameterType.referenced = uiType as UIClass
 							parameterType.type = uiType.name;
@@ -145,7 +144,7 @@ class ParameterRuleFactory {
 										
 					System.out.println("Deleting parameter: " + JParameter.uuid)
 					
-					val UIParameterComponentType parameterType = (trace as PSMToUITrace).uiElements.get(0) as UIParameterComponentType
+					val UIParameterComponentType parameterType = trace.uiElements.get(0) as UIParameterComponentType
 					parameterType.eContainer.remove(UIAction_Parameters, parameterType)
 					psm2ui.remove(PSMToUI_Traces, trace)
 										

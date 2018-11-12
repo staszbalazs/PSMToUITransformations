@@ -15,7 +15,6 @@ import queries.FindMenuItemWithParent
 import queries.FindMenuItemWithParentForModify
 import queries.PatternProvider
 import traceability.PSMToUI
-import traceability.PSMToUITrace
 import traceability.TraceabilityPackage
 import ui.UIClass
 import ui.UIMenuItem
@@ -106,7 +105,7 @@ class MenuRuleFactory {
 				if (JMenuItem.eContainer !== null) {
 					System.out.println("Updating menuItem: " + JMenuItem.uuid)
 				
-					var UIMenuItem uiMenuItem = (trace as PSMToUITrace).uiElements.get(0) as UIMenuItem
+					var UIMenuItem uiMenuItem = trace.uiElements.get(0) as UIMenuItem
 					uiMenuItem.uuid = JMenuItem.uuid
 					uiMenuItem.name = JMenuItem.name
 					
@@ -130,7 +129,7 @@ class MenuRuleFactory {
 									
 				System.out.println("Deleting menuItem: " + JMenuItem.uuid)
 				
-				var UIMenuItem uiMenuItem = (trace as PSMToUITrace).uiElements.get(0) as UIMenuItem
+				var UIMenuItem uiMenuItem = trace.uiElements.get(0) as UIMenuItem
 				uiMenuItem.ownerMenuItem.remove(UIMenuItem_MenuItems, uiMenuItem)
 				psm2ui.remove(PSMToUI_Traces, trace)
 				

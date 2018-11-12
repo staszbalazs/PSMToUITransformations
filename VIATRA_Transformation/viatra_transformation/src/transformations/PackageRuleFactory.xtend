@@ -16,7 +16,6 @@ import traceability.PSMToUI
 import traceability.TraceabilityPackage
 import ui.UIModule
 import ui.UiPackage
-import traceability.PSMToUITrace
 
 class PackageRuleFactory {
 	
@@ -68,7 +67,7 @@ class PackageRuleFactory {
 					if (JPackage.eContainer !== null) {
 						System.out.println("Updating package: " + JPackage.uuid)
 					
-						var UIModule uiModule = (trace as PSMToUITrace).uiElements.get(0) as UIModule
+						var UIModule uiModule = trace.uiElements.get(0) as UIModule
 						
 						uiModule.uuid = JPackage.uuid
 						uiModule.name = JPackage.name
@@ -79,7 +78,7 @@ class PackageRuleFactory {
 					
 					System.out.println("Deleting package: " + JPackage.uuid)
 												
-					var UIModule uiModule = (trace as PSMToUITrace).uiElements.get(0) as UIModule
+					var UIModule uiModule = trace.uiElements.get(0) as UIModule
 					
 					psm2ui.uiBase.remove(UIBase_Modules, uiModule)
 					psm2ui.remove(PSMToUI_Traces, trace)

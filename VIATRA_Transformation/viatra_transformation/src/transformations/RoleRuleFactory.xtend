@@ -24,7 +24,6 @@ import ui.UIReferenceComponentType
 import ui.UIViewField
 import ui.UIViewFieldSet
 import ui.UiPackage
-import traceability.PSMToUITrace
 
 class RoleRuleFactory {
 	
@@ -155,10 +154,10 @@ class RoleRuleFactory {
 					if (JRole.eContainer !== null && JRole.ownerClass.eContainer !== null) {
 						System.out.println("Updating role: " + JRole.uuid)
 					
-						val UIReferenceComponentType referenceComponentType = (trace as PSMToUITrace).uiElements.get(0) as UIReferenceComponentType
+						val UIReferenceComponentType referenceComponentType = trace.uiElements.get(0) as UIReferenceComponentType
 																	
 						referenceComponentType.name = JRole.name
-						referenceComponentType.uuid = classUuid + "." + JRole.name
+						referenceComponentType.uuid = uiClass.uuid + "." + JRole.name
 						if (JRole.visibility == JVisibility::PROTECTED) {
 							referenceComponentType.readonly = true
 						} else if (JRole.visibility == JVisibility::PRIVATE) {
@@ -178,7 +177,7 @@ class RoleRuleFactory {
 						referenceComponentType.interval = JRole.interval
 						
 						referenceComponentType.intervals.clear			
-						createIntervals(referenceComponentType, classUuid)
+						createIntervals(referenceComponentType, uiClass.uuid)
 						
 						val potentialOpposite = PatternProvider.instance().getFindOppositeForRole(engine)
 																	.getOneArbitraryMatch(JRole, null)
@@ -194,7 +193,7 @@ class RoleRuleFactory {
 										
 					System.out.println("Deleting role: " + JRole.uuid)
 					
-					val UIReferenceComponentType referenceComponentType = (trace as PSMToUITrace).uiElements.get(0) as UIReferenceComponentType
+					val UIReferenceComponentType referenceComponentType = trace.uiElements.get(0) as UIReferenceComponentType
 					referenceComponentType.eContainer.remove(UIClass_Attributes, referenceComponentType)
 					psm2ui.remove(PSMToUI_Traces, trace)
 					

@@ -12,13 +12,10 @@ import org.eclipse.viatra.transformation.runtime.emf.rules.eventdriven.EventDriv
 import psm.JSubmodel
 import queries.JInfoQuery
 import queries.JInfoQueryForModify
+import queries.RepresentsUserJClassQuery
 import traceability.PSMToUI
 import traceability.TraceabilityPackage
 import ui.UIInfo
-import ui.UiPackage
-import queries.RepresentsUserJClassQuery
-import queries.PatternProvider
-import queries.PsmToUiTrace.Match
 
 class InfoRuleFactory {
 	
@@ -26,7 +23,6 @@ class InfoRuleFactory {
 	extension EventDrivenTransformationRuleFactory factory = new EventDrivenTransformationRuleFactory
 	extension ViatraQueryEngine engine
 	
-	extension UiPackage uiPackage = UiPackage::eINSTANCE
 	extension TraceabilityPackage trPackage = TraceabilityPackage::eINSTANCE
 	
 	extension PSMToUI psm2ui
@@ -100,10 +96,7 @@ class InfoRuleFactory {
 										
 					System.out.println("Updating info: " + JInfo.uuid)
 					
-					var UIInfo uiInfo = PatternProvider.instance().getPsmToUiTrace(engine)
-																	.getOneArbitraryMatch(JInfo, null, null)
-																	.get()
-																	.getIdentifiable() as UIInfo;
+					var UIInfo uiInfo = trace.uiElements.get(0) as UIInfo
 										
 					uiInfo.versions.clear
 					uiInfo.submodels.clear
@@ -122,12 +115,10 @@ class InfoRuleFactory {
 										
 					System.out.println("Deleting info: " + JInfo.uuid)
 					
-					var Match match = PatternProvider.instance().getPsmToUiTrace(engine)
-														.getOneArbitraryMatch(JInfo, null, null)
-														.get();
+					psm2ui.uiBase.info.versions.clear
+					psm2ui.uiBase.info.submodels.clear
 					
-					psm2ui.uiBase.remove(UIBase_Info, match.getIdentifiable())
-					psm2ui.remove(PSMToUI_Traces, match.getTrace())
+					psm2ui.remove(PSMToUI_Traces, trace)
 					
 				].addLifeCycle(Lifecycles.getDefault(true, true)).build
 		}

@@ -104,7 +104,7 @@ class EventDrivenPsmToUi {
  			.addRule(getInfoRule)     
             .addRule(getModifyInfoRule)
             .addRule(getRepresentsUserIdForInfoRule)
-            .addAdapterConfiguration(new TransformationDebuggerConfiguration("EventDrivenDebug"))
+            //.addAdapterConfiguration(new TransformationDebuggerConfiguration("EventDrivenDebug"))
             .build
             
             

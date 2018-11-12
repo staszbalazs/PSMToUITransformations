@@ -24,7 +24,6 @@ import queries.JAttributeQueryForModify
 import queries.JAttributeViewFieldQueryForModify
 import queries.PatternProvider
 import traceability.PSMToUI
-import traceability.PSMToUITrace
 import traceability.TraceabilityPackage
 import ui.UIBaseComponentType
 import ui.UIClass
@@ -134,10 +133,10 @@ class AttributeRuleFactory {
 					if (JAttribute.eContainer !== null && JAttribute.eContainer.eContainer !== null) {
 						System.out.println("Updating attribute: " + JAttribute.uuid)
 					
-						val UIBaseComponentType componentType = (trace as PSMToUITrace).uiElements.get(0) as UIBaseComponentType
+						val UIBaseComponentType componentType = trace.uiElements.get(0) as UIBaseComponentType
 						//set attributes
 						componentType.name = JAttribute.name
-						componentType.uuid = classUuid + "." + JAttribute.name
+						componentType.uuid = uiClass.uuid + "." + JAttribute.name
 						if (JAttribute.visibility == JVisibility::PROTECTED) {
 							componentType.readonly = true
 						} else if (JAttribute.visibility == JVisibility::PRIVATE) {
@@ -158,18 +157,18 @@ class AttributeRuleFactory {
 						componentType.interval = JAttribute.interval
 						
 						//set type							
-						componentType.type = typeName
+						componentType.type = baseType.uuid
 						
 						//create intervals
 						componentType.intervals.clear
-						createIntervals(componentType, classUuid)
+						createIntervals(componentType, uiClass.uuid)
 					}
 		
 				].action(CRUDActivationStateEnum.DELETED) [
 					
 					System.out.println("Deleting attribute: " + JAttribute.uuid)
 					
-					val UIBaseComponentType componentType = (trace as PSMToUITrace).uiElements.get(0) as UIBaseComponentType
+					val UIBaseComponentType componentType = trace.uiElements.get(0) as UIBaseComponentType
 					
 					componentType.eContainer.remove(UIClass_Attributes, componentType)
 					psm2ui.remove(PSMToUI_Traces, trace)

@@ -14,14 +14,13 @@ import queries.JClassWithGuardConditionQuery
 import queries.JClassWithGuardConditionQueryForModify
 import queries.PatternProvider
 import traceability.PSMToUI
-import traceability.PSMToUITrace
 import traceability.TraceabilityPackage
+import ui.UIBaseComponentType
 import ui.UIClass
 import ui.UIClassView
 import ui.UIListView
 import ui.UIViewFieldSet
 import ui.UiPackage
-import ui.UIBaseComponentType
 
 class ClassRuleFactory {
 	
@@ -127,7 +126,7 @@ class ClassRuleFactory {
 					if (JClass.eContainer !== null) {
 						System.out.println("Updating class: " + JClass.uuid)
 					
-						val UIClass uiClass = (trace as PSMToUITrace).uiElements.get(0) as UIClass
+						val UIClass uiClass = trace.uiElements.get(0) as UIClass
 						
 						uiClass.name = JClass.name
 						uiClass.uuid = JClass.uuid
@@ -169,7 +168,7 @@ class ClassRuleFactory {
 										
 					System.out.println("Deleting class: " + JClass.uuid)
 					
-					val UIClass uiClass = (trace as PSMToUITrace).uiElements.get(0) as UIClass
+					val UIClass uiClass = trace.uiElements.get(0) as UIClass
 					
 					uiClass.eContainer.remove(UIModule_Classes, uiClass)
 					psm2ui.remove(PSMToUI_Traces, trace)

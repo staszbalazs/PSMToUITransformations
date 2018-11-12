@@ -12,7 +12,6 @@ import org.eclipse.viatra.transformation.runtime.emf.rules.eventdriven.EventDriv
 import queries.JUIFilterQuery
 import queries.JUIFilterQueryForModify
 import traceability.PSMToUI
-import traceability.PSMToUITrace
 import traceability.TraceabilityPackage
 import ui.UIFilter
 import ui.UiPackage
@@ -76,7 +75,7 @@ class FilterRuleFactory {
 					if (JFilter.eContainer !== null) {
 						System.out.println("Updating filter: " + JFilter.uuid)
 					
-						var UIFilter uiFilter = (trace as PSMToUITrace).uiElements.get(0) as UIFilter
+						var UIFilter uiFilter = trace.uiElements.get(0) as UIFilter
 																						
 						uiFilter.uuid = JFilter.uuid + "_UIFilter"
 						uiFilter.operator = JFilter.operator.toString()
@@ -88,14 +87,14 @@ class FilterRuleFactory {
 							uiFilter.name = "filter"
 						}
 						
-						uiFilter.attribute = typeUuid
+						uiFilter.attribute = componentType.uuid
 					}
 															
 				].action(CRUDActivationStateEnum.DELETED) [
 										
 					System.out.println("Deleting filter: " + JFilter.uuid)
 					
-					val UIFilter uiFilter = (trace as PSMToUITrace).uiElements.get(0) as UIFilter
+					val UIFilter uiFilter = trace.uiElements.get(0) as UIFilter
 					
 					uiFilter.eContainer.remove(UIMenuItem_Filters, uiFilter);
 					psm2ui.remove(PSMToUI_Traces, trace);					

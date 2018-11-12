@@ -12,7 +12,6 @@ import org.eclipse.viatra.transformation.runtime.emf.rules.eventdriven.EventDriv
 import queries.JAttributeGroupQuery
 import queries.JAttributeGroupQueryForModify
 import traceability.PSMToUI
-import traceability.PSMToUITrace
 import traceability.TraceabilityPackage
 import ui.UIViewFieldSet
 import ui.UiPackage
@@ -73,7 +72,7 @@ class AttributeGroupRuleFactory {
 					if (JAttributeGroup.eContainer !== null) {
 						System.out.println("Updating attributeGroup: " + JAttributeGroup.uuid)
 					
-						var UIViewFieldSet viewFieldSet = (trace as PSMToUITrace).uiElements.get(0) as UIViewFieldSet
+						var UIViewFieldSet viewFieldSet = trace.uiElements.get(0) as UIViewFieldSet
 						
 						var String vfsName;
 						if (JAttributeGroup.attributes.get(0).name.startsWith("-")) {
@@ -82,7 +81,7 @@ class AttributeGroupRuleFactory {
 							vfsName = JAttributeGroup.attributes.get(0).name
 						}
 						viewFieldSet.name = vfsName;
-						viewFieldSet.uuid = viewUuid + "_viewfieldset_" + vfsName + "_Group"
+						viewFieldSet.uuid = classView.uuid + "_viewfieldset_" + vfsName + "_Group"
 						viewFieldSet.position = JAttributeGroup.position;
 					}
 										
@@ -90,7 +89,7 @@ class AttributeGroupRuleFactory {
 					
 					System.out.println("Deleting attributeGroup: " + JAttributeGroup.uuid)
 					
-					var UIViewFieldSet viewFieldSet = (trace as PSMToUITrace).uiElements.get(0) as UIViewFieldSet
+					var UIViewFieldSet viewFieldSet = trace.uiElements.get(0) as UIViewFieldSet
 					
 					viewFieldSet.eContainer.remove(UIView_ViewFieldSets, viewFieldSet)
 					psm2ui.remove(PSMToUI_Traces, trace)
