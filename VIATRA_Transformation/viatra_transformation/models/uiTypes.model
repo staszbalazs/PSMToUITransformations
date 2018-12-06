@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<ui:UIClass xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="http://blackbelt.hu/judo/meta/psm/ui" xmi:id="_5jjgoMPfEeehI5I5hnUh6Q" uuid="class-ui-uuid" name="ui class">
+<ui:UIClass xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="http://blackbelt/judo/meta/psm/ui" xmi:id="_5jjgoMPfEeehI5I5hnUh6Q" uuid="class-ui-uuid" name="ui class">
   <classView xmi:id="_D8JsIMPgEeehI5I5hnUh6Q" uuid="view-uuid" name="view-name"/>
   <listView xmi:id="_f0z1EMPgEeehI5I5hnUh6Q" uuid="listview-uuid" name="listview-name" detailView="_D8JsIMPgEeehI5I5hnUh6Q"/>
   <attributes xsi:type="ui:UIBaseComponentType" xmi:id="_PmPUsMPgEeehI5I5hnUh6Q" uuid="comp-ui-void" name="void" regexp="&quot;&quot;"/>

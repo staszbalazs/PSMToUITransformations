@@ -1,3 +1,3 @@
 <?xml version="1.0" encoding="ASCII"?>
-<ui:UIBase xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="http://blackbelt.hu/judo/meta/psm/ui" xmi:id="_y1LcgK7hEei6TNRUv-4xJg" uuid="Model" name="Model">
+<ui:UIBase xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="http://blackbelt/judo/meta/psm/ui" xmi:id="_y1LcgK7hEei6TNRUv-4xJg" uuid="Model" name="Model">
 </ui:UIBase>

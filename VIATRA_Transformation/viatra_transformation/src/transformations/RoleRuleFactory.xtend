@@ -202,9 +202,9 @@ class RoleRuleFactory {
 		return modifyRoleRule
 	}
 	
-	public def getRoleViewFieldRule() {
+	public def getModifyRoleViewFieldRule() {
 		if (roleViewFieldRule === null) {
-			roleViewFieldRule = createRule.name("RoleViewFieldRule").precondition(JRoleViewFieldQuery.Matcher.querySpecification())
+			roleViewFieldRule = createRule.name("ModifyRoleViewFieldRule").precondition(JRoleViewFieldQuery.Matcher.querySpecification())
 				.action(CRUDActivationStateEnum.UPDATED) [
 					
 					if (JRole.eContainer !== null && JRole.ownerClass.eContainer !== null) {

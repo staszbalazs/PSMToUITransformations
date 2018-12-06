@@ -147,8 +147,10 @@ class ClassRuleFactory {
 																									.get()
 																									.getIdentifiable as UIBaseComponentType
 							
-							componentType.representation = true;
-							uiClass.representation = componentType;	
+							componentType.representation = true
+							uiClass.representation = componentType
+						} else {
+							uiClass.representation = null
 						}
 						
 						val UIClassView classView = uiClass.classView

@@ -154,9 +154,9 @@ class ParameterRuleFactory {
 	}
 	
 	
-	public def getParameterViewFieldRule() {
+	public def getModifyParameterViewFieldRule() {
 		if (parameterViewFieldRule === null) {			
-			parameterViewFieldRule = createRule.name("parameterViewFieldRule").precondition(JParameterViewFieldQuery.Matcher.querySpecification())
+			parameterViewFieldRule = createRule.name("ModifyParameterViewFieldRule").precondition(JParameterViewFieldQuery.Matcher.querySpecification())
 				.action(CRUDActivationStateEnum.UPDATED) [
 					
 					if (JParameter.eContainer !== null) {

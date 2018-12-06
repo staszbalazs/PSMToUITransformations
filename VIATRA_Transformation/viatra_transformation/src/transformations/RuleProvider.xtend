@@ -95,8 +95,8 @@ class RuleProvider {
 		return roleRuleFactory.getModifyRoleRule()
 	}
 	
-	public def getRoleViewFieldRule() {
-		return roleRuleFactory.getRoleViewFieldRule()
+	public def getModifyRoleViewFieldRule() {
+		return roleRuleFactory.getModifyRoleViewFieldRule()
 	}
 	
 	public def getAttributeGroupRule() {
@@ -143,8 +143,8 @@ class RuleProvider {
 		return parameterRuleFactory.getModifyParameterRule()
 	}
 	
-	public def getParameterViewFieldRule() {
-		return parameterRuleFactory.getParameterViewFieldRule()
+	public def getModifyParameterViewFieldRule() {
+		return parameterRuleFactory.getModifyParameterViewFieldRule()
 	}
 	
 }

@@ -78,7 +78,7 @@
 			                </models>
 			                <eolPrograms>
 			                    <Ecl>
-			                        <source>src/main_test.ecl</source>
+			                        <source>src/mainTest.ecl</source>
 			                    </Ecl>
 			                </eolPrograms>
 			            </configuration>

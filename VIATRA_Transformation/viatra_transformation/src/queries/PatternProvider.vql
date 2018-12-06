@@ -106,7 +106,6 @@ pattern findDescendantsForClassWithJClass(uiClass : UIClass, descendant : UIClas
 pattern JClassWithGuardConditionQuery(jClass : JClass, uiModule : UIModule) {
 	find hasUuid(jClass, _);
 	JClass.^package(jClass, jPackage);
-	find findUIRelevantPackages(jPackage);
 	neg find alreadyTransformed(jClass, _, _);
 	find alreadyTransformed(jPackage, uiModule, _);
 }
@@ -252,6 +251,7 @@ pattern findViewFieldForComponentType(componentType : UIComponentType, uiView : 
 pattern JAttributeGroupQuery(jAttributeGroup : JUIAttributeGroup, classView : UIClassView) {
 	find hasUuid(jAttributeGroup, _);
 	JClass.attributeOrder(jClass, jAttributeGroup);
+	JUIAttributeGroup.attributes(jAttributeGroup, _);
 	find psmToUiTrace(jClass, uiClass, _);
 	UIClass.classView(uiClass, classView);
 	neg find alreadyTransformed(jAttributeGroup, _, _);

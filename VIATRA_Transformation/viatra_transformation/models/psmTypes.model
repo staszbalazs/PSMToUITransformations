@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<psm:JPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:psm="http://blackbelt.hu/judo/meta/psm" xmi:id="_EmGUcPzUEeaBFPkGdGK2hw" uuid="psm-package-types" name="types">
+<psm:JPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:psm="http://blackbelt/judo/meta/psm" xmi:id="_EmGUcPzUEeaBFPkGdGK2hw" uuid="psm-package-types" name="types">
   <primitives xmi:id="_OHrYYPzUEeaBFPkGdGK2hw" uuid="psm-type-boolean" name="Boolean"/>
   <primitives xmi:id="_Rb7XYPzUEeaBFPkGdGK2hw" uuid="psm-type-string" name="String" useForIdType="true"/>
   <primitives xmi:id="_Ts0b8PzUEeaBFPkGdGK2hw" uuid="psm-type-integer" name="Integer"/>
